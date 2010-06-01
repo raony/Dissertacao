@@ -178,11 +178,24 @@ informativa, conectiva. É importante ter em mente que as categorias
 apresentadas não são, de forma alguma, mutuamente exclusivas, podendo mesmo numa
 interação singular ser combinadas em diferentes formas.
 \subsection{por conteúdo}
-É importante classificar as interações por conteúdo porque cada tipo de conteúdo
-carrega um valor diferente de atenção. Se quisermos partir para uma economia da
-atenção como capital social na rede, precisaremos ser capazes de medir o grau de
-atenção dada à interação por parte dos atores envolvidos. Mais a frente
-mostraremos nossa abordagem quanto ao tratamento de conteúdos textuais.
+É importante classificar as interações por conteúdo porque cada tipo de conteúdo\begin{wrapfigure}{r}{2in}
+\begin{boxedminipage}{2in}
+No estudo de caso da rede A.M.I.G.O.S. temos interações que se concentram no
+\textbf{texto}: narrativas, comentários, mensagens, fóruns. Temos também
+interações \textbf{não textuais}: objetos, avaliações, compartilhamento,
+contatos, afiliação a comunidades. No que diz respeito à abrangência, as
+interações são do tipo \textbf{indivíduo-generalizada} e \textbf{comum}, dado
+que todos os fóruns e narrativas são públicas para toda a rede. Mensagens
+privativas não foram analisadas. Não foi realizada uma categorização de
+intenção da rede e, por isso mesma, o estudo de caso trata de uma
+\textbf{análise ingênua}. Também não foram consideradas \textbf{interações
+passivas}.
+\end{boxedminipage}
+\end{wrapfigure}carrega um valor diferente de atenção. Se quisermos partir para
+uma economia da atenção como capital social na rede, precisaremos ser capazes
+de medir o grau de atenção dada à interação por parte dos atores envolvidos.
+Mais a frente mostraremos nossa abordagem quanto ao tratamento de conteúdos
+textuais.
 \begin{description}
 \item[conteúdo textual] Já foi dito o quanto o texto é importante para a
 comunicação mediada por computador, mesmo numa época em que o compartilhamento
@@ -276,6 +289,43 @@ conteúdos. Essas informações poderiam ser utilizadas numa análise
 intrínseca da rede para a concepção de um modelo mais real do interagente
 quanto ao dispêndio da atenção.
 
+\section{mensurando a rede a partir de interações não-textuais}
+
+Agora que podemos definir os medianeiros e classificar as interações sob estudo
+em seus tipos, vamos passar à construção da rede social propriamente dita. Em
+primeiro lugar, interações não-textuais não são facilmente integráveis, isto é,
+em que se assemelha a interação através de uma foto com a afiliação comum a
+um mesmo grupo? Por este motivo, a primeira abordagem é separar a rede por
+interação, ou seja, cada interação não-textual produz uma rede diferente.
+Podemos restringir o total de atenção de cada ator a uma constante, digamos 1
+(um), e distribuir sua interação uniformemente sobre o intervalo [0..1].
+
+Essa abordagem será especialmente útil quando formos aplicar a técnica de
+medição de proeminência baseada em autovetores mais adiante. Assim, se um
+ator escolheu a 5 outros atores para se conectar, cada vínculo terá valor de
+0.2. Apesar de incompleta, verificamos que essa abordagem é necessária pois não
+tem como conceber uma recurso comum, como estabeleceremos mais adiante para as
+interações textuais, que trafega pela rede. Como mensurar a atenção
+dada/recebida de uma foto? Porém, caso seja possível ao investigador a
+utilização de dados sobre a interação passiva dos atores, seria possível
+construir uma métrica comum baseada no tempo que o ator gasta observando os
+conteúdos alheios.
+
+Mesmo assim, interações como avaliações (ratings) são naturalmente difíceis de
+integrar com outras, já que leva a mesma quantidade de tempo para avaliar mal ou
+bem o outro ator. Porém, quando levarmos em consideração técnicas como a análise
+de sentimentos em texto para a avaliação da intenção das interações, poderemos
+imaginar uma integração com avaliações no sentido que elas sao naturalmente
+negativas/afirmativas.
+
+\begin{boxedminipage}{\textwidth}
+[colocar aqui resultados da pesquisa realizada com contatos do amigos]
+\end{boxedminipage}
+
+\section{mensuração textual}
+
+[a palavra como indicativo da atenção.]
+
 \section{outros problemas em relação às métricas de proeminência}
 
 Voltando a questão da proeminência, mesmo que consigamos definir os medianeiros,
@@ -287,7 +337,8 @@ possíveis caminhos da rede como grafo. Nesse sentido, podemos dividir as
 métricas em dois grandes grupos: as radiais que medem seu envolvimento nas
 extremidades do caminho e as mediais que a fazem nos elos intermediários.
 
-
+[relações intertextuais entre os atores para a formação de comunidades de
+prática.]
 
 
 
