@@ -1,0 +1,294 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+
+%%\RequirePackage[latin1]{inputenc}
+\documentclass{article}
+\usepackage[brazil]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{boxedminipage}
+\begin{document}
+
+
+\title{redes sociais digitais}
+
+\section{redes sociais}
+
+O estudo de rede sociais data das décadas de 40 e 50 com Moreno e outros.
+Inicialmente voltado para o estudo de pequenos grupos de individuos e suas
+interações, a rede era mensurada através de observações, questionários e
+entrevistas. Diferentemente de outras ciências sociais que consideravam apenas o
+indivíduo e seus atributos, o estudo das redes sociais considera suas relações
+e os atributos dessas relações. Diversas representações foram então utilizadas
+em seu estudo como os grafos e as matrizes e todo um ferramental matemático foi
+sendo apropriado e desenvolvido para a modelagem de conceitos anteriormente
+subjetivos das ciências sociais como por exemplo influência e prestígio. 
+
+\section{proeminência}
+
+Primeiramente, precisamos caracterizar o que é proeminência: é a característica
+dos relacionamentos de um ator que o evidencia para outros atores na rede
+[wasserman]. A proeminência, academicamente, foi separada em dois aspectos:
+centralidade e prestígio. Centralidade é como o ator se posiciona na rede, sua
+interação e envolvimento com os outros. Prestígio é como os outros atores se
+posicionam em relação a ele, como interagem e envolvem-se com ele. 
+
+Durante décadas os pesquisadores de redes sociais se debruçaram sobre o estudo
+\begin{wrapfigure}{r}{2in}
+\begin{boxedminipage}{2in}
+\textbf{\large{Por que etnografia digital não é um bom nome?}}
+\normalsize{}
+
+Porque etnografia trata de um estudo aprofundado, qualitativo, do fenômeno
+humano. Enquanto que na nossa abordagem digital estamos horizontalizando em
+números e mesmo quando verticalizar a abordagem do ponto de vista
+``qualitativo'', também será uma abordagem numérica.
+\end{boxedminipage}
+\end{wrapfigure} da proeminência em redes pessoais, derivadas do círculo
+imediato dos atores, por amostragem ou por delimitação teórica. Enfim, vários foram os meios para esse
+estudo, mas sempre limitado em quantidade devido ao custo de mensuração da rede.
+Esse panorama mudou com a chegada do ciberespaço e as possibilidades de uma
+\textbf{etnografia}[buscar termo para inserir aqui] digital. 
+
+\section{redes sociais digitais}
+
+Com a era da Internet é fato que pessoas se conectam umas às outras virtualmente
+por seu intermédio. A questão é: como mensurar a rede social digital? Definem
+sites de redes sociais, um conceito que vamos usar para chegar ao mais amplo,
+como sendo um espaço (ciber) em que seja possível 1) criar um perfil, 2)
+relacionar uma lista públicade amigos, 3) navegar por essa rede de perfis
+interligados. Porém essa definição restringe a sites de relacionamentos
+ignorando todo o conteúdo que poderia ser minerado em fóruns e listas de
+discussão. Por este motivo, usaremos uma definição mais ampla que chamaremos de
+redes sociais digitais como aquelas em que se é possível 1) identificar
+unicamente um ator da rede, 2) a interação entre esses atores unicamente
+identificados e, em algumas redes mas não em todas, 3) o posicionamento dessa
+interação no tempo, permitindo um estudo longitudinal da evolução da rede.
+
+Porque nos parece evidente a impossibilidade aplicar questionários ou
+entrevistas com centenas de milhares de atores, respondemos a primeira questão
+assim: através de uma etnografia digital, observando as interações dos atores na
+rede. A questão que nos aparece agora é como as interações observadas
+combinam-se para formar tal rede e se ela é significativa para a aplicação de
+técnicas de cálculo de proeminência. A validade dessa observação enquanto
+ferramenta prática para mensuração da rede é o tema central deste trabalho.
+
+\section{métricas de proeminência}
+
+Antes de entrar em detalhes sobre como aconteceria essa etnografia digital,
+vamos considerar alguns requisitos básicos para as técnicas disponíveis para o
+cálculo de proeminência. A literatura sobre proeminência é extensa e propõe
+diversas métricas e considerações a serem feitas sobre sua validade. Comum a
+todas as técnicas, podemos dizer que duas observações devem ser feitas durante
+a escolha do método de pesquisa:
+\begin{itemize}
+\item Laços de natureza fraca são pouco representativos das escolhas sociais dos
+atores. e.g.: estudos mostram que quando questionados, os atores erram em torno
+de 50\% a respeito das suas interações com outros atores em comparação com o
+observado em campo. Isso se dá devido ao fato que muitas das interações
+observadas tem pouca importância relativa para aquelas que o ator se lembra
+vividamente.
+\item A medição binária, presença ou ausência, da relação não captura a intenção
+de escolha dos atores, de forma que não é possível analisar o aspecto de
+prestígio dos atores já que não temos informação sobre quem procurou quem.
+\end{itemize}
+
+Assim sendo, devemos ser criteriosos na escolha do que observar e de como
+combinar as interações observadas de forma a criar uma rede que seja
+significativa e direcionada. Esses dois requisitos metodológicos nos guiarão na
+concepção de uma etnografia digital voltada a redes sociais.
+
+\section{etnografia digital}
+
+Por etnografia digital entende-se como a etnografia mediada por elementos
+digitais. Considerando a produção textual na web, a produção de vídeos dos
+respondentes, sua interação com artefatos digitais. Também encontra-se
+literatura sobre o uso de artefatos digitais por parte do pesquisador para
+registrar e recontar as histórias estudadas. Etnografia, portanto, seria a
+atividade humana de observar outros seres humanos e contar sua história. 
+
+Porém, no nosso caso o fenômeno observado é puramente digital. As interações
+acontecem na internet. E apesar de entendermos que a rede virtual é uma extensão
+que entrelaça a rede física do indivíduo, nosso foco reside totalmente na
+virtual. O motivo disso é simples, queremos considerar a maior parte da rede
+possível, em toda a sua manifestação, e para isso iremos desenvolver ferramentas
+automatizadas que observam e recontam a história da rede de forma apreensível
+para nós. Essa observação semi-automatizada é que chamamos de etnografia
+digital.
+
+\section{visão etnográfica da rede}
+
+Primeiramente, o pesquisador deve delimitar o fenômeno digital observado. Isso
+se dá na escolha dos medianeiros. Chamamos de medianeiros estruturas digitais
+(e.g. software) que intermediam a interação humana. Alguns exemplos são: salas
+de batepapo, fórums, lista de discussão, sites de relacionamentos, sites de
+compartilhamento de fotos e vídeos.
+
+\begin{wrapfigure}{r}{2in}
+\begin{boxedminipage}{2in}
+No estudo de caso realizado, foi considerada o site de relacionamento Amigos do
+C.E.S.A.R. Composto em sua maioria por colaboradores do mesmo, a rede se
+configura, portanto, como uma comunidade de prática, i.e. voltada para o
+compartilhamento e a colaboração em torno de um foco comum, no caso
+desenvolvimento de software. O ambiente foi aberto à pesquisa e por isso podemos
+considerar que foi realizada uma análise intrínseca. Todas as informações
+utilizadas são também informações públicas na rede.
+\end{boxedminipage}
+\end{wrapfigure}
+Do ponto de vista da análise, podemos considerar duas possibilidades relativas a
+um dado fenômeno digital qualquer: a análise intrínseca e a extrínseca. Na
+análise intrínseca a observação se dá na própria estrutura digital que media a
+interação, por exemplo, a análise tem acesso ao conteúdo e funcionamento
+interno (e.g., banco de dados) do medianeiro. Na extrínsica a observação
+limita-se ao que está disponível publicamente, sendo restrito o acesso a
+conteúdo privativo e comportamental do ator. Questões éticas a parte, não há
+dúvidas que o registro da interação do ator \textbf{com} a ferramenta é de
+grande valor para o tratamento da atenção como capital social.
+
+\section{a atenção como capital social}
+
+Uma vez que os medianeiros sejam identificados, cabe agora discutir como as
+interações observadas serão combinadas para a mensuração da rede. O problema é
+que são interações bem diferentes uma das outras e, por isso, com significância
+também diferente. Para resolver esse problema iremos considerar a teorial do
+capital social que consiste no estudo das transferências de ``recursos'' pela
+rede social. A vantagem de utilizar essa teoria é que ela prevê que quanto mais
+``recursos'' trafeguem por um laço, mais forte ele é, assim atendendo ao nosso
+primeiro requisito para alcançar uma rede com métricas de proeminência
+significativas.
+
+Mas que ``recurso'' seria esse que trafega pela rede? Nossa aposta está na
+\textbf{atenção}. A atenção é o recurso empregado em cada interação e é o
+recurso mais escarço na atual era da informação. Assim como na teoria da
+proeminência das redes sociais nós teremos ``estrelas'' e ``isolados'', também
+na economia da atenção acharemos esses mesmos atores à medida que mais e mais
+atenção eles atraiam sobre si. Para mensurar o quanto de atenção o ator emprega
+em sua interação vamos considerar os tipos de interação que ele pode fazer na
+rede.
+
+\section{uma tipologia das interações}
+
+Podemos dividir por tipo do conteúdo, abrangência e intenção. Os tipos de
+conteúdos podem ser divididos em dois grandes grupos: textuais e não textuais.
+Abrangência consiste se a interação é individual básica, individual
+desenvolvida, individual generalizado ou comum. Finalmente, quanto a intenção
+podemos classificar a interação em assertiva, negativa, conversacional,
+informativa, conectiva. É importante ter em mente que as categorias
+apresentadas não são, de forma alguma, mutuamente exclusivas, podendo mesmo numa
+interação singular ser combinadas em diferentes formas.
+\subsection{por conteúdo}
+É importante classificar as interações por conteúdo porque cada tipo de conteúdo
+carrega um valor diferente de atenção. Se quisermos partir para uma economia da
+atenção como capital social na rede, precisaremos ser capazes de medir o grau de
+atenção dada à interação por parte dos atores envolvidos. Mais a frente
+mostraremos nossa abordagem quanto ao tratamento de conteúdos textuais.
+\begin{description}
+\item[conteúdo textual] Já foi dito o quanto o texto é importante para a
+comunicação mediada por computador, mesmo numa época em que o compartilhamento
+de vídeos está na moda, o texto, na forma de comentários, continua sendo o
+principal móvel das trocas sociais. São desse tipo:
+\begin{itemize}
+  \item comentários
+  \item mensagens
+  \item tópicos
+  \item blogs e similares
+  \item microblogging e similares
+  \item descrições
+\end{itemize}
+\item[conteúdo não-textual] Nesse grupo estão relacionados não só as interações
+áudiovisuais, mas também as interações ``mudas'' como a formação de laços
+explícito entre os atores, a classificação uns dos outros através de um
+ranqueamento ou simplismente o atestado de ``gostei''/''não gostei'' e o
+compartilhamento de conteúdo produzido por um terceiro. Exemplos:
+\begin{itemize}
+  \item fotos
+  \item vídeos
+  \item links
+  \item laços explícitos entre os atores
+  \item rating
+  \item compartilhamento
+\end{itemize}
+\end{description}
+\subsection{por abrangência}
+A abrangência define quais são os atores influenciados pela interação. Quando um
+ator se propõe a investir sua atenção numa interação com a rede, essa proposta
+deve ser analisa em vista ao público-alvo da interação. Dessa forma, a
+abrangência define o grupo de atores em relação ao qual o ator interagente busca
+se posicionar na rede.
+\begin{description}
+\item[individual básica] Classificam-se neste grupo as interações de caráter
+privativo que partem de um ator específico para outro ator. As interações que
+tipicamente pertencem a este grupo são as mensagens, os pedidos de conexão e o
+compartilhamento de conteúdo do tipo ``forward''.
+\item[individual desenvolvida] Quando a interação se inicia em um ator e envolve
+sua rede imediata de contatos sem estar publicamente disponível para qualquer
+membro da rede. São desse grupo, em sua maioria: tópicos de fóruns, fotos,
+vídeos, compartilhamentos, microblogging.
+\item[individual generalizada] Quando a interação se inicia em um ator e
+torna-se pública para todos os atores da rede. Todos os tipos de interação podem
+se classificar nesse grupo, depende do grau de livre acesso que a rede
+proporciona aos seus membros.
+\item[comum] Quando a interação se dá num espaço de igualdade, quer dizer, que
+todos podem interagir com todos no mesmo nível, chamamos de interação comum. Um
+exemplo claro dessa categoria é as salas de batepapo onde todos podem publicar
+mensagens para todos lerem. Listas de discussão também seguem esse modelo.
+Um Blog em particular não é uma interação comum, na maioria dos casos, porque
+só o mantenedor do blog pode publicar artigos nesse blog, já o espaço de
+comentários do artigo possa ser considerado um espaço comum.
+\end{description}
+\subsection{por intenção}
+Por último, mas não por menos, temos a intenção sobre a qual o ator reveste sua
+interação. A diferença de intenção não só pode representar mudança significativa
+na quantidade de atenção cedida, como necessariamente define os possíveis
+resultados da interação. Podemos classificar a intenção das interações, no
+escopo proposto por esse trabalho, em cinco grandes grupos:
+\begin{description}
+\item[afirmativa] Trata da afirmação de suporte social entre um ator e outro.
+Pode ser um comentário positivo relacionado a uma interação prévia do ator
+elogiado, uma avaliação positiva, a recomendação do seu conteúdo para outros.
+\item[negativa] Quando a interação se dá para depreciar o outro. Pode ser por
+comentário, tópicos, mensagens, avaliação negativa.
+\item[conversacional] Quando a interação tem caráter pessoal, relacionado a uma
+conversação que se inicia ou que está em andamento.
+\item[informativo] Quando a intenção é informar um grupo de atores sobre
+determinado assunto. Avisos, artigos, propaganda, críticas.
+\item[conectivos] Quando a intenção é formar laços explícitos através da rede.
+Pedidos para conexão como adicionar à lista de contatos/amigos/etc.
+\end{description}
+Ainda em relação à categorização das interações por tipo de intenção, temos que
+tal realização é cai na área do tratamento de linguagem natural e ainda sem uma
+técnica que se compare com a habilidade discriminante do ser humano para a
+maioria das interações. Por este motivo, essa categorização é particularmente
+complexa do ponto de vista computacional e por isso teremos o cuidado de anotar
+as análises de redes sociais digitais que não levem em consideração a intenção
+como \textbf{análises ingênuas}.
+\subsection{interações passivas}
+Para finalizar essa seção sobre interações, falaremos aqui de interações
+passivas e comportamentais que podem levar a um maior entendimento de como o
+ator investe sua atenção na rede e, por isso mesmo, como se posiciona na rede em
+relação a outros atores. Podemos considerar como interação passiva como
+aquela que não é necessariamente percebida pelos outros atores além do
+interagente, nesse tipo de interação encontram-se todas as interações do
+ator como o sistema como: mensagens lidas, não lidas, tempo usado para
+cada mensagem, perfis visitados, tempo usado na leitura de outros
+conteúdos. Essas informações poderiam ser utilizadas numa análise
+intrínseca da rede para a concepção de um modelo mais real do interagente
+quanto ao dispêndio da atenção.
+
+\section{outros problemas em relação às métricas de proeminência}
+
+Voltando a questão da proeminência, mesmo que consigamos definir os medianeiros,
+identificar os tipos de interação, mensurar a atenção investida e formalizar uma
+rede direcionada e valorada, ainda assim teremos que a métrica pode não ser
+significativa dependendo da parte da rede sobre o qual foi aplicada. Nota-se que
+o que as métricas de proeminência fazem é verificar o envolvimento do nó com os
+possíveis caminhos da rede como grafo. Nesse sentido, podemos dividir as
+métricas em dois grandes grupos: as radiais que medem seu envolvimento nas
+extremidades do caminho e as mediais que a fazem nos elos intermediários.
+
+
+
+
+
+\end{document}
