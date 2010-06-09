@@ -319,7 +319,7 @@ de sentimentos em texto para a avaliação da intenção das interações, poder
 imaginar uma integração com avaliações no sentido que elas sao naturalmente
 negativas/afirmativas.
 
-\begin{table}[htb]
+\begin{table}[htbp]
 	\begin{boxedminipage}{\textwidth}
 Para o estudo de caso da rede A.M.I.G.O.S. vamos começar analisando a rede
 decorrente das conexões explícitas da rede: os contatos. Contatos são atores
@@ -379,6 +379,7 @@ sucessivamente.
 
 	\end{boxedminipage}
 \end{table}
+\clearpage
 
 \section{mensuração textual}
 \subsection{conceituação}
@@ -475,8 +476,12 @@ delas não é apenas sinal de atenção para com anterior, mas para todas as out
 antes dela até um certo limite.
 
 Para abordar essa questão, precisamos melhorar nossa definição em
-\ref{def:atencao}. Considere $|i_j|$ como a quantidade de palavras em $i_j
-\in I$ e $P(i_j)$ a interação a qual $i_j$ respondeu. Definimos:
+\ref{def:atencao}. Cada nova mensagem no fórum pode iniciar um novo tópico ou
+responder a uma mensagem anterior. As mensagens encadeadas dessa forma são
+chamadas em conjunto de \textit{thread}. Sendo assim, considere a função
+$P:I\to I$ onde $P(i_j)$ corresponde a interação a qual $i_j$ respondeu.
+Definimos o conjunto de mensagens anteriores na \textit{thread} de $i_j \in I$
+como:
 
 \begin{equation}
 R(i_j) = \left\{ \begin{array}{l l} \emptyset &\quad\text{se $P(i_j)$ não
@@ -484,25 +489,42 @@ existir}\\ \{P(i_j)\} \cup R(P(i_j)) &\quad\text{em todo outro caso}\end{array}
 \right.
 \end{equation}
 
-Sendo $r_{jk}$ como o $k$-ésimo item de uma sequência sobre $R(i_j)$
-considerando a ordenação trivial: $a > b \iff a\in R(b)$. Assim $r_{jk+1}$ será
-sempre o tópico anterior ao qual $r_{jk}$ responde. A partir daí derivamos a
-nova definição da troca de atenção entre os atores:
+Seja $r_{jk}$ o $k$-ésimo item de uma sequência sobre $R(i_j)$ considerando a
+ordenação trivial: $a > b \iff a\in R(b)$. Teremos que $r_{jk+1}$ será sempre o
+tópico anterior ao qual $r_{jk}$ responde. Finalmente, considere que $A^*$
+quando aplicado a um subconjunto $S \subset I$ retorna o subconjunto de seus
+autores: $A^*(S)=\{x \in A| A^*(s) = x \text{, para algum }s \in S\}$. A
+partir daí derivamos a nova definição da troca de atenção entre os atores baseada na anterior
+(\ref{def:atencao}):
 
 \begin{equation}
-	v_{jkq} = \left\{
+	v_{jkq}^* = \left\{
 	\begin{array}{l l}
-		0 & \quad \text{se $a_k \neq A^*(i_j)$ e $a_q \neq A^*(i_j)$}\\
-		0 & \quad \text{se $a_q =A^*(i_j)$ e $a_k \ni A(i_j)$}\\
-  		\beta v_{jqk} + (1-\alpha)\sum_{l=1}^{|R(i_j)|}\frac{1}{l}|r_{jl}| & \quad
-  		\text{se $a_k=A^*(i_j)$ e $a_q \in A(i_j)$}\\ \alpha|i_j| & \quad \text{se $a_q=A^*(i_j)$ e $a_k \in A(i_j)$}
+		\alpha v_{jkq} & \quad \text{se $a_q=A^*(i_j)$ e $a_k \in A(i_j)$} \\
+		v_{jkq} + (1-\alpha)\sum_{l=1}^{|R(i_j)|}\frac{1}{l}f(a_q, r_{jl}) & \quad
+		\text{se $a_k=A^*(i_j)$ e $a_q \in A^*(R(i_j))$} 
 	\end{array}
 	\right.
 \end{equation}
 
 Assim, sugerimos um outro parâmetro atenuante $\alpha$ que indica o quanto de
 uma interação deve ser considerada quando não há resposta (ou outro indício de
-sua apreensão). Então considere , $R(i_j) \in I$ como a interação que deu origem à $i_j$ 
+sua apreensão). A influência do tópico $r_{jl}$ na presente troca de atenção é
+tão menor quanto mais distante estiver na \textit{thread}, ou seja, quanto maior
+o $l$. Falta-nos apenas definir a função $f$, que nada mais faz que selecionar
+para o somatório apenas os tópicos cujo autor seja o ator visado na troca:
+
+\begin{equation}
+		\text{Definimos $f:A\times I\to N$, }
+		f(a,i) = \left\{
+		\begin{array}{l l}
+			0 & \quad \text{se $a\neq A^*(i)$}\\
+			\text{quantidade de palavras em }i & \quad \text{se $a=A^*(i)$}
+		\end{array}\right.
+\end{equation}
+
+Considere $|i_j|$ como a quantidade de palavras em $i_j
+\in I$ e
 \section{outros problemas em relação às métricas de proeminência}
 
 Voltando a questão da proeminência, mesmo que consigamos definir os medianeiros,
