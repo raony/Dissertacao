@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{boxedminipage}
+\usepackage{amsmath}
 \begin{document}
 
 
@@ -226,7 +227,7 @@ compartilhamento de conteúdo produzido por um terceiro. Exemplos:
 \subsection{por abrangência}
 A abrangência define quais são os atores influenciados pela interação. Quando um
 ator se propõe a investir sua atenção numa interação com a rede, essa proposta
-deve ser analisa em vista ao público-alvo da interação. Dessa forma, a
+deve ser analisada em vista ao público-alvo da interação. Dessa forma, a
 abrangência define o grupo de atores em relação ao qual o ator interagente busca
 se posicionar na rede.
 \begin{description}
@@ -304,7 +305,7 @@ Essa abordagem será especialmente útil quando formos aplicar a técnica de
 medição de proeminência baseada em autovetores mais adiante. Assim, se um
 ator escolheu a 5 outros atores para se conectar, cada vínculo terá valor de
 0.2. Apesar de incompleta, verificamos que essa abordagem é necessária pois não
-tem como conceber uma recurso comum, como estabeleceremos mais adiante para as
+tem como conceber um recurso comum, como estabeleceremos mais adiante para as
 interações textuais, que trafega pela rede. Como mensurar a atenção
 dada/recebida de uma foto? Porém, caso seja possível ao investigador a
 utilização de dados sobre a interação passiva dos atores, seria possível
@@ -318,14 +319,190 @@ de sentimentos em texto para a avaliação da intenção das interações, poder
 imaginar uma integração com avaliações no sentido que elas sao naturalmente
 negativas/afirmativas.
 
-\begin{boxedminipage}{\textwidth}
-[colocar aqui resultados da pesquisa realizada com contatos do amigos]
-\end{boxedminipage}
+\begin{table}[htb]
+	\begin{boxedminipage}{\textwidth}
+Para o estudo de caso da rede A.M.I.G.O.S. vamos começar analisando a rede
+decorrente das conexões explícitas da rede: os contatos. Contatos são atores
+explicitamente adicionados através da ferramenta, constituindo uma interação
+não-textual individual-básica. Foram coletadas as interações de 1247 atores
+representadas em um digrafo. Desses, 720 formam o componente principal do
+digrafo (o maior subgrafo fracamente conexo) e removendo os que se conectam a
+apenas 1 indivíduo temos 618 atores e 5180 conexões.
+		\large       % tamanho da fonte 
+		\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+		\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+		\caption{\it Os 10 mais bem posicionados em Proeminência no A.M.I.G.O.S.}
+		\centering   % tabela centralizada
+		\begin{tabular}{| l | l |}
+			\hline
+			Ator & Centralidade \\ \hline
+			8 & 0.230 \\
+			135 & 0.136 \\
+			1037 & 0.136 \\
+			541 & 0.132 \\
+			3 & 0.119 \\
+			675 & 0.111 \\
+			201 & 0.106 \\
+			542 & 0.069 \\
+			614 & 0.054 \\
+			838 & 0.051\\
+			\hline
+		\end{tabular}
+		\begin{tabular}{| l | l |}
+			\hline
+			Ator & Prestígio \\ \hline
+			553 & 138.361 \\
+			571 & 137.627 \\
+			569 & 133.475 \\
+			581 & 131.738 \\
+			586 & 126.468 \\
+			555 & 125.683 \\
+			609 & 121.362 \\
+			598 & 118.524 \\
+			575 & 112.545 \\
+			611 & 102.776 \\
+			\hline
+		\end{tabular}
+		\label{tab:acontccent}
+\flushleft
+Na tabela~\ref{tab:acontccent} apresentamos o cálculo da centralidade
+(\textit{Betweeness}) de Freeman e do prestígio (\textit{Power}) de Bonacich.
+É notável que não há uma correlação entre as duas medidas e que os atores mais
+centrais não são os atores com maior prestígio. Temos pouca informação externa
+da rede sobre os atores mas é possível notar que no primeiro grupo (mais
+central) estão presentes alguns pesquisadores-chefe da comunidade e que por isso
+conectam grupos relativamente separados na rede. Já uma análise de clusterização
+mostra que no segundo grupo (maior prestígio) estão membros de clusters
+densamente conectados, o que explica terem sido escolhidos por muitos outros
+atores que por sua vez foram escolhidos por muitos outros e assim
+sucessivamente.
+
+	\end{boxedminipage}
+\end{table}
 
 \section{mensuração textual}
+\subsection{conceituação}
+Na seção anterior investigamos as relações não-textuais, agora vamos nos deter
+nas textuais. Primeiramente, intentamos com essa divisão alcançar uma
+consequência prática: a integração de diversas interações numa só rede. A rede
+que vamos construir é valorada, isto é, as conexões possuem um peso na forma de
+um número real dentro de um intervalo. Ao contrário de redes binárias, as redes
+valoradas proporcionam um indicativo da \textit{força} do laço entre os atores.
 
-[a palavra como indicativo da atenção.]
+Dentro de uma teoria da atenção como capital social, devemos então nos voltar
+para a afirmação de que laços por onde trafegam muito recursos são laços fortes
+e o contrário também é verdade. Idealmente, em interações textuais poderíamos
+aferir quanto tempo um ator passa lendo, porém nem sempre dispomos dessa medida.
+Na maioria dos casos é inviável até determinar se uma interação textual foi
+percebida ou não por outro ator, por isso maior valor será dado à interação que
+gerar algum tipo de reação. Um exemplo: um tópico iniciado em uma comunidade
+pode ser um indicativo que os membros dessa comunidade investiram atenção ao
+movimento do autor, porém tópicos respondidos claramente demonstram que, pelo
+menos por parte dos respondentes, a atenção foi consumada.
 
+Sugerimos então, a utilização da quantidade de palavras como uma estimativa da
+atenção despendida na interação. A sugestão advém naturalmente do fato de que
+quanto maior o texto, mais tempo é empregado na sua leitura, possivelmente mais
+recursos cognitivos também serão empregados para a sua apreensão. Isso nem
+sempre é verdade para todos os textos, ou tipos de textos, mas restringindo
+nosso escopo para comunidades virtuais de amigos e/ou comunidades de prática,
+acreditamos ser esse um bom ponto de partida.
+
+Antes de definir o cálculo dessa atenção, devemos ponderar que toda interação é
+um sinal de atenção por ambas as partes. A diferença é que a atenção que o
+agente cede para o receptor é parte ilusória. Em uma economia da atenção,
+o receptor acredita receber tanto quanto cede e a habilidade fundamental de quem
+se comunica para as massas é saber atender essa necessidade de atenção; o agente
+pode nem conhecer o receptor, mas este se julga atendido. Entretanto, a escolha
+de agir para um determinado grupo já é por si só um sinal de atenção e por isso
+que dizemos que toda interação representa valor para ambas as partes.
+\subsection{formalização}
+Para a formalização dessa métrica, vamos usar um exemplo prático. Em um fórum
+qualquer, vamos tomar um tópico para nosso exemplo. O fórum é o
+\textbf{medianeiro}, os membros assinantes do fórum os \textbf{atores}. O tipo
+de interação é \textbf{textual} quanto ao conteúdo, \textbf{comum} quanto a
+abrangência e nossa análise será \textbf{ingênua}, isto é, não consideraremos a
+intenção. Seja $A$ o conjunto de $n$ atores e $I$ o conjunto de $m$ tópicos
+do fórum. Para cada um dos tópicos $i_j \in I$, existe um autor $A^*(i_j) \in A$
+e um conjunto de atores constituintes de sua abrangência $A(i_j) \subset A$.
+Definimos a atenção trocada $v_{jkq}$ entre os atores $a_k$ e $a_q$ através da
+interação $i_j$ nos seguintes termos:
+
+$\forall i_j \in I$ e $\forall a_{k,q} \in A$,
+\begin{equation}
+\label{def:atencao}
+v_{jkq} = \left\{ 
+\begin{array}{l l}
+  0 & \quad \text{se $a_k \neq A^*(i_j)$ e $a_q \neq A^*(i_j)$}\\
+  0 & \quad \text{se $a_q =A^*(i_j)$ e $a_k \ni A(i_j)$}\\
+  \beta v_{jqk} & \quad \text{se $a_k=A^*(i_j)$ e $a_q \in A(i_j)$}\\
+  \text{quantidade de palavras de $i_j$} & \quad \text{se $a_q=A^*(i_j)$ e $a_k
+  \in A(i_j)$} \end{array} \right.
+\end{equation}
+ 
+O parâmetro $\beta$ é um atenuante para representar o quanto o autor da
+interação investiu de atenção em relação ao seu público receptor. Sendo
+$\beta=0$, temos que nenhuma atenção foi dada pelo autor do tópico no fórum
+para o resto da comunidade, sendo $\beta=1$ significa que ele deu tanta atenção
+quanto recebeu de um leitor seu. Um valor interessante para $\beta$ é
+$^1/_{|A(i_j)|}$, pois refletiria o fato de que quanto maior o conjunto de
+abrangência da interação, menor é a atenção que o autor dá para um receptor em
+particular. Como tópico de fórum é uma interação de abrangência comum, ou seja,
+todos os atores são atingidos pela mensagem do autor, temos que $A(i_j)=A$,
+$\forall i_j \in I$.
+
+A partir da definição~\ref{def:atencao}, definimos a força $p_{ij}$ do laço
+direcionado de $a_i$ para $a_j$, ambos pertencentes a $A$, como a soma de todas
+as trocas de $a_i$ para $a_j$ normalizada pelo total de trocas de $a_i$.
+Por isso, todos os laços originados em um dado ator qualquer somam em 1. Em
+outras palavras:
+\begin{equation}
+\label{def:forca}
+p_{ij}=\frac{\sum_{k|i_k \in I}v_{kij}}{\sum_{q|i_q \in I}\sum_{w|a_w
+\in A}v_{qiw}}
+\end{equation}
+Com a definição dada em \ref{def:forca}, podemos somar a força de vários
+tipos de interação, respeitando suas diferenças no parâmetro $\beta$ e
+no conjunto de sua abrangência $A(i_j)$ e com isso mensurar uma rede integrada
+a partir de todas as interações textuais do sistema. 
+\subsection{o fator resposta}
+Agora considere que o tópico analisado na seção anterior fosse respondido por um
+outro membro da comunidade. Teríamos a confirmação de que este ator leu e não
+apenas leu, como se deu ao trabalho de responder. Essa resposta, portanto,
+deveria ser levada em consideração no cáculo da atenção trocada entre esse ator
+e o primeiro. Entretanto, respostas podem ser encadeadas e naturalmente uma
+delas não é apenas sinal de atenção para com anterior, mas para todas as outras
+antes dela até um certo limite.
+
+Para abordar essa questão, precisamos melhorar nossa definição em
+\ref{def:atencao}. Considere $|i_j|$ como a quantidade de palavras em $i_j
+\in I$ e $P(i_j)$ a interação a qual $i_j$ respondeu. Definimos:
+
+\begin{equation}
+R(i_j) = \left\{ \begin{array}{l l} \emptyset &\quad\text{se $P(i_j)$ não
+existir}\\ \{P(i_j)\} \cup R(P(i_j)) &\quad\text{em todo outro caso}\end{array}
+\right.
+\end{equation}
+
+Sendo $r_{jk}$ como o $k$-ésimo item de uma sequência sobre $R(i_j)$
+considerando a ordenação trivial: $a > b \iff a\in R(b)$. Assim $r_{jk+1}$ será
+sempre o tópico anterior ao qual $r_{jk}$ responde. A partir daí derivamos a
+nova definição da troca de atenção entre os atores:
+
+\begin{equation}
+	v_{jkq} = \left\{
+	\begin{array}{l l}
+		0 & \quad \text{se $a_k \neq A^*(i_j)$ e $a_q \neq A^*(i_j)$}\\
+		0 & \quad \text{se $a_q =A^*(i_j)$ e $a_k \ni A(i_j)$}\\
+  		\beta v_{jqk} + (1-\alpha)\sum_{l=1}^{|R(i_j)|}\frac{1}{l}|r_{jl}| & \quad
+  		\text{se $a_k=A^*(i_j)$ e $a_q \in A(i_j)$}\\ \alpha|i_j| & \quad \text{se $a_q=A^*(i_j)$ e $a_k \in A(i_j)$}
+	\end{array}
+	\right.
+\end{equation}
+
+Assim, sugerimos um outro parâmetro atenuante $\alpha$ que indica o quanto de
+uma interação deve ser considerada quando não há resposta (ou outro indício de
+sua apreensão). Então considere , $R(i_j) \in I$ como a interação que deu origem à $i_j$ 
 \section{outros problemas em relação às métricas de proeminência}
 
 Voltando a questão da proeminência, mesmo que consigamos definir os medianeiros,
@@ -340,6 +517,34 @@ extremidades do caminho e as mediais que a fazem nos elos intermediários.
 [relações intertextuais entre os atores para a formação de comunidades de
 prática.]
 
+Quando tudo o que temos é a rede para medirmos proeminência em atores de redes
+sociais digitais precisamos de uma maneira de medir sua aplicabilidade.
+
+
+% \center
+\begin{tabular}{| l | l |}
+\hline
+Métrica & Valor \\ \hline
+Densidade & 0.0136 \\
+Reciprocidade & 0.5841 \\
+Coef. Cluster & 0.554 \\
+Coef. Cluster Ponderada & 0.290 \\
+Distância (geodésica) & 4.499 \\
+Coesão (Distância) & 0.183 \\
+Largura (Distância) & 0.817 \\
+Fitness (Núcleo/Periferia) & 0.257 \\
+\hline
+\end{tabular}
+
+% \flushleft
+A densidade, distância, coesão e largura nos diz que a rede é esparsa. O
+coeficiente de clusterização mostra que apesar de que atores com poucos contatos
+tem uma vizinhança relativamente interconectada, quanto maior a sua vizinhança,
+menor a interconexão. Finalmente, o algoritmo de detecção de Núcleo/Periferia
+encontrou baixa adequação. Todas essas métricas indicam que temos diversos
+subgrupos dentro da rede e que ela está longe de se assemelhar a uma comunidade
+de prática. Numa situação assim, [métricas mediais perdem força descritiva da
+influência do ator na rede como um todo TODO: revisar isso aqui].
 
 
 \end{document}
