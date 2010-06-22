@@ -9,7 +9,10 @@
 \usepackage{wrapfig}
 \usepackage{boxedminipage}
 \usepackage{amsmath}
+ 
 \begin{document}
+\bibliographystyle{alpha}
+\bibliography{references}
 
 
 \title{redes sociais digitais}
@@ -319,6 +322,12 @@ de sentimentos em texto para a avaliação da intenção das interações, poder
 imaginar uma integração com avaliações no sentido que elas sao naturalmente
 negativas/afirmativas.
 
+\begin{figure}[h!]
+  \caption{A rede de contatos no A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/redeamigocontact.jpg}
+\end{figure}
+
 \begin{table}[htbp]
 	\begin{boxedminipage}{\textwidth}
 Para o estudo de caso da rede A.M.I.G.O.S. vamos começar analisando a rede
@@ -423,178 +432,205 @@ considerar a resposta como um sinal de atenção não só para com o participant
 imediatamente anterior, mas para vários antes dele que de certa forma
 influenciaram na resposta atual.
 
+Assim, podemos construir uma rede onde os nós são os atores e os laços é o
+somatório da atenção trocada pelos mesmos. Quanto mais textos de um ator $a$
+lidos, respondidos, recomendados, avaliados por um ator $b$, maior será a força
+da relação direcionada de $b$ para $a$. Quanto mais conteúdo um ator $a$ publica
+para um determinado público, mais forte também será sua relação direcionada
+com o mesmo. Tal rede, por tanto, integraria insumos de diversos tipos de
+interação mensurados, desde que sejam de conteúdo textual.
+
+No entanto, uma ultima consideração deve ser feita, a de que todos nós temos uma
+quantidade limitada de atenção para ceder uns aos outros. Sendo assim, na
+representação apresentada acima, a soma das forças dos laços para todo ator da
+rede deve ser normalizada, de forma que atores que recebam interações de menos
+agentes tenham laços mais fortes com eles do que receptores de grande quantidade
+de agentes diferentes com os seus. Em termos gerais, quanto mais pessoas dividem
+sua atenção, menos elas recebem proporcionalmente.
+
 \subsection{formalização}
+\label{sec:formalizacao}
 Para a formalização dessa métrica, vamos usar um exemplo prático. Em um fórum
 qualquer, vamos tomar um tópico para nosso exemplo. O fórum é o
 \textbf{medianeiro}, os membros assinantes do fórum os \textbf{atores}. O tipo
 de interação é \textbf{textual} quanto ao conteúdo, \textbf{comum} quanto a
 abrangência e nossa análise será \textbf{ingênua}, isto é, não consideraremos a
-intenção. Seja $A$ o conjunto de $n$ atores e $I$ o conjunto de $m$ tópicos
-do fórum. Para cada um dos tópicos $i_j \in I$, existe um agente da interação
-$A^*(i_j) \in A$ e um conjunto de atores receptores em sua abrangência $A(i_j)
-\subset A$. Definimos a atenção trocada $v_{jkq}$ entre os atores $a_k$ e $a_q$
-através da interação $i_j$ nos seguintes termos:
+intenção. Considere:
+\begin{itemize}
+  \item $G$ o conjunto de $n$ atores e $g_{1..n}$ uma sequência sobre $G$;
+  \item $I$ o conjunto de $m$ tópicos do fórum e $i_{1..m}$ uma sequência sobre
+  $I$;
+  \item $A:I\to G$ tal que $A(i_k)$ seja o autor do tópico $i_k$, a função $A$
+  não é inversível, dado que um ator pode ser autor de mais de um tópico, porém
+  considere a função $A^{-1}:G\to \mathcal{P}(I)$ tal que $A^{-1}(g_h) = \{x \in
+  I|A(x) = g_h\}$ representando o conjunto de tópicos escritos pelo ator;
+  \item $R:I\to \mathcal{P}(G)$ tal que todo $x \in R(i_k)$ é um receptor de
+  $i_k$, considere também o conjunto de tópicos recebidos por um ator como sendo
+  $R^{-1}:G\to \mathcal{P}(I)$ tal que $R^{-1}(g_h) = \{x \in I|g_h\in R(x)\}$;
+  \item $|i_k|$ como a quantidade de palavras de $i_k$; 
+\end{itemize}
 
-$\forall i_j \in I$ e $\forall a_{k,q} \in A$,
+Definimos a atenção total cedida de $g_i$ para $g_j$, $p(i,j)$ como a soma de
+suas atenções diretas, residuais e transitivas. A atenção direta é aquela
+formada quando $g_i$ é receptor de $g_j$ e definimos como:
+
 \begin{equation}
-\label{def:atencao}
-v_{jkq} = \left\{ 
-\begin{array}{l l}
-  0 & \quad \text{se $a_k \neq A^*(i_j)$ e $a_q \neq A^*(i_j)$}\\
-  0 & \quad \text{se $a_q =A^*(i_j)$ e $a_k \ni A(i_j)$}\\
-  \beta v_{jqk} & \quad \text{se $a_k=A^*(i_j)$ e $a_q \in A(i_j)$}\\
-  \text{quantidade de palavras de $i_j$} & \quad \text{se $a_q=A^*(i_j)$ e $a_k
-  \in A(i_j)$} \end{array} \right.
+\label{def:atedireta}
+p_{dir}(i,j) = \sum \alpha |k|\text{, para todo $k \in \{x \in I| A(x)=g_j
+\wedge g_i \in R(x)\}$}
 \end{equation}
- 
-O parâmetro $\beta$ é um atenuante para representar o quanto o agente da
-interação investiu de atenção em relação ao seu público receptor. Sendo
-$\beta=0$, temos que nenhuma atenção foi dada pelo autor do tópico no fórum
-para o resto da comunidade, sendo $\beta=1$ significa que ele deu tanta atenção
-quanto recebeu de um leitor seu. Um valor interessante para $\beta$ é
-$^1/_{|A(i_j)|}$, pois refletiria o fato de que quanto maior o conjunto de
-abrangência da interação, menor é a atenção que o agente dá para um receptor em
-particular. Como tópico de fórum é uma interação de abrangência comum, ou seja,
-todos os atores são atingidos pela mensagem do autor, temos que $A(i_j)=A$,
-$\forall i_j \in I$.
 
-A partir da definição~\ref{def:atencao}, definimos a força $p_{ij}$ do laço
-direcionado de $a_i$ para $a_j$, ambos pertencentes a $A$, como a soma de todas
-as trocas de $a_i$ para $a_j$ normalizada pelo total de trocas de $a_i$.
-Por isso, todos os laços originados em um dado ator qualquer somam em 1. Isso
-é importante porque todos temos quantidades limitadas de atenção para ceder e
-que em maiores ou menores quantidades elas são similares. Em outras palavras:
+A atenção residual é cedida quando $g_i$ é autor de algum tópico recebido por
+$g_j$ e definimos como:
+
 \begin{equation}
-\label{def:forca}
-p_{ij}=\frac{\sum_{k|i_k \in I}v_{kij}}{\sum_{q|i_q \in I}\sum_{w|a_w
-\in A}v_{qiw}}
+\label{def:ateresidual}
+p_{res}(i,j) = \sum \beta |k|\text{, para todo $k \in \{x \in I| A(x)=g_i
+\wedge g_j \in R(x)\}$}
 \end{equation}
-Com a definição dada em \ref{def:forca}, podemos somar a força de vários
-tipos de interação, respeitando suas diferenças no parâmetro $\beta$ e
-no conjunto de sua abrangência $A(i_j)$ e com isso mensurar uma rede integrada
-a partir de todas as interações textuais do sistema. 
-\subsubsection{o fator resposta}
-Agora considere que o tópico analisado na seção anterior fosse respondido por um
-outro membro da comunidade. Teríamos a confirmação de que este ator leu e não
-apenas leu, como se deu ao trabalho de responder. Essa resposta, portanto,
-deveria ser levada em consideração no cáculo da atenção trocada entre esse ator
-e o primeiro. Entretanto, respostas podem ser encadeadas e naturalmente uma
-delas não é apenas sinal de atenção para com anterior, mas para todas as outras
-antes dela até um certo limite.
 
-Para abordar essa questão, precisamos melhorar nossa definição em
-\ref{def:atencao}. Cada nova mensagem no fórum pode iniciar um novo tópico ou
-responder a uma mensagem anterior. As mensagens encadeadas dessa forma são
-chamadas em conjunto de \textit{thread}. Sendo assim, considere a função
-$P:I\to I$ onde $P(i_j)$ corresponde a interação a qual $i_j$ respondeu.
-Definimos o conjunto de mensagens anteriores na \textit{thread} de $i_j \in I$
+A atenção transitiva é aquela $g_j$ recebe de $g_i$ se ele foi autor de algum
+tópico que $g_i$ respondeu. Para definirmos $p_tra$ devemos antes modelar o
+encadeamento dos tópicos. Seja $T:I\to I\cup\{\emptyset\}$, se $i_h=T(i_k)$
+então $i_k$ é uma resposta a $i_h$, se $i_k$ é a mensagem que iniciou o tópico
+então $T(i_k)=\emptyset$. Agora faça $T^*:I\to\mathcal{P}(I)$:
+
+\begin{equation}
+\label{def:thread}
+T^*(i_k) = \left\{ \begin{array}{l l} \emptyset &\quad\text{se
+$T(i_k)=\emptyset$}\\ \{T(i_k)\} \cup T^*(T(i_k)) &\quad\text{em todo outro
+caso}\end{array} \right.
+\end{equation}
+
+Daí temos que $T^*(i_k)$ é conjunto de todas as $m$ mensagens anteriores na
+\textit{thread} de $i_k$ e podemos definir uma sequência $t^*_{kn}$, onde
+$n=1..m$, sobre esse conjunto considerando a ordenação trivial: $a > b \iff a\in
+T^*(b)$. Dessa forma $i_k$ é uma resposta a $t^*_{k1}$, que por sua vez responde
+a $t^*_{k2}$ e assim sucessivamente até a mensagem inicial. Levando em
+consideração a definição em \ref{def:thread}, definimos a atenção transitiva
 como:
 
 \begin{equation}
-R(i_j) = \left\{ \begin{array}{l l} \emptyset &\quad\text{se $P(i_j)$ não
-existir}\\ \{P(i_j)\} \cup R(P(i_j)) &\quad\text{em todo outro caso}\end{array}
-\right.
+\label{def:atetransitiva}
+\begin{array}{ l l }
+p_{tra}(i,j) = \sum_k\sum_l
+(1-\alpha)\gamma^l|t^*_{kl}| &\quad\text{para todo $k$ tal que $i_k \in \{x
+\in I| A(x)=g_i\}$}\\&\quad\text{e todo $l$ tal que $A(t^*_{kl}) = g_j$}
+\end{array}
 \end{equation}
 
-Seja $r_{jk}$ o $k$-ésimo item de uma sequência sobre $R(i_j)$ considerando a
-ordenação trivial: $a > b \iff a\in R(b)$. Teremos que $r_{jk+1}$ será sempre o
-tópico anterior ao qual $r_{jk}$ responde. Finalmente, considere que $A^*$
-quando aplicado a um subconjunto $S \subset I$ retorna o subconjunto de seus
-agentes: $A^*(S)=\{x \in A| A^*(s) = x \text{, para algum }s \in S\}$. A
-partir daí derivamos a nova definição da troca de atenção entre os atores baseada na anterior
-(\ref{def:atencao}):
+A partir das definições em \ref{def:atedireta}, \ref{def:ateresidual} e
+\ref{def:atetransitiva} podemos calcular a atenção total entre $g_i$ e $g_j$
+como:
 
 \begin{equation}
-	v_{jkq}^* = \left\{
-	\begin{array}{l l}
-		\alpha v_{jkq} & \quad \text{se $a_q=A^*(i_j)$ e $a_k \in A(i_j)$} \\
-		v_{jkq} + (1-\alpha)\sum_{l=1}^{|R(i_j)|}\frac{1}{2^l}f(a_q, r_{jl}) & \quad
-		\text{se $a_k=A^*(i_j)$ e $a_q \in A^*(R(i_j))$} 
-	\end{array}
-	\right.
+\label{def:atetotal}
+p(i,j) = E(g_i)\frac{p_{dir}(i,j) + p_{res}(i,j) + p_{tra}(i,j)}{\sum_{k|g_k \in
+G}p_{dir}(i,k) + p_{res}(i,k) + p_{tra}(i,k)}
 \end{equation}
 
-Assim, sugerimos um outro parâmetro atenuante $\alpha$ que indica o quanto de
-uma interação deve ser considerada quando não há resposta (ou outro indício de
-sua apreensão). A influência do tópico $r_{jl}$ na presente troca de atenção é
-tão menor quanto mais distante estiver na \textit{thread}, ou seja, quanto maior
-o $l$. Falta-nos apenas definir a função $f$, que nada mais faz que selecionar
-para o somatório apenas os tópicos cujo autor seja o ator visado na troca:
-
-Definimos $f:A\times I\to N$,
-\begin{equation}
-		f(a,i) = \left\{
-		\begin{array}{l l}
-			0 & \quad \text{se $a\neq A^*(i)$}\\
-			\text{quantidade de palavras em }i & \quad \text{se $a=A^*(i)$}
-		\end{array}\right.
-\end{equation}
-\subsection{discussão}
-
-Quanto maior o texto empregado pelo autor da interação, tanto maior será a
-atenção cedida dele para os receptores da interação. Essa atenção não é trocada
-integralmente para cada receptor, cada um recebe uma fração desta. Da mesma
-forma, quanto maior o texto da interação, tanto maior será a atenção cedida
-pelos receptores para autor da interação. Mas também essa atenção não é trocada
-integralmente, apenas uma fração é cedida para considerar a possibilidade do
-receptor não ter realmente prestado atenção à mensagem, quando não temos
-evidências disso. Porém, quando alguém responde à essa interação, então este
-alguém certamente releva mais o autor a ponto de se dar o trabalho de responder
-e tanto maior será essa relevância quanto maior for o conteúdo da resposta.
-Assim, usamos o texto como estimador da troca de atenção pela rede, consolidando
-sua posição de importância como principal meio para as trocas sociais digitais.
-
-Muitas porém são as nuanças comportamentais da comunicação mediada por
-computador e o modelo apresentado nada mais é que exploratório para as
-possibilidades de mensuração de redes. Naturalmente, a utilização de estudos
-psicológicos e etnográficos complementaria a robustez do modelo. Enquanto isso,
-abordaremos apenas mais duas questões para encerrar a análise de interações
-textuais: a escolha do parâmetro $\alpha$ e o efeito da normalização da força do
-laço para somar em 1.
-
-\subsubsection{o parâmetro $\alpha$}
-
-Idealmente, como não se tem conhecimento prévio ou externo à rede sobre o
-comportamento dos seus membros, os parâmetros necessários para a sua mensuração
-deveriam ser um função do próprio sistema. No caso do parâmetro $\alpha$, temos
-que quanto maior ele for mais fácil será de formar laços fortes entre autores e
-receptores. Enquanto que para menos, produz o efeito de recompensar interações
-interligadas estreitando mais esses laços relativamente a outros em que não haja
-resposta. Existem alguns casos óbvios e outros não tão óbvios assim que devemos
-considerar:
+Evidentemente, este é um modelo exploratório para a mensuração de redes a partir
+de interações textuais sob um ponto de vista generalista. Nesse sentido há muito
+espaço para aperfeiçoamento dentro do campo experimental. Para finalizar,
+devemos fazer mais algumas considerações:
 \begin{itemize}
-  \item Quando há algum mecanismo que mostre quando um ator prestou atenção a
-  uma determinada interação, o parâmetro $\alpha$ deve ser zero.
-  \item Quando há uma alta taxa de participação dos atores na rede, com
-  respostas frequentes, então menor valor deve ser dado à resposta.
-  \item Quando há baixa taxa de resposta então maior valor deve ser dado à
-  mesma.
+  \item $p(i,j)$ tem sua soma normalizada devido ao limite de atenção
+  natural de cada um;
+  \item Porém, cada pessoa dedica quantidades diferentes de atenção total aos
+  medianeiros analisados, de forma que seria simplório normalizar todos em 1.
+  Por esta razão, cada ator tem a soma de suas atenções distribuídas na rede
+  normalizada em um fator $E(g_i)$ que indica o seu grau de atividade na rede.
+  Esse fator, \textit{a priori} será sempre relativo e caso o escolhamos como
+  sendo a razão do total de atenção cedido pelo ator sobre a maior atenção
+  medida, teremos uma normalização absoluta para toda a rede baseada no seu
+  máximo. O que pode não ser a melhor escolha, pois idealmente a restrição de
+  atenção deve servir para reduzir a variância das forças dos laços na rede;
+  \item O parâmetro $\gamma$ representa a força da influência de mensagens
+  antigas na $thread$ sobre um determinado ator em sua participação atual. Por
+  esta razão $0 \leq \gamma \leq 1$, sendo que $\gamma=0$ anula toda a atenção
+  transitiva e $\gamma=1$ considera todas as mensagens anteriores como sendo
+  igualmente influentes na mensagem atual;
+  \item O parâmetro $\beta$ representa a atenção recíproca do agente para os
+  seus recptores, também varia de 0 a 1, sendo que $\beta=0$ anula a atenção
+  residual da composição e $beta=1$ indica que o autor da mensagem cedeu
+  individualmente a cada receptor tanto quanto este para com ele. Um valor
+  interessante para $\beta$ é o inverso da quantidade de atores na abrangência
+  da interação em contexto. Assim, o autor cede uma fração igual para cada
+  receptor que é tão menor quanto maior for seu público;
+  \item O parâmetro $\alpha$ representa o quão certos estamos de que a interação
+  foi recebida integralmente pelo receptor. A sua escolha depende de diversos
+  fatores da análise empregada sobre os medianeiros, pois que para cada caso
+  poderemos (ou não) averiguar a atenção média cedida por um ator a uma
+  interação que lhe chega qualquer. Se $\alpha=0$ indica que caso o receptor não
+  tenha respondido à interação de alguma forma, ele não foi influenciado por
+  ela. $\alpha=1$ retira qualquer valor do fato do ator ter respondido ou não
+  determinada mensagem, igualando os dois casos. Em geral, mesmo que tenhamos o
+  indicativo de que o receptor recebeu a interação, é interessante manter um
+  valor de $\alpha$ diferente dos extremos para premiar a relação entre atores
+  que se respondem.
 \end{itemize}
 
 [revisar esta seção considerando o efeito da powerlaw das trhead, de que
 threads com muitas mensagens naturalmente atraem mais mensagens]
 
-\subsubsection{o limite de atenção}
+\begin{figure}[h!]
+  \caption{A rede de atenção trocada no A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/redeamigosattention.jpg}
+\end{figure}
 
-Como todos nós temos 24h por dia para dividirmos entre nossas atividades
-diárias, podemos concluir daí que temos uma porção relativamente similar para
-distribuir no mesmo período. Mesmo que isso seja verdade, nem todos empregam o
-mesmo tempo e atenção aos medianeiros escolhidos para mensurar a rede digital.
-Antes de seguir daí, vamos relembrar que o total de atenção cedido por um
-ator é normalizado em 1, representando a limitação do recurso e faz com que
-caso um ator interaja mais com um determinado ator, a relação dele com os outros
-se enfraqueça relativamente. Porém como a atenção total empregada por um ator
-nos os medianeiros registrados é diferente uma das outras, também deve ser
-diferente a normalização de cada ator.
-
-Para quantificar essa diferença criaremos o atributo \textbf{atividade} que
-representa o quanto um ator é ativo nos medianeiros. Esse atributo é sempre
-relativo, medindo o quanto um ator é ativo em relação ao mais ativo dos
-atores. Em outras palavras, a atividade mede quanto da atenção total que ele
-emprega nos medianeiros em relação ao total que tem para dividir em suas
-atividades cotidianas. Assim, quanto mais atividade, maior a força de suas
-conexões na rede porque emprega mais atenção, troca mais capitais sociais e por
-isso estreita os laços.
+\begin{table}[htbp]
+	\begin{boxedminipage}{\textwidth}
+		Utilizamos a formalização descrita na seção \ref{sec:formalizacao} sobre a
+		rede de teste do A.M.I.G.O.S. Os parâmetros foram:
+		\begin{itemize}
+		  \item $\alpha = 0.2$
+		  \item $\beta = ^1/_\text{(quantidade da abrangência)}$
+		  \item $\gamma = 0.5$
+		\end{itemize}
+		Foram consideradas os fórums e as narrativas (com seus comentários).
+		Narrativas são similares aos \textit{posts} de \textit{blog} convencionais.
+		Fizemos testes com várias possibilidades para $|i_k|$ pois a variância
+		indicava muito ruído. Pode se ter como exemplo de ruído uma mensagem de
+		fórum onde o autor copiou enorme lista com os nomes dos arquivos presentes na
+		comunidade, nem o autor dedicou muito tempo ao copiar a lista, nem os outros
+		membros devem ter dado muita atenção à lista inteira. Sendo assim, escolhemos
+		um $|i_k|$ que desprezasse interações com quantidades de palavras muito
+		destoantes. Fizemos $|i_k|=\tanh(0.5\lambda x)$ onde $x$ é a quantidade de
+		fato de palavras e $\lambda=-\frac{\ln(10^{-4})}{\overline{x} + 5\sigma}$,
+		$\overline{x}$ é a média e $\sigma$ é o desvio padrão, logo temos que pelo
+		menos 95\% das interações encontram-se entre 0 e 0.9999.
+		
+		\large       % tamanho da fonte 
+		\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+		\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+		\caption{\it Comparação entre a rede de contatos e de atenção.}
+		\centering   % tabela centralizada
+		\begin{tabular}{| l | l | l |}
+		\hline
+		Métrica & Contatos & Atenção \\ \hline
+		Densidade & 0.0136 & 0.1861\\
+		Reciprocidade & 0.5841 & NA\\
+		Coef. Cluster & 0.554 & 0.45\\
+		Coef. Cluster Ponderada & 0.290 & 0.099\\
+		Distância (geodésica) & 4.499 & 1.0340\\
+		Coesão (Distância) & 0.183 & 0.983\\
+		Largura (Distância) & 0.817 & 0.017\\
+		Fitness (Núcleo/Periferia) & 0.257 & 0.0\\
+		\hline
+		\end{tabular}
+		\label{tab:comparacao_contato_atencao}
+		\flushleft
+		\normalsize
+		A rede mensurada a partir das interações textuais foi então dicotomizada em
+		0 para valores abaixo da média e 1 para valores acima da média. A
+		tabela~\ref{tab:comparacao_contato_atencao} apresenta uma comparação entre a
+		rede formada a partir dos contatos e da atenção. Nota-se uma maior adensamento
+		da rede, com encurtamento de caminhos e notável ausência de uma padrão 	
+		núcleo/periferia, porém também há uma redução no nível de
+		\textit{clusterização} da rede.
+	\end{boxedminipage}
+\end{table}
 
 \section{outros problemas em relação às métricas de proeminência}
 
