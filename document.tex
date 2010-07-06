@@ -9,34 +9,119 @@
 \usepackage{wrapfig}
 \usepackage{boxedminipage}
 \usepackage{amsmath}
- 
 \begin{document}
 \bibliographystyle{alpha}
 \bibliography{references}
 
+\newcommand{\observednet}{rede social observada} 
 
-\title{redes sociais digitais}
+\title{NAIF: Network Analysis of Influence Framework}
 
-\section{redes sociais}
+\section{Introdução}
 
-O estudo de rede sociais data das décadas de 40 e 50 com Moreno e outros.
-Inicialmente voltado para o estudo de pequenos grupos de individuos e suas
-interações, a rede era mensurada através de observações, questionários e
-entrevistas. Diferentemente de outras ciências sociais que consideravam apenas o
-indivíduo e seus atributos, o estudo das redes sociais considera suas relações
-e os atributos dessas relações. Diversas representações foram então utilizadas
-em seu estudo como os grafos e as matrizes e todo um ferramental matemático foi
-sendo apropriado e desenvolvido para a modelagem de conceitos anteriormente
-subjetivos das ciências sociais como por exemplo influência e prestígio. 
+A análise de redes sociais tem sido utilizada para a investigação
+de temas tão diversos quanto a difusão de inovações \cite{Coleman1966},
+oportunidades de emprego \cite{Granovetter1995}, prevenção contra fraude
+\cite{Neville2005} e marketing \cite{Domingos2001}. Muito dessa pesquisa inicial
+se baseia em redes pequenas em torno de indivíduos escolhidos por amostragem
+\cite{Wasserman}\cite{Newman2006}, porém a recente disponibilidade de informações
+relacionais na internet através de sites de relacionamentos permitiu o
+desenvolvimento da análise de redes em larga escala \cite{Boyd2007}. Não
+obstante, o meio ainda carece de modelos dinâmicos de representação para redes
+sociais observadas a partir do fenômeno digital \cite{Xiang2010} e é justamente
+nesse ponto que o trabalho atual se concentra. Nosso objetivo é avaliar as
+dificuldades, parâmetros e modelos existentes para a representação e modelagem
+não-supervisionada de redes sociais digitais em larga escala e tempo real,
+especificamente para aplicações que façam uso da rede para identificar atores
+chaves em processos de difusão de conhecimento, inovações e recursos.
 
-\section{proeminência}
+\section{Sobre Redes Sociais}
+
+O estudo de rede sociais inicia nas décadas de 40 e 50, inicialmente voltado para
+o estudo de pequenos grupos de individuos e suas interações, a rede era mensurada
+através de observações, questionários e entrevistas \cite{Wasserman}.
+Diferentemente de outras ciências sociais que consideravam apenas os indivíduo e
+seus atributos, o estudo das redes sociais considera suas relações e os atributos
+dessas relações. A rede social é um fenômeno complexo envolvendo os
+relacionamentos de diversos atores em suas particularidades e que, através de um
+processo que chamamos de mensuração, pode ser traduzido em uma representação.
+Toda representação da rede social, por ser um modelo, é naturalmente parcial e
+enviesado. Comumente, as pesquisas de redes sociais trabalham com grafos onde os
+vértices são os atores e os arcos entre os vértices são as relações mensuradas; e
+matrizes, onde as linhas e colunas são conjuntos de atores e que a posição
+$(i,j)$ da matriz representa o arco \textbf{do} ator $i$ \textbf{para} o ator
+$j$. Para economizar repetições, no decorrer deste trabalho quando estivermos nos
+referindo ao fenômeno observado, utilizaremos o termo \textbf{\observednet},
+enquanto que os termos \textbf{representação} e \textbf{rede social} serão
+intercambiáveis.
+
+Devido à disponibilidade de ferramentas matemáticas para o tratamento de grafos,
+a análise de redes sociais desenvolveu-se rapidamente construindo métodos e
+modelos estatísticos apropriados \cite{Butts2009}. A partir desse ferramental, o
+ramo das ciências sociais passou a quantificar diversos fenômenos antes
+considerados apenas do ponto de vista subjetivo, como a proeminência dos atores,
+que estaria relacionada com a sua centralidade no grafo.
+
+\subsection{Alguma Formalização}
+
+Representamos a rede como um grafo $G(V,E)$ onde $V$ é um conjunto de $n$
+vértices (também chamados de atores) e $E$ o conjunto de arestas que os conectam.
+Quando a representação é não-direcionada o par $(i,j)$ é chamado de aresta e
+temos que $(i,j) \in E$ implica $(j,i) \in E$. No caso em que há direcionamento,
+essa afirmação não se sustenta e por isso $(i,j) \in E$ não implica em $(j,i) \in
+E$ necessariamente, além do que chamamos o par de arco de $i$ para $j$. De
+maneira geral, sempre trataremos a representação como sendo direcionada.
+
+Definimos uma matriz de $X$ com $n$ linhas e colunas, onde $x_{ij} = 1$, se
+$(i,j) \in V$ ou 0 de outra forma. Essa matriz de $X$ é uma representação
+binária da rede. Podemos generalizar essa notação para incluir redes com valores
+discretos onde $0 \leq x_{ij} \leq m$ ou contínuos dispostos em um intervalo.
+Ambas as notações, de grafo e de matriz, serão usadas de forma intercalada neste
+trabalho.
+
+\section{Sobre Proeminência}
 
 Primeiramente, precisamos caracterizar o que é proeminência: é a característica
 dos relacionamentos de um ator que o evidencia para outros atores na rede
-[wasserman]. A proeminência, academicamente, foi separada em dois aspectos:
+\cite{Wasserman}. A proeminência, academicamente, foi separada em dois aspectos:
 centralidade e prestígio. Centralidade é como o ator se posiciona na rede, sua
 interação e envolvimento com os outros. Prestígio é como os outros atores se
-posicionam em relação a ele, como interagem e envolvem-se com ele. 
+posicionam em relação a ele, como interagem e envolvem-se com ele.
+
+Durante décadas pesquisadores de redes sociais se debruçaram sobre o estudo da
+proeminência, desenvolvendo inúmeras métricas que conjuntamente são chamadas de
+métricas de centralidade. Quando calculadas considerando os caminhos que
+\textbf{saem} do ator, referem-se a sua centralidade propriamente dita. Quando
+considera-se os caminhos que \textbf{chegam} no ator, referem-se ao seu
+prestígio. Não obstante tenha o comum senso de que essas métricas referem-se de
+alguma forma à proeminência do ator, a forma específica tem ficado a cargo de
+cada pesquisador que já atribuiu ao seu resultado interpretações como autonomia,
+controle, risco, influência, corretagem (\textit{brokerage}), independência,
+etc.
+
+Freeman revisou as métricas existentes à época \cite{Freeman1979} e as compilou
+em três principais centralidades: por grau, por proximidade (\textit{closeness})
+e por intermediação (\textit{betweenness}). Interpretando seus resultados em
+relação ao quanto o grafo se aproxima de uma estrutura de estrela
+(Figura~\ref{fig:star}), sua visão de centralização ideal, onde suas métricas
+alcançam o máximo.
+
+\begin{figure}[h!]
+  \caption{Gráfico estrela}
+  \label{fig:star}
+  \centering
+    \includegraphics[width=0.3\textwidth]{imgs/star.png}
+\end{figure}
+
+Recentemente, Borgatti e Everett \cite{Borgatti2006} nos ofereceram uma
+outra reposta para a questão: O que as métricas de centralidade medem? E
+chegaram a conclusão que todas elas investigam o relacionamento do nó com os
+possíveis caminhos do grafo. Em sua tipologia para a classificação das
+métricas de centralidade, propõem quatro dimensões: tipo do caminho,
+propriedade do caminho, tipo do envolvimento e forma de agregação. Em outras
+palavras, toda métrica de centralidade é uma forma de agregar uma propriedade
+dos caminhos de determinado tipo em que o nó tem um determinado envolvimento.
+Nesse sentido ele 
 
 Durante décadas os pesquisadores de redes sociais se debruçaram sobre o estudo
 \begin{wrapfigure}{r}{2in}
@@ -322,12 +407,6 @@ de sentimentos em texto para a avaliação da intenção das interações, poder
 imaginar uma integração com avaliações no sentido que elas sao naturalmente
 negativas/afirmativas.
 
-\begin{figure}[h!]
-  \caption{A rede de contatos no A.M.I.G.O.S.}
-  \centering
-    \includegraphics[width=\textwidth]{imgs/redeamigocontact.jpg}
-\end{figure}
-
 \begin{table}[htbp]
 	\begin{boxedminipage}{\textwidth}
 Para o estudo de caso da rede A.M.I.G.O.S. vamos começar analisando a rede
@@ -390,6 +469,11 @@ sucessivamente.
 	\end{boxedminipage}
 \end{table}
 \clearpage
+\begin{figure}[h!]
+  \caption{A rede de contatos no A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/amigos-contatos.jpg}
+\end{figure}
 
 \section{mensuração textual}
 \subsection{conceituação}
@@ -574,9 +658,21 @@ devemos fazer mais algumas considerações:
 threads com muitas mensagens naturalmente atraem mais mensagens]
 
 \begin{figure}[h!]
-  \caption{A rede de atenção trocada no A.M.I.G.O.S.}
+  \caption{A rede de atenção nos fóruns do A.M.I.G.O.S.}
   \centering
-    \includegraphics[width=\textwidth]{imgs/redeamigosattention.jpg}
+    \includegraphics[width=\textwidth]{imgs/amigos-topicos.jpg}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{A rede de atenção nas narrativas do A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/amigos-narrativas.jpg}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{A rede de atenção total do A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/amigos-atencao.jpg}
 \end{figure}
 
 \begin{table}[htbp]
@@ -601,36 +697,225 @@ threads com muitas mensagens naturalmente atraem mais mensagens]
 		$\overline{x}$ é a média e $\sigma$ é o desvio padrão, logo temos que pelo
 		menos 95\% das interações encontram-se entre 0 e 0.9999.
 		
-		\large       % tamanho da fonte 
+		Foi coletado a rede usando apenas a interação por tópicos, depois por
+		narrativas, depois as duas combinadas. A
+		tabela~\ref{tab:comparacao_contato_atencao} apresenta uma comparação entre os
+		quatro tipos de rede coletadas até agora.
+		
+% 		\large       % tamanho da fonte 
 		\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
 		\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
 		\caption{\it Comparação entre a rede de contatos e de atenção.}
 		\centering   % tabela centralizada
-		\begin{tabular}{| l | l | l |}
+		\begin{tabular}{| l | l | l | l | l |}
 		\hline
-		Métrica & Contatos & Atenção \\ \hline
-		Densidade & 0.0136 & 0.1861\\
-		Reciprocidade & 0.5841 & NA\\
-		Coef. Cluster & 0.554 & 0.45\\
-		Coef. Cluster Ponderada & 0.290 & 0.099\\
-		Distância (geodésica) & 4.499 & 1.0340\\
-		Coesão (Distância) & 0.183 & 0.983\\
-		Largura (Distância) & 0.817 & 0.017\\
-		Fitness (Núcleo/Periferia) & 0.257 & 0.0\\
+		Métrica & Contatos & Fóruns & Narr. & Atenção \\ \hline
+		Densidade & 0.0136 & 0.1861 & 0.05 & 0.05\\
+		Reciprocidade & 0.5841 & 0.1120 & 0.83 & 0.79\\
+		Coef. Cluster & 0.554 & 0.45 & 0.67 & 0.66\\
+		Coef. Cluster Ponderada & 0.290 & 0.099 & 0.49 & 0.47\\
+		Distância (geodésica) & 4.499 & 1.0340 & 2.54 & 2.63\\
+		Coesão (Distância) & 0.183 & 0.983 & 0.43 & 0.41\\
+		Largura (Distância) & 0.817 & 0.017 & 0.57 & 0.59\\
+		Fitness (Núcleo/Periferia) & 0.257 & 0.0 & 0.44 & 0.44\\
 		\hline
 		\end{tabular}
 		\label{tab:comparacao_contato_atencao}
 		\flushleft
 		\normalsize
-		A rede mensurada a partir das interações textuais foi então dicotomizada em
-		0 para valores abaixo da média e 1 para valores acima da média. A
-		tabela~\ref{tab:comparacao_contato_atencao} apresenta uma comparação entre a
-		rede formada a partir dos contatos e da atenção. Nota-se uma maior adensamento
-		da rede, com encurtamento de caminhos e notável ausência de uma padrão 	
-		núcleo/periferia, porém também há uma redução no nível de
-		\textit{clusterização} da rede.
+		Nota-se uma maior adensamento da rede com encurtamento de caminhos nas redes
+		de atenção. Porém enquanto a que foi formada a partir das interações nos
+		fóruns tem menor coeficiente de \textit{clusterização} da rede com nenhum
+		indicativo de padrão núcleo/periferia, a proveniente das narrativas tendência
+		oposta. Pode-se dizer, que na rede do A.M.I.G.O.S. os fóruns descentralizam a
+		distribuição da atenção, enquanto que as narrativas atuam em sentido
+		contrário.
 	\end{boxedminipage}
 \end{table}
+
+\section{critérios de escolha da representação}
+
+Qual a rede ideal para o cálculo de proeminência? Não há resposta objetiva para
+essa pergunta. Cada rede é uma representação de um fenômeno social que vai além
+das ferramentas, mesmo sendo capaz de coletar e integrar todas as interações
+digitais, as pessoas ainda vão ser capazes de tomar um café juntas e nossa visão
+será apenas parcial. Sendo assim, é evidente que cada representação mensurada é
+uma parte da informação e, portanto, capaz de descrever aspectos diferentes ou
+não do fenômeno. São essas variações entre as representações de redes que
+chamaremos de \textbf{critérios de escolha}.
+
+Para enteder sua utilidade, um exemplo: imaginemos que ao final da análise
+tenhamos duas ou mais representações da rede: uma textual e algumas não
+textuais. Para cada uma encontramos valores diferentes de proeminência,
+então qual usar? Colocando de outra forma, quanto de informação estarei perdendo
+caso considere apenas uma delas? 
+
+Esse é um problema bastante similar ao que estudiosos de aprendizagem de máquina
+chamam de seleção de características (\textit{feature selection}) e que consiste
+em decidir quais subconjunto de todas as variáveis possíveis que podem ser
+utilizadas no treinamento da máquina são maximamente dependentes do resultado
+esperado, ou seja, é maximamente relevante e minimamente redundante. No nosso
+caso, porém, como afirmado acima, não há a rede \textbf{certa} e por isso a
+relevância de todas elas são iguais. O que podemos procurar, portanto, é um
+subconjunto com minimize a redundância. De acordo com o mais recente algoritmo
+de mRMR (\textit{minimal-redundancy-maximal-relevance}) define-se a mínima
+redundância como:
+
+\begin{equation}
+\label{def:min_redun}
+\min R(S), R = \frac{1}{|S|^2}\sum_{x_i, x_j \in S}I(x_i, x_j)
+\end{equation}
+
+Onde $S$ é um subconjunto de características e $I(.)$ é a função de mútua
+informação. Por definição, a função de mútua informação mede a correlação entre
+duas variáveis aleatórias, porém, para o caso de redes sociais, o procedimento
+comum é modelar cada par de ator como uma variável separada cujos valores
+possíveis depende do tipo da rede. Se considerássemos cada rede como uma única
+variável que representasse a chance de dois atores quaisquer estarem ligados,
+então estaríamos nos limitando a uma correlação de suas densidades, o que de
+forma nenhuma é interessante para nosso objetivo já que o cálculo de
+proeminência varia consideravelmente a depender dos padrões das conexões,
+mesmo em redes com densidade iguais.
+
+Por esta razão, precisamos adaptar nossa função de mútua informação para
+considerar as peculiaridades das redes sociais. Basicamente temos duas opções:
+considerar a redundância das conexões ou calcular a proeminência para cada
+rede e a partir daí determinar sua correlação. 
+
+\subsection{Redundância das conexões}
+
+Uma conexão é redundante quando pode ser encontrada em mais de uma rede. Mais do
+que isso, duas redes são redundantes quando além de compartilhar conexões também
+compartilham determinados padrões como triângulos e subgrupos. As duas
+famílias de ferramentas para acessar essa similaridade estrutural mais
+desenvolvidas na literatura são: gráficos aleatórios exponenciais e procedimento
+de atribuição quadrática, respectivamente $p*$ (\textit{exponential random
+graphs}) e \textit{QAP} (\textit{quadratic assignment procedure}).
+
+\subsubsection{redes discretas e/ou esparsas}
+
+O primeiro é mais apropriado para redes binárias ou com valores discretos.
+Consiste em criar um modelo exponencial para a criação de grafos aleatórios a
+partir de um conjunto de parâmetros relacionados a \textbf{configurações} de
+interesse. Uma configuração pode ser desde a presença de uma conexão, até a
+quantidade de k-triângulos e outros padrões mais complexos. Cada configuração
+tem um parâmetro relacionado que pode ser negativo, indicando que a rede é tem
+tendência inversa à presença daquela configuração, nula representando a
+indiferença e positiva para uma tendência de mesmo modo. Assim sendo, cada
+parâmetro pode ser visto como tendências da rede em relação a, por exemplo:
+densidade, reciprocidade e transitividade da rede quando suas configurações
+relativas são respectivamente a presença de conexões, a mutualidade das
+relações e a presença de triângulos. 
+
+Modelos exponenciais de gráficos aleatórios tem a seguinte forma geral:
+
+\begin{equation}
+\label{def:p_star_geral}
+\Pr(\textbf{Y} = \textbf{y})
+=\left(\frac{1}{k}\right)\exp\left\{\sum_A\eta_Ag_A(\textbf{y})\right\}
+\end{equation}
+
+Onde (i) o somatório é sobre todas as configurações procuradas em \textbf{y};
+(ii) $\eta_A$ é o parâmetro relacionado à configuração $A$; (iii)
+$g_A(\textbf{y})=1$ se a configuração é observada em \textbf{y}, ou 0 de outra
+forma; (iv) $k$ é uma constante de normalização que garante que
+(\ref{def:p_star_geral}) é uma distribuição de probabilidades. O vetor de
+parâmetros $\eta$ é estimado para o grafo a ser modelado, procurando maximizar
+a sua probabilidade, iterativamente a partir de simulações com o método Monte
+Carlo (\textit{Markov chain Monte Carlo maximum likelihood estimation}).
+
+Voltando ao problema de minimizar a redundância, podemos considerar o vetor
+$\eta$ no cálculo de ``informação mútua'' entre as redes, no sentido de que
+redes possuem a mesma informação se compartilham conexões e tendências similares
+ao aparecimento de padrões estruturais. Derivamos $I_D$ para redes discretas:
+
+\begin{equation}
+\label{def:MI_discreto}
+I_D(x, y) =\frac{\sum_{i,j = 1}^n x_{ij}y_{ij}}{\sum_{i,j = 1}^n
+y_{ij}\sum_{i,j=1}^n x_{ij}} \rho(\eta_x, \eta_y)
+\end{equation}
+
+Onde (i) o numerador é a quantidade de conexões presentes em ambas $x$ e $y$;
+(ii) o denominador da fração é a soma de todas as conexões de $x$ e todas de
+$y$; e (iii) é a correlação linear entre os parâmetros $\eta$ estimados para $x$
+e os estimados para $y$. Substituindo (\ref{def:MI_discreto}) em
+(\ref{def:min_redun}) temos um modelo para o conjunto de redes com mínima
+redundância.
+
+\subsubsection{redes contínuas densas}
+
+Para rede contínuas, um segundo método pode ser utilizado para calcular a
+correlação diretamente. O procedimento de atribuição quadrática (\textit{QAP})
+recomenda um modelo linear para a correlação das redes, assim, temos que:
+
+\begin{equation}
+\label{def:linear_model_qap}
+Y = \alpha X + \epsilon
+\end{equation}
+
+A probabilidade de que a correlação encontrada não seja apenas coincidência é
+acessada através da permuta das colunas da matriz seguindo algoritmo apropriado.
+Não é nosso objetivo nos aprofundar na especifidades do teste, apenas é pertinente
+considerarmos a  utilização da correlação linear como valor para a informação
+mútua em \ref{def:min_redun} para redes de valores contínuos densos.
+
+\subsection{Correlação de Proeminência}
+
+O critério anterior busca relacionar as características da rede em busca de
+informações redundante, porém também é interessante observar a relação que há
+entre o produto final da análise das redes que são as medições de proeminência.
+Para esse fim utilizaremos também a correlação linear de Pearson de forma que
+duas redes podem estar positivamente relacionadas, aparentemente independentes
+ou negativamente relacionadas. Um critério baseado na proeminência pode
+correlacionar redes estruturalmente bastante diferentes, mas que resultam no
+sobressaimento dos mesmos atores em termos de importância. Porém, se o objetivo
+for minizar a redundância do ponto de vista da ordenação final dos atores por
+grau de proeminência para a utilização em outros algoritmos como por exemplo,
+escolha de subconjunto ótimo para marketing viral, então talvez este critério
+seja o mais apropriado.
+
+\begin{table}[htbp]
+	\begin{boxedminipage}{\textwidth}
+	No caso do A.M.I.G.O.S. só temos duas representações da rede, a primeira 
+	proveniente da interação não textual ``contatos'', a segunda é a união de duas
+	interações textuais: fóruns e narrativas. Sendo assim, só podemos avaliar o
+	quão diferentes são as redes e por isso mesmo, o quanto de informação vamos
+	perder escolhendo uma ou outra.
+	
+	Como a rede de contatos é binária a correlação linear fica prejudicada devido a
+	limitação do modelo em relação a dados tão dicotômicos (0 ou 1), porém não
+	temos uma implementação disponível de um algoritmo de estimativa no modelo $p*$
+	para a nova configuração e executamos um teste de correlação QAP entre as duas
+	redes. Verificamos que a rede de contatos e de atenção possuem um coeficiente
+	de correlação positiva de 0.27, que quer dizer que a chance de encontrarmos um
+	laço entre dois atores em ambas as redes é de 27\%. A chance de uma correlação
+	nessa proporção acontecer entre as redes considerando uma combinação aleatória
+	é menor que 0.001 e $R^2$ de apenas 0.07, parte devido à dicotomia dos dados.
+	
+	Também realizamos um teste de regressão para as duas métricas de proeminência
+	escolhidas, o índice de poder de Bonacich e o de \textit{betweeness} de
+	Freeman. Encontramos nenhuma correlação entre as redes para o primeiro,
+	indicando que quanto a influência ambas as redes são bastante distintas. Já em
+	termos de centralidade, pudemos verificar uma correlação positiva de 0.47, com
+	$R^2=0.22$ e $p. < 0.0001$.
+	
+	Com essas medidas podemos avaliar melhor a perda de informação que teremos ao
+	escolher apenas uma das redes. Não há necessidade de buscar um subconjunto de
+	redes que minimize a redundância por que só temos 2 redes.
+	
+	\end{boxedminipage}
+\end{table}
+
+\subsection{Conclusão e trabalhos futuros}
+
+Cada dia mais e mais interações entre pessoas ocorre em meio digital, essas
+interações podem proporcionar a mensuração de diversas representações da rede
+social que interliga estes indivíduos. O resultado deste processo pode alimentar
+novas ações no campo do marketing, modelos sobre disseminação de idéias,
+doenças e reconhecimento de especialistas. A seleção apropriada de medianeiros
+para o recolhimento 
+
+\title{PARTE II}
 
 \section{outros problemas em relação às métricas de proeminência}
 
