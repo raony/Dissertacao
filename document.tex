@@ -81,12 +81,19 @@ trabalho.
 
 \section{Sobre Proeminência}
 
-Primeiramente, precisamos caracterizar o que é proeminência: é a característica
-dos relacionamentos de um ator que o evidencia para outros atores na rede
-\cite{Wasserman}. A proeminência, academicamente, foi separada em dois aspectos:
-centralidade e prestígio. Centralidade é como o ator se posiciona na rede, sua
-interação e envolvimento com os outros. Prestígio é como os outros atores se
-posicionam em relação a ele, como interagem e envolvem-se com ele.
+Proeminência é a característica dos relacionamentos de um ator que o põe em
+evidência para outros atores na rede \cite{Wasserman}. A proeminência,
+academicamente, foi separada em dois aspectos: centralidade e prestígio.
+Centralidade é como o ator se posiciona na rede, sua interação e envolvimento com
+os outros. Prestígio é como os outros atores se posicionam em relação a ele, como
+interagem e envolvem-se com ele \cite{Knoke1983}.
+
+Nosso objetivo, identificar atores chaves para processos de influência da rede,
+está relacionado diretamente com o conceito de proeminência de forma que podemos
+dizer que a usaremos como uma aproximação da influência do ator na transmissão de
+conhecimento, inovações e opiniões pela rede. Por estes motivos, cuidado especial
+deve ser tomado sobre a forma como calcularemos a proeminência e que
+características são esperadas da representação da rede que será mensurada.
 
 Durante décadas pesquisadores de redes sociais se debruçaram sobre o estudo da
 proeminência, desenvolvendo inúmeras métricas que conjuntamente são chamadas de
@@ -121,7 +128,54 @@ métricas de centralidade, propõem quatro dimensões: tipo do caminho,
 propriedade do caminho, tipo do envolvimento e forma de agregação. Em outras
 palavras, toda métrica de centralidade é uma forma de agregar uma propriedade
 dos caminhos de determinado tipo em que o nó tem um determinado envolvimento.
-Nesse sentido ele 
+Das quatro dimensões, duas são de maior importância: propriedade do caminho e
+tipo de envolvimento. 
+
+\subsection{Tipo de envolvimento} 
+
+O tipo de envolvimento é a dimensão de classificação proposta por Borgatti que
+se traduz na maior variância nos resultados. Pode ser de dois tipos: radial ou
+medial.
+
+Métricas radiais são as que analisam os caminhos em que o nó está numa das
+pontas, ou seja, que saem ou chegam nele. Exemplos de métricas radiais são as
+centralidades de grau e proximidade de Freeman. A análise de Borgatti et al veio
+confirmar o que as evidências empíricas já sugeriam, que as métricas radiais
+representam a parcela de responsabilidade que o nó tem na coesão total da rede e
+que, por este motivo, se enfraquecem a medida que a rede não se adequa ao padrão
+de núcleo-periferia \cite{Nakao1990}.
+
+Já as ditas mediais analisam os caminhos que passam pelo nó, classificando-o em
+seu papel de \textit{gateway} entre partes da rede. O \textit{betweenness} de
+Freeman é um exemplo de métrica medial. São mais estáveis em relação à
+característica de núcleo-periferia, por outro lado tendem a dar maior importância
+a atores que conectam grupos distintos, mas que se encontram na periferia dos
+mesmos.
+
+Os dois tipos são complementares e \{stephenson, 1989 rethinking centrality,
+apud wasserman\} mais de uma métrica devem ser combinadas, por esta razão, já é
+possível derivarmos uma primeira restrição sobre a representação da rede:
+
+\emph{Quanto mais próximo a representação estiver do modelo de núcleo-periferia,
+melhor será a aplicabilidade das métricas radiais de centralidade.}
+
+\subsection{Propriedade do caminho}
+
+Borgatti define dois tipos de propriedade: distância e volume. A
+propriedade do tipo distância mais comum é a geodésica que é a quantidade de
+arcos presentes no menor caminho entre um ator e outro. Volume refere-se à
+quantidade de caminhos entre os nós. As centralidades por grau e
+\textit{betweenness} são exemplos de métricas que usam o volume dos caminhos,
+enquanto que \textit{closeness} usa distância.
+
+O critério de escolha depende da aplicação. Para o nosso caso, queremos modelar
+o efeito da influência entre os pares na transmissão de informação. Nesse
+sentido, quanto mais atores próximos estiverem tentando convencer alguém de
+algo, maior será sua influência sobre este. Daí temos, naturalmente, a
+preferência sobre métricas relacionadas a volume, no lugar de distância, já que
+representa diretamente a quantidade de caminhos que chegam ou partem 
+
+\cite{Richardson2002} e \cite{Domingos2001}
 
 Durante décadas os pesquisadores de redes sociais se debruçaram sobre o estudo
 \begin{wrapfigure}{r}{2in}
@@ -141,6 +195,9 @@ Esse panorama mudou com a chegada do ciberespaço e as possibilidades de uma
 \textbf{etnografia}[buscar termo para inserir aqui] digital. 
 
 \section{redes sociais digitais}
+
+\cite{Clemons2007} sobre redes sociais digitais nao representarem bem a
+realidade
 
 Com a era da Internet é fato que pessoas se conectam umas às outras virtualmente
 por seu intermédio. A questão é: como mensurar a rede social digital? Definem
@@ -379,6 +436,15 @@ intrínseca da rede para a concepção de um modelo mais real do interagente
 quanto ao dispêndio da atenção.
 
 \section{mensurando a rede a partir de interações não-textuais}
+
+\cite{Cooper1997} e \cite{Silverstein2000} - artigo doido sobre formas de
+encontrar relacao causal entre variaveis, pode ser usado para dizer que tal
+influencia causou tal reacao
+
+\cite{Friedman1999} - traz um modelo interessante baseado em probabilidade da
+relacao para aprender relacoes entre atributos de atores, baseado em sua
+aparicao estatistica no banco de dados, pode ser util usar isso para ajudar na
+mensuracao
 
 Agora que podemos definir os medianeiros e classificar as interações sob estudo
 em seus tipos, vamos passar à construção da rede social propriamente dita. Em
