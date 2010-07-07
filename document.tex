@@ -72,12 +72,12 @@ essa afirmação não se sustenta e por isso $(i,j) \in E$ não implica em $(j,i
 E$ necessariamente, além do que chamamos o par de arco de $i$ para $j$. De
 maneira geral, sempre trataremos a representação como sendo direcionada.
 
-Definimos uma matriz de $X$ com $n$ linhas e colunas, onde $x_{ij} = 1$, se
-$(i,j) \in V$ ou 0 de outra forma. Essa matriz de $X$ é uma representação
-binária da rede. Podemos generalizar essa notação para incluir redes com valores
-discretos onde $0 \leq x_{ij} \leq m$ ou contínuos dispostos em um intervalo.
-Ambas as notações, de grafo e de matriz, serão usadas de forma intercalada neste
-trabalho.
+Definimos a matriz de adjacência da rede $X$ com $n$ linhas e colunas, onde
+$x_{ij} = 1$, se $(i,j) \in V$ ou 0 de outra forma. Essa matriz de $X$ é uma
+representação binária da rede. Podemos generalizar essa notação para incluir
+redes com valores discretos onde $0 \leq x_{ij} \leq m$ ou contínuos dispostos em
+um intervalo. Ambas as notações, de grafo e de matriz, serão usadas de forma
+intercalada neste trabalho.
 
 \section{Sobre Proeminência}
 
@@ -152,12 +152,14 @@ característica de núcleo-periferia, por outro lado tendem a dar maior importâ
 a atores que conectam grupos distintos, mas que se encontram na periferia dos
 mesmos.
 
-Os dois tipos são complementares e \{stephenson, 1989 rethinking centrality,
-apud wasserman\} mais de uma métrica devem ser combinadas, por esta razão, já é
-possível derivarmos uma primeira restrição sobre a representação da rede:
-
+Os dois tipos são complementares e mais de uma métrica devem ser combinadas
+(\cite{Stephenson1989}; \textit{Apud} \cite{Wasserman}). Pelo fato de que
+usaremos métricas radiais de centralidade para estimar a influência do ator na
+rede, já é possível derivarmos uma primeira restrição sobre a representação que
+será mensurada:
+\paragraph{
 \emph{Quanto mais próximo a representação estiver do modelo de núcleo-periferia,
-melhor será a aplicabilidade das métricas radiais de centralidade.}
+melhor será a aplicabilidade das métricas radiais de centralidade.}}
 
 \subsection{Propriedade do caminho}
 
@@ -173,7 +175,27 @@ o efeito da influência entre os pares na transmissão de informação. Nesse
 sentido, quanto mais atores próximos estiverem tentando convencer alguém de
 algo, maior será sua influência sobre este. Daí temos, naturalmente, a
 preferência sobre métricas relacionadas a volume, no lugar de distância, já que
-representa diretamente a quantidade de caminhos que chegam ou partem 
+representa diretamente a quantidade de caminhos que existem entre os nós.
+
+\subsection{Métricas de proeminência}
+
+Escolhemos duas medidas para a análise de influência neste trabalho, uma para
+centralidade e outra para prestígio. Ambas são do tipo volume, isto é, medem a
+quantidade de caminhos, o que representa melhor o fenômeno de pressão social na
+difusão de inovações. Para centralidade, utilizaremos a métrica medial
+\textit{flow betweenness} que expande o conceito de \textit{betweenness} para
+grafos não-binários \cite{Freeman1991} levando em consideração não apenas
+geodésicas mas todos os caminhos que passam pelo ator, utilizando o peso das
+arestas para medir a ``vazão'' que ``flui'' pelo mesmo. Para prestígio,
+escolhemos a métrica radial de poder de Bonacich \cite{Bonacich1987} que
+considera a soma dos caminhos que chegam ponderada pelo poder dos atores que a
+compõem.
+
+A interpretabilidade de tais métricas está diretamente relacionada com o que está
+sendo representado pela rede. É fácil perceber que o poder de Bonacich significa
+se o arco do ator $i$ para o ator $j$ quer dizer que $i$ buscou os conselhos de
+$j$. 
+
 
 \cite{Richardson2002} e \cite{Domingos2001}
 
@@ -246,6 +268,9 @@ significativa e direcionada. Esses dois requisitos metodológicos nos guiarão n
 concepção de uma etnografia digital voltada a redes sociais.
 
 \section{etnografia digital}
+
+\cite{Spertus2005} - similaridade em orkut
+
 
 Por etnografia digital entende-se como a etnografia mediada por elementos
 digitais. Considerando a produção textual na web, a produção de vídeos dos
