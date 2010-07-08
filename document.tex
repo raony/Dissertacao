@@ -173,8 +173,8 @@ enquanto que \textit{closeness} usa distância.
 O critério de escolha depende da aplicação. Para o nosso caso, queremos modelar
 o efeito da influência entre os pares na transmissão de informação. Nesse
 sentido, quanto mais atores próximos estiverem tentando convencer alguém de
-algo, maior será sua influência sobre este. Daí temos, naturalmente, a
-preferência sobre métricas relacionadas a volume, no lugar de distância, já que
+algo, maior será sua influência sobre este \cite{Watts2007}. Daí temos,
+naturalmente, a preferência sobre métricas relacionadas a volume, no lugar de distância, já que
 representa diretamente a quantidade de caminhos que existem entre os nós.
 
 \subsection{Métricas de proeminência}
@@ -192,41 +192,59 @@ considera a soma dos caminhos que chegam ponderada pelo poder dos atores que a
 compõem.
 
 A interpretabilidade de tais métricas está diretamente relacionada com o que está
-sendo representado pela rede. É fácil perceber que o poder de Bonacich significa
-se o arco do ator $i$ para o ator $j$ quer dizer que $i$ buscou os conselhos de
-$j$. 
+sendo medido na representação da rede. É fácil perceber o que o poder de Bonacich
+significa se o arco do ator $i$ para o ator $j$ quer dizer que $i$ buscou os
+conselhos de $j$. Por esta razão derivamos uma segunda restrição:
 
+\paragraph{\emph{Quanto melhor a representação capturar a força dos
+relacionamentos, tanto melhor será a aplicabilidade das métricas de proeminência;
+Falhar em estimar a força das conexões levará a seleção de atores chaves em uma
+miríade de interações irrelevantes. Da mesma forma, representar as conexões de
+forma binária pode causar o enviesamento da rede ou para a superestimação de sua
+força ou para a subestimação da mesma.}}
 
-\cite{Richardson2002} e \cite{Domingos2001}
-
-Durante décadas os pesquisadores de redes sociais se debruçaram sobre o estudo
-\begin{wrapfigure}{r}{2in}
-\begin{boxedminipage}{2in}
-\textbf{\large{Por que etnografia digital não é um bom nome?}}
-\normalsize{}
-
-Porque etnografia trata de um estudo aprofundado, qualitativo, do fenômeno
-humano. Enquanto que na nossa abordagem digital estamos horizontalizando em
-números e mesmo quando verticalizar a abordagem do ponto de vista
-``qualitativo'', também será uma abordagem numérica.
-\end{boxedminipage}
-\end{wrapfigure} da proeminência em redes pessoais, derivadas do círculo
-imediato dos atores, por amostragem ou por delimitação teórica. Enfim, vários foram os meios para esse
-estudo, mas sempre limitado em quantidade devido ao custo de mensuração da rede.
-Esse panorama mudou com a chegada do ciberespaço e as possibilidades de uma
-\textbf{etnografia}[buscar termo para inserir aqui] digital. 
-
-\section{redes sociais digitais}
+\section{Redes sociais digitais}
 
 \cite{Clemons2007} sobre redes sociais digitais nao representarem bem a
 realidade
+\cite{Richardson2002} e \cite{Domingos2001}
 
-Com a era da Internet é fato que pessoas se conectam umas às outras virtualmente
-por seu intermédio. A questão é: como mensurar a rede social digital? Definem
-sites de redes sociais, um conceito que vamos usar para chegar ao mais amplo,
-como sendo um espaço (ciber) em que seja possível 1) criar um perfil, 2)
-relacionar uma lista públicade amigos, 3) navegar por essa rede de perfis
-interligados. Porém essa definição restringe a sites de relacionamentos
+Com a popularização da Internet é fato que pessoas se conectam umas às outras
+virtualmente por seu intermédio. Os mecanismos de interação à disposição vão da
+simples troca de mensagens, à venda e troca de produtos, à participação conjunta
+em jogos \textit{multiplayer} massivos. Indo além do que sociólogo algum sonhou
+realizar no início dos estudos de redes sociais, grande parte dessas interações
+estão registradas, ou podem ser registradas eletronicamente a baixo custo,
+fornecendo uma quantidade nunca antes disponível de informações para
+estudos antropológicos e sociais da rede.
+
+E assim tem sido, desde o nível micro com a análise dos conteúdos trocados
+entre as interações pontuais de alguns indivíduos \cite{Recuero2008}, passando
+por análise de potencial de marketing
+\cite{Clemons2007}\cite{Domingos2001}\cite{Richardson2002}\cite{Ma2008}, busca
+de pessoas \cite{ADAMIC2005}, de especialistas \cite{Ehrlich2007}, formação de
+grupos \cite{Adamic2003}\cite{Backstrom2006}\cite{Kumar2006}, divulgação de
+notícias \cite{Gruhl2004}, dinâmicas de prestígio
+\cite{Salganik2006}\cite{Song2007}.
+
+Enquanto nosso objetivo é alcançar resultados similares as pesquisas anteriores
+de influência em redes sociais digitais, decidimos antes colocar a questão: como
+mensurar a rede social digital? Cada pesquisa teve seu critério: quantidade de
+e-mails trocados, recomendações, similaridades de perfil, participação nas mesmas
+comunidades. Dissemos no começo que a \observednet é um fenômeno que pode ser
+representado, mas que não é a representação em si, por esta razão, toda
+representação carrega um \textit{bias}. Ora, ao acrescentarmos digital ao termo,
+queremos dizer que estamos tratando da observação do fenômeno através de mídias
+digitais; não mais das interações ao vivo e analógicas, mas através de
+ferramentas eletrônicas que permitem a fácil armazenação, indexação e recuperação
+dessa informação.
+
+
+
+Definem sites de redes sociais, um conceito que vamos usar para
+chegar ao mais amplo, como sendo um espaço (ciber) em que seja possível 1) criar
+um perfil, 2) relacionar uma lista públicade amigos, 3) navegar por essa rede de
+perfis interligados. Porém essa definição restringe a sites de relacionamentos
 ignorando todo o conteúdo que poderia ser minerado em fóruns e listas de
 discussão. Por este motivo, usaremos uma definição mais ampla que chamaremos de
 redes sociais digitais como aquelas em que se é possível 1) identificar
@@ -281,8 +299,8 @@ atividade humana de observar outros seres humanos e contar sua história.
 
 Porém, no nosso caso o fenômeno observado é puramente digital. As interações
 acontecem na internet. E apesar de entendermos que a rede virtual é uma extensão
-que entrelaça a rede física do indivíduo, nosso foco reside totalmente na
-virtual. O motivo disso é simples, queremos considerar a maior parte da rede
+que entrelaça a rede física do indivíduo \cite{Haythornthwaite2005}, nosso foco
+reside totalmente na virtual. O motivo disso é simples, queremos considerar a maior parte da rede
 possível, em toda a sua manifestação, e para isso iremos desenvolver ferramentas
 automatizadas que observam e recontam a história da rede de forma apreensível
 para nós. Essa observação semi-automatizada é que chamamos de etnografia
