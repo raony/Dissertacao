@@ -256,15 +256,67 @@ condição acima.
 
 Porque nos parece evidente a impossibilidade aplicar questionários ou entrevistas
 com centenas de milhares de atores, respondemos a questão de como mensurar a rede
-assim: através da mensuração das interações encontradas nos medianeiros. A
-mensuração é um processo de mineração de dados e, portanto, sujeita a todos os
-empecilhos típicos do campo como informações incompletas, ruidosas, esparsas,
-redundantes.
+assim: através das interações encontradas nos medianeiros. A mensuração é um
+processo de mineração de dados e, portanto, sujeita a todos os empecilhos típicos
+do campo como informações incompletas, ruidosas, esparsas, redundantes. A questão
+que nos aparece agora é como as interações observadas combinam-se para formar tal
+rede e se ela é significativa para a análise de proeminência.
 
+\section{Mensuração da rede}
 
-A questão que nos aparece agora é como as interações observadas combinam-se para formar tal rede e se ela é significativa para a aplicação de
-técnicas de cálculo de proeminência. A validade dessa observação enquanto
-ferramenta prática para mensuração da rede é o tema central deste trabalho.
+Antes de entrar em detalhes sobre como as interações são combinadas, vamos rever
+alguns conceitos da mineração de dados. \textit{Knowledge discovery} é o
+processo maior "... não-trivial de identificar, em dados, padrões
+válidos, novos, potencialmente úteis e ultimamente compreensíveis"
+\cite{Fayyad1996} e mineração de dados é uma de suas etapas. Apesar dos
+algoritmos para aprendizagem de máquina e mineração de dados estarem bem
+consolidados \cite{Cios2005}, a maioria deles não foram feitos para dados
+relacionais. Algoritmos tradicionais de mineração de dados buscam padrões
+considerando cada entrada de dados como independetes, mas dados relacionais
+possuem o que chamamos de autocorrelação relacional. 
+
+Dados com autocorrelaçao relacional são aqueles em que as entradas possuem
+correlação entre si a depender de uma relação comum. Em ciências sociais, essa
+autocorrelação pode ser fruto de uma propriedade chamada de homofilia e que
+pode ser vista de maneira simples como pessoas parecidas tendem a formar laços
+e vice versa. Recentemente, algumas técnicas de mineração de dados tem sido
+desenvolvidas para tratar dados relacionais como os modelos relacionais
+probabilísticos, classificadores Bayesianos de primeira ordem e árvores de
+probabilidades relacionais \cite{Jensen2002}. Técnicas mais antigas incluem
+programação de lógica indutiva e a análise de redes sociais tradicional.
+
+Seguindo com o nosso objetivo de mensurar redes sociais digitais para a análise
+de influência, devemos ter em mente que como processo de mineração de dados, um
+método se faz necessário. Para isso, utilizaremos o método de 6 passos descritos
+em \cite{Cios2005} e que consiste em:
+
+\begin{description}
+\item[1. Entendendo o domínio do problema]Neste passo devemos determinar os
+objetivos da mineração e aprender sobre as possíveis técnicas conhecidas para
+alcançá-los.
+\item[2. Entendendo os dados]Este passo inclue coletar os dados, decidir quais
+serão utilizados, priorizar atributos, verificar sua utilidade em relação aos
+objetivos. Os dados precisam ser verificados em termos de completude,
+plausabilidade, etc.
+\item[3. Preparação dos dados]Este é o passo chave do qual o sucesso de todo o
+processo depende; Ela geralmente consome metade de todo os esforço da mineração.
+Aqui, decidimos quais dados serão usados como entradas para quais técnicas de
+mineração do passo 4. O que pode envolver levantar amostragem de dados, executar
+testes de correlação e significância, remoção e correção de ruído, etc. Os dados
+tratados depois poderão serem processados para a seleção de características,
+algoritmos de extração para redução da dimensionalidade dos dados, derivação de
+novos atributos (discretização) e agregação dos dados (granularização). O
+resultado é um novo conjunto de dados que atendem aos requesitos específicos
+para servir de entrada às ferramentas de mineração selecionadas.
+\item[4. Mineração dos dados]Este é outro passo crucial para todo o processo.
+Apesar de ser através das ferramentas de mineração que as novas informações
+são descobertas, sua utilização normalmente envolve menos esforço do que
+preparar os dados. Ferramentas de mineração reunem diversos tipos de algoritmos
+como conjuntos \textit{fuzzy}, métodos Bayesianos, computação genética,
+aprendizado de máquina, redes neurais, etc. Para uma visão mais detalhada desses
+algoritmos, nos referimos a \cite{JiaweiHan2006}. 
+\end{description}
+
 
 \section{métricas de proeminência}
 
