@@ -264,16 +264,63 @@ rede e se ela é significativa para a análise de proeminência.
 
 \section{Mensuração da rede}
 
-Antes de entrar em detalhes sobre como as interações são combinadas, vamos rever
-alguns conceitos da mineração de dados. \textit{Knowledge discovery} é o
-processo maior "... não-trivial de identificar, em dados, padrões
-válidos, novos, potencialmente úteis e ultimamente compreensíveis"
-\cite{Fayyad1996} e mineração de dados é uma de suas etapas. Apesar dos
-algoritmos para aprendizagem de máquina e mineração de dados estarem bem
-consolidados \cite{Cios2005}, a maioria deles não foram feitos para dados
+\textit{Knowledge discovery} é o processo maior "... não-trivial de identificar,
+em dados, padrões válidos, novos, potencialmente úteis e ultimamente
+compreensíveis" \cite{Fayyad1996} e mineração de dados é uma de suas etapas.
+Chamamos de mensuração da rede social digital o processo de minerar dados
+proveninentes de meios digitais de interação social para formar uma
+representação. Na última década alguns métodos norteadores para os projetos de
+mineração de dados foram propostos, dentre os quais escolhemos o método de 6
+passos descritos em \cite{Cios2005} e que consiste em sua forma geral:
+
+\begin{description}
+\item[1. Entendendo o domínio do problema]Neste passo devemos determinar os
+objetivos do projeto e aprender sobre as possíveis técnicas conhecidas
+para alcançá-los.
+\item[2. Entendendo os dados]Este passo inclue coletar os dados, decidir quais
+serão utilizados, priorizar atributos, verificar sua utilidade em relação aos
+objetivos. Os dados precisam ser verificados em termos de completude,
+plausabilidade, etc.
+\item[3. Preparação dos dados]Este é o passo chave do qual o sucesso de todo o
+processo depende; Ele geralmente consome metade de todo os esforço da mineração.
+Aqui, decidimos quais dados serão usados como entradas para quais técnicas de
+mineração do passo 4. O que pode envolver levantar amostragem de dados, executar
+testes de correlação e significância, remoção e correção de ruído, etc. Os dados
+tratados depois poderão serem processados para a seleção de características,
+algoritmos de extração para redução da dimensionalidade dos dados, derivação de
+novos atributos (discretização) e agregação dos dados (granularização). O
+resultado é um novo conjunto de dados que atendem aos requesitos específicos
+para servir de entrada às ferramentas de mineração selecionadas.
+\item[4. Mineração dos dados]Aplicação dos métodos de mineração selecionados.
+Apesar de ser através das ferramentas de mineração que as novas informações
+são descobertas, sua utilização normalmente envolve menos esforço do que
+preparar os dados. Ferramentas de mineração reunem diversos tipos de algoritmos
+como conjuntos \textit{fuzzy}, métodos Bayesianos, computação genética,
+aprendizado de máquina, redes neurais, etc. Para uma visão mais detalhada desses
+algoritmos, nos referimos a \cite{JiaweiHan2006}.
+\item[5. Avaliação do conhecimento descoberto]Interpretação dos
+resultados, verificando a relevância da informação encontrada. Somente os
+modelos aprovados são mantidos, todo o processo pode ser revisitado e ações
+alternativas que levem à melhoria dos resultados podem ser identificadas.
+\item[6. Usando o conhecimento descoberto]Entrega do conhecimento produzido.
+Criação de um plano para monitorar sua utilização, documentação do projeto,
+extender sua aplicação para outros domínios.
+\end{description}
+
+O método de 6 passos para mineração de dados foi escolhido dentre outros
+possíveis devido ao seu viés acadêmico e modelo iterativo com ciclos de
+\textit{feedback} explícitos que orientam o retorno a passos anteriores para a
+melhoria do processo \cite{KURGAN2006}. Mostraremos agora, para cada passo do
+método quais as considerações necessárias, dificuldades e possíveis soluções no
+contexto da mensuração de redes sociais digitais para a análise da influência.
+
+\section{Entendendo o domínio do problema}
+
+Apesar dos algoritmos para aprendizagem de máquina e mineração de dados estarem
+bem consolidados \cite{Cios2005}, a maioria deles não foram feitos para dados
 relacionais. Algoritmos tradicionais de mineração de dados buscam padrões
 considerando cada entrada de dados como independetes, mas dados relacionais
-possuem o que chamamos de autocorrelação relacional. 
+possuem o que chamamos de autocorrelação relacional.
 
 Dados com autocorrelaçao relacional são aqueles em que as entradas possuem
 correlação entre si a depender de uma relação comum. Em ciências sociais, essa
@@ -285,38 +332,48 @@ probabilísticos, classificadores Bayesianos de primeira ordem e árvores de
 probabilidades relacionais \cite{Jensen2002}. Técnicas mais antigas incluem
 programação de lógica indutiva e a análise de redes sociais tradicional.
 
-Seguindo com o nosso objetivo de mensurar redes sociais digitais para a análise
-de influência, devemos ter em mente que como processo de mineração de dados, um
-método se faz necessário. Para isso, utilizaremos o método de 6 passos descritos
-em \cite{Cios2005} e que consiste em:
+Recentes trabalhos na área utilizam de diversos tipos de interação para a
+mensuração da rede como por exemplo a similaridade entre classificação de
+produtos \cite{Richardson2002}, similaridade em termos extraídos de mecanismos de
+busca na internet \cite{MATSUO2007} e co-autoria em artigos científicos
+\cite{Kempe2003}. Em \cite{Xiang2010} temos uma mensuração combinando diversas
+interações observadas nos sites de relacionamento Facebook e LikedIn, que
+possuem propostas diferentes de utilização. A existência ou ausência de cada
+interação, como a recomendação, troca de mensagens, marcação em fotos, é reunida
+em um vetor binário. Da mesma forma, a similaridade entre os atores é reunido em
+outro vetor binário, onde cada dimensão representa uma propriedade comparada e
+recebe 0 caso seja diferente, 1 se igual. A partir de então, os autores propõem
+um modelo de força da relação como variável escondida com causa na similaridade
+e com consequência na interação. 
 
-\begin{description}
-\item[1. Entendendo o domínio do problema]Neste passo devemos determinar os
-objetivos da mineração e aprender sobre as possíveis técnicas conhecidas para
-alcançá-los.
-\item[2. Entendendo os dados]Este passo inclue coletar os dados, decidir quais
-serão utilizados, priorizar atributos, verificar sua utilidade em relação aos
-objetivos. Os dados precisam ser verificados em termos de completude,
-plausabilidade, etc.
-\item[3. Preparação dos dados]Este é o passo chave do qual o sucesso de todo o
-processo depende; Ela geralmente consome metade de todo os esforço da mineração.
-Aqui, decidimos quais dados serão usados como entradas para quais técnicas de
-mineração do passo 4. O que pode envolver levantar amostragem de dados, executar
-testes de correlação e significância, remoção e correção de ruído, etc. Os dados
-tratados depois poderão serem processados para a seleção de características,
-algoritmos de extração para redução da dimensionalidade dos dados, derivação de
-novos atributos (discretização) e agregação dos dados (granularização). O
-resultado é um novo conjunto de dados que atendem aos requesitos específicos
-para servir de entrada às ferramentas de mineração selecionadas.
-\item[4. Mineração dos dados]Este é outro passo crucial para todo o processo.
-Apesar de ser através das ferramentas de mineração que as novas informações
-são descobertas, sua utilização normalmente envolve menos esforço do que
-preparar os dados. Ferramentas de mineração reunem diversos tipos de algoritmos
-como conjuntos \textit{fuzzy}, métodos Bayesianos, computação genética,
-aprendizado de máquina, redes neurais, etc. Para uma visão mais detalhada desses
-algoritmos, nos referimos a \cite{JiaweiHan2006}. 
-\end{description}
+Para a relação força e interação os autores propõe um modelo discriminativo que
+possibilita o calculo da probabilidade condicional da interação a partir da
+força da relação, isso é feito por amostragem da população. Essa estimativa é
+usada para calibrar um modelo generativo que relaciona a similaridade à força da
+conexão, que é utilizado por sua vez para calcular a força entre dois atores
+quaisqueres. Essa combinação de modelo discriminativo e generativo possibilita a
+inferência não supervisionada da força do laço, o que é um ponto positivo para
+esta abordagem, porém ela sobestima outros fatores igualmente importantes.
 
+A similaridade é apenas uma das possíveis componentes da força da conexão,
+propriedade conhecida como homofilia. Para um entendimento de um processo geral
+de mensuração da rede digital, precisamos remontar a um dos trabalhos fundantes
+da análise de redes sociais onde Granovetter lança, pela primeira vez, a
+hipótese:
+
+\paragraph{\textit{A força da conexão [entre dois atores] é uma combinação
+(provavelmente linear) da quantidade de tempo, intensidade emocional,
+intimidade (confidência mútua) e serviços recíprocos que a
+caracterizam.}\cite{Granovetter1973}}
+
+Granovetter também separa indicadores de pescritores, indicadores são
+componentes de fato da força da conexão, enquanto que prescritores são
+contigências contextuais que influenciam, mas não são componentes. Dentre os
+prescritores está a homofilia, o que quer dizer que a similaridade entre os
+atores influencia a conexão, mas é a intensidade, duração, intimidade e
+reciprocidade que indicam a sua força. Dessas quatro dimensões iniciais
+(tempo, intensidade, intimidade, reciprocidade), acrescentaram-se oito outras no
+decorrer de três décadas de pesquisa. 
 
 \section{métricas de proeminência}
 
