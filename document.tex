@@ -10,12 +10,13 @@
 \usepackage{wrapfig}
 \usepackage{boxedminipage}
 \usepackage{amsmath}
+\usepackage{yhmath}
 \begin{document}
 
 \newcommand{\observednet}{rede social observada} 
 
 \title{NAIF: Network Analysis of Influence Framework}
-
+\maketitle
 \section{Introdução}
 
 A análise de redes sociais tem sido utilizada para a investigação
@@ -61,7 +62,7 @@ ramo das ciências sociais passou a quantificar diversos fenômenos antes
 considerados apenas do ponto de vista subjetivo, como a proeminência dos atores,
 que estaria relacionada com a sua centralidade no grafo.
 
-\subsection{Alguma Formalização}
+\subsection{$\bigotimes$ Alguma Formalização}
 
 Representamos a rede como um grafo $G(V,E)$ onde $V$ é um conjunto de $n$
 vértices (também chamados de atores) e $E$ o conjunto de arestas que os conectam.
@@ -190,7 +191,7 @@ método quais as considerações necessárias, dificuldades e possíveis soluç�
 contexto da mensuração de redes sociais digitais para a análise da influência.
 
 \section{Entendendo o domínio do problema}
-
+\label{sec:ent_dom_pro}
 No caso da análise da influência a mineração se divide em duas etapas a saber: a
 mensuração da rede propriamente dita e o reconhecimento de atores chave. Da
 segunda, depende a primeira. Caso a abordagem seja encontrar esses atores por
@@ -403,23 +404,23 @@ para o passo seguinte e selecionar quais dados serão usados e se são válidos.
 
 \section{Entendendo os dados}
 
-A primeira crítica que deve ser avaliada é a de que interações digitais
-não são um indicador confiável da relação entre dois indivíduos
-\cite{Clemons2007}. Que se um amigo virtual não é mais do que um conhecido, não
-há relação de influência significativa entre eles. Porém, as pesquisas em redes
-sociais digitais tem demonstrado que em sua maior parte, os indivíduos utilizam
-os meios digitais para continuar uma relação já existente no mundo
-\textit{off-line}\cite{Haythornthwaite2005}\cite{Recuero2008}. Outra vantagem de
-ater-se a interação observada é que ela não carrega alguns pontos fracos da
+A primeira crítica que deve ser avaliada é a de que interações digitais não são
+um indicador confiável da relação entre dois indivíduos \cite{Clemons2007}. Que
+se um amigo virtual não é mais do que um conhecido, não há relação de influência
+significativa entre eles. Porém, as pesquisas em redes sociais digitais tem
+demonstrado que em sua maior parte, os indivíduos utilizam os meios digitais para
+continuar uma relação já existente no mundo \textit{off-line}
+\cite{Haythornthwaite2005} \cite{Recuero2008} \cite{Sassen2002}. Outra vantagem
+de ater-se a interação observada é que ela não carrega alguns pontos fracos da
 abordagem direta (questionário, entrevista) que é o esquecimento e a omissão das
 relações nas respostas (a taxa de erro quando interrogados sobre as interações
 que mantiveram chega a 50\% em comparação com a observação) \cite{Mislove2007}.
 Mas a vantagem mais óbvia e determinante é o custo, coletar e processar os dados
-advindo das interações dos atores no meio digital é muito mais barato que fazer
-o mesmo para interações não digitais, na medida em que o tamanho da rede
-aumenta, ou mesmo em comparação com entrevistas e questionários. Na casa dos
-milhões de membros na rede, qualquer coisa que não seja a primeira opção é
-atualmente inviável.
+advindo das interações dos atores no meio digital é muito mais barato que fazer o
+mesmo para interações não digitais, na medida em que o tamanho da rede aumenta,
+ou mesmo em comparação com entrevistas e questionários. Na casa dos milhões de
+membros na rede, qualquer coisa que não seja a primeira opção é atualmente
+inviável.
 
 Nessa etapa da mineração, uma vez delineada as técnicas de mensuração, é
 necessário escolher quais medianeiros serão utilizados. Recapitulando a definição
@@ -478,7 +479,7 @@ diferentes formas.
 O tipo do conteúdo da comunicação diz muito sobre o capital social que carrega
 \cite{Kim2007}, por exemplo, mensagens síncronas possuem vocabulário mais
 limitado, são mais informais e possuem maior carga social fática
-(\cite{Danet1998},\cite{Ko1996},\cite{WERRY1996}; \textit{Apud}
+(\cite{Danet1998}, \cite{Ko1996}, \cite{WERRY1996}; \textit{Apud}
 \cite{Herring2002}) enquanto que mensagens assíncronas tendem a ser maiores,
 mais multifuncionais e linguisticamente complexas (\cite{Herring1999};
 \textit{Apud} \cite{Herring2002}). De acordo com essas diferenças, mensagens
@@ -596,7 +597,7 @@ de outros conteúdos. Essas informações poderiam ser utilizadas numa análise
 intrínseca da rede para a concepção de um modelo mais real do interagente quanto
 ao dispêndio da atenção.
 
-\subsubsection{Notação}
+\subsubsection{$\bigotimes$ Notação}
 
 Seja $\mathscr{X}$ um medianeiro, existirá um conjunto $\mathscr{L}$ de
 interações associado a $\mathscr{X}$. Considere o conjunto $\mathscr{N}$ de
@@ -629,9 +630,10 @@ conceito de influência e, certamente, é mais fácil de medir.
 
 Foi o vencedor do prémio nobel, o economista Herbert Simon, que disse:
 
-\quote{\textit{What information consumes is rather obvious: it consumes the
-attention of its recipients. Hence a wealth of information creates a poverty of
-attention}\cite{Simon1996}}
+\begin{quotation}\textit{What information consumes is rather obvious: it consumes
+the attention of its recipients. Hence a wealth of information creates a poverty
+of attention }\cite{Simon1996}
+\end{quotation}
 
 Vivemos em uma era de riqueza de informação e por esta razão estamos em escassez
 de atenção \cite{Goldhaber1997}. Atenção é vista atualmente como \textbf{o} mais
@@ -642,157 +644,192 @@ importantes \cite{Dindia1993}. Por esta razão a atenção satisfaz os critério
 capital social, a saber 1) contribuir na manutenção da rede, 2) pode ser
 mobilizada através das conexões. Vários estudos consideram a atenção como a nova
 economia na internet, através de comentários, classificações positivas e
-\textit{profiles} \cite{Humphreys2009} \cite{Wu2009} \cite{Skageby2009}.
+\textit{profiles} \cite{Humphreys2009} \cite{Wu2009} \cite{Skageby2009}. Nessa
+economia nós temos ``celebridades'' e ``fãs'', muito similar ao que encontramos
+no contexto da influência.
 
-esquema de fa celebridade q tem a ver com influencia que tem a ver com o macaco
-que dai vai para as dimensoes
+Na verdade somente o fato de prestar atenção em si já é uma influência per si,
+independente das futuras escolhas do receptor. Em uma pesquisa em Parma, na
+Itália, por volta de 1991, neurocientistas conectaram cabos ao cérebro de macacos
+de forma que o computador reconhecia pelo padrão de ativação dos neurônios quando
+ele levava um amendoin à boca. Não obstante a ativação fosse registrada
+eletrônicamente, eles também ligaram o aparato a um auto-falante de forma que
+mesmo estando distantes soubessem quando o evento acontecia. Quando um aluno
+passou pelo laboratório e levou uma banana à boca, o alarme soou. Porém o macaco
+não estava fazendo nada além de observar o estudante. Estava claro que a atenção
+no gesto do estudante disparava o cérebro a reproduzir (em sua mente) o movimento
+como se fosse seu (\cite{Rizzolatti1996};\textit{Apud} \cite{Goldhaber2006}).
 
-Uma vez que os medianeiros sejam identificados, cabe agora discutir como as
-interações observadas serão combinadas para a mensuração da rede. 
+Resta-nos saber como mediremos a atenção. Ora, em qualquer interação o que é
+trocado em primeiro lugar entre o agente e os receptores é atenção. A atenção
+flui não só do receptor para o agente ao receber a ``mensagem'', no que chamamos
+de atenção \textbf{direta}, mas também do agente para os receptores, por a ter
+preparado e comunicado, que chamamos de atenção \textbf{residual}
+\cite{Goldhaber1997}. Apesar de que em quantias bem menores proporcionalmente,
+por que o que cada receptor recebe é uma atenção ilusória, é uma fração da
+atenção do agente e que o satisfaz de alguma forma na interação de modo que para
+ele parece um bom negócio continuar retribuindo-a com a sua. Mas como essa
+atenção se relaciona com as dimensões da força de Granovetter? Para responder
+essa questão precisaremos usar nossa tipologia da interação.
 
+Em primeiro lugar, frequência e duração são dimensões temporais que são
+recuperadas a partir do tratamento longitudinal da rede. A frequencia das
+interações e data do começo delas são métricas simples de colher e que contribuem
+para força total. Quanto a intimidade, podemos verificar que a depender da
+abrangência teremos espaço para maior ou menor intimidade, ou seja, quando mais
+restrito a abrangência mais íntima a interação, sendo a mensagem de pessoa a
+pessoa a forma mais íntima possível. Quanto a carga emocional, mesmo não tendo à
+disposição meios de análise de sentimento, sabemos que as interações que mais nos
+chamam atenção são as que possuem carga emocional \cite{Davenport2001}. Daí
+podemos aproximar a dimensão de suporte emocional por uma combinação da de
+duração, frequência e intensidade.
 
+Para finalizar nossa consideração sobre a atenção como capital social, é
+importante mencionar que a atenção não é direcionada apenas sobre um foco, mas
+sobre o contexto. Isto quer dizer que alguns indivíduos podem receber atenção
+indiretamente terem sido citados, por intermediarem a interação ou por
+simplesmente fazer parte do contexto de alguma forma. Essa atenção chamamos de
+\textbf{transitiva}.
 
-O problema é INTIMIDADE TEM A VER COM ABRANGECIA MEXENDO NO ALPHA
-EMOCAO TEM A VER COM ATENCAO
-INTENSIDADE TEM A VER COM\ldots
-que são interações bem diferentes uma das outras e, por isso, com significância
-também diferente. Para resolver esse problema iremos considerar a teorial do
-capital social que consiste no estudo das transferências de ``recursos'' pela
-rede social. A vantagem de utilizar essa teoria é que ela prevê que quanto mais
-``recursos'' trafeguem por um laço, mais forte ele é, assim atendendo ao nosso
-primeiro requisito para alcançar uma rede com métricas de proeminência
-significativas.
+\subsubsection{$\bigotimes$ Formalização}
 
-Mas que ``recurso'' seria esse que trafega pela rede? Nossa aposta está na
-\textbf{atenção}. A atenção é o recurso empregado em cada interação e é o
-recurso mais escarço na atual era da informação. Assim como na teoria da
-proeminência das redes sociais nós teremos ``estrelas'' e ``isolados'', também
-na economia da atenção acharemos esses mesmos atores à medida que mais e mais
-atenção eles atraiam sobre si. Para mensurar o quanto de atenção o ator emprega
-em sua interação vamos considerar os tipos de interação que ele pode fazer na
-rede.
+Considere dois atores $i$ e $j \in \mathscr{N}$; se $\mathscr{X}$ é um medianeiro
+para $\mathscr{N}$ com um conjunto de interações $\mathscr{L}$, considere também
+$l$ uma interação de $\mathscr{L}$. Se $i \in A(l)$ e $j \in R(l)$ então existe
+uma atenção direta $v_{ijl}\neq0$ de $i$ para $j$ e uma atenção residual de $j$
+para $i$ expressa como $\dot{v}_{jil}\neq0$. Usaremos o símbolo $+$ em um índice
+quando queremos dizer que trata-se do somatório sobre todo o seu conjunto, alguns
+exemplos: $v_{i+l} = \sum_{j \in \mathscr{N}}v_ijl$ representa toda a atenção
+direta investida por $i$ na interação $l$; $v_{ij+} = \sum_{l \in
+\mathscr{L}}v_{ijl}$, toda atenção direta cedida de $i$ para $j$ considerando
+todas as interações; e $v_{++l} = \sum_{i \in \mathscr{N}}\sum_{j \in
+\mathscr{N}}v_{ijl}$, toda a atenção direta cedida na rede através da interação
+$l$.
 
-Para alguns, por etnografia digital entende-se como a etnografia mediada por
-elementos digitais. Considerando a produção textual na web, a produção de vídeos
-dos respondentes, sua interação com artefatos digitais. Também encontra-se
-literatura sobre o uso de artefatos digitais por parte do pesquisador para
-registrar e recontar as histórias estudadas. Etnografia, portanto, seria a
-atividade humana de observar outros seres humanos e contar sua história.
+Algumas restrições são óbvias, como o total de atenção investida um ator qualquer
+é: $v_{i++} + \dot{v}_{i++} = c, \forall i \in \mathscr{N}$. Essa restrição, no
+entanto, não se sustenta quando só temos as interações da rede para avaliar já
+que representam apenas uma fração da atenção total do ator.
 
-Porém, no nosso caso o fenômeno observado é puramente digital. As interações
-acontecem na internet. E apesar de entendermos que a rede virtual é uma extensão
-que entrelaça a rede física do indivíduo \cite{Sassen2002}, nosso foco
-reside totalmente na virtual. 
+Para definir a atenção transitiva é necessário primeiro estabelecer a relação
+$T:\mathscr{L}\to\mathscr{L}$ tal que se $l$ e $q \in \mathscr{L}$ e uma faz
+parte do contexto da outra, isto é, estão encadeadas, então $q \in T(l)$ se $q$
+veio antes. Dizemos que há atenção transitiva $\widetriangle{v}_{ijl}$ se há um
+caminho entre $i$ e $j$ através de $v$, isto é, se $i \in R(l)$ e $j \in A(q)$
+para algum $q \in T(l)$. Exemplos de interações encadeadas são comentários de
+\textit{posts}, \textit{threads} em fóruns e recomendação de conteúdo.
 
+\section{Preparação dos dados}
 
-\section{mensurando a rede a partir de interações não-textuais}
+Essa etapa confunde-se com a próxima que trata da aplicação de técnicas de
+mineração. Isso se dá porque, dependendo do objetivo do estudo, a mensuração da
+rede pode ser o fim ou o meio para a aplicação de um outro processo de análise.
+Por isso nessa seção falaremos um pouco de algumas técnicas de mineração quando
+usadas no contexto da preparação dos dados. Também estaremos atentos para
+algumas dificuldades que se apresentam quando utilizamos aprendizagem de
+máquina e faremos algumas considerações sobre técnicas para a escolha dos dados
+mais relevantes.
 
-\cite{Cooper1997} e \cite{Silverstein2000} - artigo doido sobre formas de
-encontrar relacao causal entre variaveis, pode ser usado para dizer que tal
-influencia causou tal reacao
+Trataremos aqui principalmente de mensurações da rede, que é a primeira parte do
+processo de análise de influência. A mensuração, por sua vez, se divide em dois
+momentos: dados \textbf{brutos} e dados \textbf{compilados}. No seu estado
+bruto, a rede guarda os dados como se lhe apresentam através dos medianeiros
+como por exemplo: quantidade de interações, tamanho das interações,
+classificações usadas, data da interação, etc. Esse processo por si so é
+trabalhoso, pois devemos ter o cuidado de guardar não só as interações, mas as
+propriedades relacionadas a elas. Também é comum a formação de hipergrafos,
+isto é, grafos onde os atores são agrupados por alguma relação. Um exemplo claro
+de hipergrafo é a representação formada apartir da afiliação dos atores à
+comunidades, contudo, a rigor, toda interação particiona o grafo em um
+subconjunto.
+\begin{quotation}
+$\bigotimes$ \textbf{Um exemplo de hipergrafo:} Considere dois medianeiros
+$\mathscr{X}_1$ e $\mathscr{X}_2$ com seus respectivo conjuntos de interações
+$\mathscr{L}_1$ e $\mathscr{L}_2$. Ambos referem-se ao mesmo conjunto de atores
+$\mathscr{N} = \{n_1, n_2, n_3\}$. Para $\mathscr{L}_1$ temos duas interações
+$l_1$ e $l_2$, onde $n_1$ é o autor de ambas, ou seja $A(l_1)=A(l_2)=\{n_1\}$. O
+ator $n_2$ é o receptor de $l_1$ e $n_3$ é o de $l_2$, assim temos
+$R(l_1)=\{n_2\}$ e $R(l_2)=\{n_3\}$. Se construirmos uma representação de
+$\mathscr{X}_1$ chamada de $X_1$, onde $x_{ij}=1$ se existir uma interação $l$
+onde $i \in A(l)$ e $j \in R(l)$ então teremos:
 
-\cite{Friedman1999} - traz um modelo interessante baseado em probabilidade da
-relacao para aprender relacoes entre atributos de atores, baseado em sua
-aparicao estatistica no banco de dados, pode ser util usar isso para ajudar na
-mensuracao
+\center
+\begin{array}{c | c c c}
+& n_1 & n_2 & n_3 \\ \hline
+n_1&0&1&1\\
+n_2&0&0&0\\
+n_3&0&0&0\\
+\end{array}
 
-Agora que podemos definir os medianeiros e classificar as interações sob estudo
-em seus tipos, vamos passar à construção da rede social propriamente dita. Em
-primeiro lugar, interações não-textuais não são facilmente integráveis, isto é,
-em que se assemelha a interação através de uma foto com a afiliação comum a
-um mesmo grupo? Por este motivo, a primeira abordagem é separar a rede por
-interação, ou seja, cada interação não-textual produz uma rede diferente.
-Podemos restringir o total de atenção de cada ator a uma constante, digamos 1
-(um), e distribuir sua interação uniformemente sobre o intervalo [0..1].
-
-Essa abordagem será especialmente útil quando formos aplicar a técnica de
-medição de proeminência baseada em autovetores mais adiante. Assim, se um
-ator escolheu a 5 outros atores para se conectar, cada vínculo terá valor de
-0.2. Apesar de incompleta, verificamos que essa abordagem é necessária pois não
-tem como conceber um recurso comum, como estabeleceremos mais adiante para as
-interações textuais, que trafega pela rede. Como mensurar a atenção
-dada/recebida de uma foto? Porém, caso seja possível ao investigador a
-utilização de dados sobre a interação passiva dos atores, seria possível
-construir uma métrica comum baseada no tempo que o ator gasta observando os
-conteúdos alheios.
-
-Mesmo assim, interações como avaliações (ratings) são naturalmente difíceis de
-integrar com outras, já que leva a mesma quantidade de tempo para avaliar mal ou
-bem o outro ator. Porém, quando levarmos em consideração técnicas como a análise
-de sentimentos em texto para a avaliação da intenção das interações, poderemos
-imaginar uma integração com avaliações no sentido que elas sao naturalmente
-negativas/afirmativas.
-
-\begin{table}[htbp]
-	\begin{boxedminipage}{\textwidth}
-Para o estudo de caso da rede A.M.I.G.O.S. vamos começar analisando a rede
-decorrente das conexões explícitas da rede: os contatos. Contatos são atores
-explicitamente adicionados através da ferramenta, constituindo uma interação
-não-textual individual-básica. Foram coletadas as interações de 1247 atores
-representadas em um digrafo. Desses, 720 formam o componente principal do
-digrafo (o maior subgrafo fracamente conexo) e removendo os que se conectam a
-apenas 1 indivíduo temos 618 atores e 5180 conexões.
-		\large       % tamanho da fonte 
-		\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
-		\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
-		\caption{\it Os 10 mais bem posicionados em Proeminência no A.M.I.G.O.S.}
-		\centering   % tabela centralizada
-		\begin{tabular}{| l | c |}
-			\hline
-			Ator & Centralidade \\ \hline
-			8 & 0.230 \\
-			135 & 0.136 \\
-			1037 & 0.136 \\
-			541 & 0.132 \\
-			3 & 0.119 \\
-			675 & 0.111 \\
-			201 & 0.106 \\
-			542 & 0.069 \\
-			614 & 0.054 \\
-			838 & 0.051\\
-			\hline
-		\end{tabular}
-		\begin{tabular}{| l | c |}
-			\hline
-			Ator & Prestígio \\ \hline
-			553 & 138.361 \\
-			571 & 137.627 \\
-			569 & 133.475 \\
-			581 & 131.738 \\
-			586 & 126.468 \\
-			555 & 125.683 \\
-			609 & 121.362 \\
-			598 & 118.524 \\
-			575 & 112.545 \\
-			611 & 102.776 \\
-			\hline
-		\end{tabular}
-		\label{tab:acontccent}
 \flushleft
-\normalsize
-Na tabela~\ref{tab:acontccent} apresentamos o cálculo da centralidade
-(\textit{Betweeness}) de Freeman e do prestígio (\textit{Power}) de Bonacich.
-É notável que não há uma correlação entre as duas medidas e que os atores mais
-centrais não são os atores com maior prestígio. Temos pouca informação externa
-da rede sobre os atores mas é possível notar que no primeiro grupo (mais
-central) estão presentes alguns pesquisadores-chefe da comunidade e que por isso
-conectam grupos relativamente separados na rede. Já uma análise de clusterização
-mostra que no segundo grupo (maior prestígio) estão membros de clusters
-densamente conectados, o que explica terem sido escolhidos por muitos outros
-atores que por sua vez foram escolhidos por muitos outros e assim
-sucessivamente.
+Agora para $\mathscr{L}_2$ temos apenas uma interação $q$ onde $A(q)=\{n_1\}$ e
+$R(q)=\{n_2,n_3\}$. Então em apenas uma interação $n_1$ conseguiu a atenção de
+$n_2$ e $n_3$. Se utilizarmos a mesma regra para construirmos $X_2$ também
+teremos:
 
-	\end{boxedminipage}
-\end{table}
-\clearpage
-\begin{figure}[h!]
-  \caption{A rede de contatos no A.M.I.G.O.S.}
-  \centering
-    \includegraphics[width=\textwidth]{imgs/amigos-contatos.jpg}
-\end{figure}
+\center
+\begin{array}{c | c c c}
+& n_1 & n_2 & n_3 \\ \hline
+n_1&0&1&1\\
+n_2&0&0&0\\
+n_3&0&0&0\\
+\end{array}
 
-\section{mensuração textual}
-\subsection{conceituação}
+\flushleft
+O que é no mínimo inconveniente, já que os dois medianeiros possuem padrões bem
+diferentes, o primeiro possui dois subgrafos e o segundo apenas um. 
+\end{quotation}
+
+Nenhum das abordagens citadas na seção \ref{sec:ent_dom_pro} consideram o
+aspecto de hipergrafo das interações. Seria necessário adaptar as técnicas de
+análise de influência se quisermos considerar um ator que influencia muitos em
+uma única interação de outro que o faz através de muitas interações separadas.
+Tendo isso em mente, partimos para as técnicas de mensuração em si.
+
+\section{Interações não-textuais}
+
+Uma possível abordagem foi a citada no exemplo acima, a da ausência ou presença
+de interação. Ela foi usada por \cite{Xiang2010} e simplifica a representação em
+uma rede dicotômica. Outras possibilidades está em contar a quantidade de
+interações ocorridas, a frequência por período, a idade da primeira interação, a
+presença em comunidades comuns, similaridade de perfil, etc. De forma geral
+podemos criar a rede por:
+
+\begin{itemize}
+\item Intensidade/Quantidade
+\item Frequência
+\item Presença/Ausência
+\item Properidade única (e.g., Longevidade)
+\item Similaridade
+\end{itemize}
+
+Cada uma dessas apresenta apenas uma dimensão da relação, de forma que para o
+mesmo medianeiro mais de uma representação pode ser mensurada a partir de
+diferentes formas de agregação. Outras representações ainda podem ser criadas a
+partir da combinação de mensurações diferentes, por exemplo: intensidade x
+frequência, longevidade x similaridade. Não existe forma correta de escolher as
+agregações, porém veremos mais adiante como poderemos diminuir o impacto disso
+no processo como um todo. 
+
+No final, teremos uma ou mais representações da rede para cada tipo de
+medianeiro, que por diferença de natureza não são facilmente integráveis.
+Contando, porém, com uma análise intrínseca dos medianeiros, poríamos apostar
+numa integração pela teoria da atenção. Apesar de que tempo gasto não se traduz
+diretamente em atenção dispendida, poderíamos mensurar o tempo que o usuário do
+medianeiro empregou em cada interação e daí inferir uma valor em unidade única:
+atenção \cite{Davenport2001}. Com isso teríamos o tempo empregado na visualização
+de um vídeo, de uma foto como estimativa da atenção. Essa análise nem sempre é
+possível e mesmo que seja, há interações que são naturalmente difíceis de
+integrar, como as avaliações (\textit{ratings}, \textit{rankings}). As avaliações
+tomam sempre o mesmo tempo (o do clique do mouse) e seu conteúdo é totalmente
+``emocional'', isto é, polarizado entre positivo e negativo. Caso seja utilizado
+técnicas de análise de sentimentos para as outras interações, então talvez as
+avaliações possam ser integradas pela dimensão emocional da força da relação.
+Por outro lado, avaliações são excelentes opções para a utilização como grupo
+de teste para algoritmos de aprendizagem de máquina ``supervisionados''.
+
+\section{Interações textuais}
+
 Na seção anterior investigamos as relações não-textuais, agora vamos nos deter
 nas textuais. Primeiramente, intentamos com essa divisão alcançar uma
 consequência prática: a integração de diversas interações numa só rede. A rede
@@ -801,7 +838,7 @@ um número real dentro de um intervalo. Ao contrário de redes binárias, as red
 valoradas proporcionam um indicativo da \textit{força} do laço entre os atores.
 
 Dentro de uma teoria da atenção como capital social, devemos então nos voltar
-para a afirmação de que laços por onde trafegam muito recursos são laços fortes
+para a afirmação de que laços por onde trafegam muitos recursos são laços fortes
 e o contrário também é verdade. Em cada interação na rede, como vimos, tem um
 ator-agente que inicia a interação e um grupo de abrangência, que chamaremos de
 atores-receptores, que é afetado por ela. Com esse modelo, podemos estimar que
@@ -817,7 +854,8 @@ naturalmente do fato de que quanto maior o texto, mais tempo é empregado na sua
 leitura, possivelmente mais recursos cognitivos também serão empregados para a
 sua apreensão. Isso nem sempre é verdade para todos os textos, ou tipos de
 textos, mas restringindo nosso escopo para comunidades virtuais de amigos e/ou
-comunidades de prática, acreditamos ser esse um bom ponto de partida.
+comunidades de prática \cite{Lave1991} \cite{Lave1991a}, acreditamos ser esse um
+bom ponto de partida.
 
 Outro cuidado necessário é na determinação se de fato a interação foi percebida
 pelos receptores. Na maioria das vezes essa determinação é inviável, aumentando
@@ -839,14 +877,6 @@ da relação direcionada de $b$ para $a$. Quanto mais conteúdo um ator $a$ publ
 para um determinado público, mais forte também será sua relação direcionada
 com o mesmo. Tal rede, por tanto, integraria insumos de diversos tipos de
 interação mensurados, desde que sejam de conteúdo textual.
-
-No entanto, uma ultima consideração deve ser feita, a de que todos nós temos uma
-quantidade limitada de atenção para ceder uns aos outros. Sendo assim, na
-representação apresentada acima, a soma das forças dos laços para todo ator da
-rede deve ser normalizada, de forma que atores que recebam interações de menos
-agentes tenham laços mais fortes com eles do que receptores de grande quantidade
-de agentes diferentes com os seus. Em termos gerais, quanto mais pessoas dividem
-sua atenção, menos elas recebem proporcionalmente.
 
 \subsection{formalização}
 \label{sec:formalizacao}
@@ -1429,6 +1459,83 @@ Falhar em estimar a força das conexões levará a seleção de atores chaves em
 miríade de interações irrelevantes. Da mesma forma, representar as conexões de
 forma binária pode causar o enviesamento da rede ou para a superestimação de sua
 força ou para a subestimação da mesma.}}
+
+\cite{Cooper1997} e \cite{Silverstein2000} - artigo doido sobre formas de
+encontrar relacao causal entre variaveis, pode ser usado para dizer que tal
+influencia causou tal reacao
+
+\cite{Friedman1999} - traz um modelo interessante baseado em probabilidade da
+relacao para aprender relacoes entre atributos de atores, baseado em sua
+aparicao estatistica no banco de dados, pode ser util usar isso para ajudar na
+mensuracao
+
+\begin{table}[htbp]
+	\begin{boxedminipage}{\textwidth}
+Para o estudo de caso da rede A.M.I.G.O.S. vamos começar analisando a rede
+decorrente das conexões explícitas da rede: os contatos. Contatos são atores
+explicitamente adicionados através da ferramenta, constituindo uma interação
+não-textual individual-básica. Foram coletadas as interações de 1247 atores
+representadas em um digrafo. Desses, 720 formam o componente principal do
+digrafo (o maior subgrafo fracamente conexo) e removendo os que se conectam a
+apenas 1 indivíduo temos 618 atores e 5180 conexões.
+		\large       % tamanho da fonte 
+		\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+		\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+		\caption{\it Os 10 mais bem posicionados em Proeminência no A.M.I.G.O.S.}
+		\centering   % tabela centralizada
+		\begin{tabular}{| l | c |}
+			\hline
+			Ator & Centralidade \\ \hline
+			8 & 0.230 \\
+			135 & 0.136 \\
+			1037 & 0.136 \\
+			541 & 0.132 \\
+			3 & 0.119 \\
+			675 & 0.111 \\
+			201 & 0.106 \\
+			542 & 0.069 \\
+			614 & 0.054 \\
+			838 & 0.051\\
+			\hline
+		\end{tabular}
+		\begin{tabular}{| l | c |}
+			\hline
+			Ator & Prestígio \\ \hline
+			553 & 138.361 \\
+			571 & 137.627 \\
+			569 & 133.475 \\
+			581 & 131.738 \\
+			586 & 126.468 \\
+			555 & 125.683 \\
+			609 & 121.362 \\
+			598 & 118.524 \\
+			575 & 112.545 \\
+			611 & 102.776 \\
+			\hline
+		\end{tabular}
+		\label{tab:acontccent}
+\flushleft
+\normalsize
+Na tabela~\ref{tab:acontccent} apresentamos o cálculo da centralidade
+(\textit{Betweeness}) de Freeman e do prestígio (\textit{Power}) de Bonacich.
+É notável que não há uma correlação entre as duas medidas e que os atores mais
+centrais não são os atores com maior prestígio. Temos pouca informação externa
+da rede sobre os atores mas é possível notar que no primeiro grupo (mais
+central) estão presentes alguns pesquisadores-chefe da comunidade e que por isso
+conectam grupos relativamente separados na rede. Já uma análise de clusterização
+mostra que no segundo grupo (maior prestígio) estão membros de clusters
+densamente conectados, o que explica terem sido escolhidos por muitos outros
+atores que por sua vez foram escolhidos por muitos outros e assim
+sucessivamente.
+
+	\end{boxedminipage}
+\end{table}
+\clearpage
+\begin{figure}[h!]
+  \caption{A rede de contatos no A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/amigos-contatos.jpg}
+\end{figure}
 
 
 \bibliographystyle{alpha}
