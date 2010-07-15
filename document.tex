@@ -11,6 +11,7 @@
 \usepackage{boxedminipage}
 \usepackage{amsmath}
 \usepackage{yhmath}
+\usepackage{amssymb}
 \begin{document}
 
 \newcommand{\observednet}{rede social observada} 
@@ -230,7 +231,7 @@ pode ser vista de maneira simples como pessoas parecidas tendem a formar laços
 e vice versa. Recentemente, algumas técnicas de mineração de dados tem sido
 desenvolvidas para tratar dados relacionais como os modelos relacionais
 probabilísticos, classificadores Bayesianos de primeira ordem e árvores de
-probabilidades relacionais \cite{Jensen2002}. Técnicas mais antigas incluem
+probabilidades relacionais \cite{Jensen2003}. Técnicas mais antigas incluem
 programação de lógica indutiva e a análise de redes sociais tradicional.
 
 Recentes trabalhos na área utilizam de diversos tipos de interação para a
@@ -732,14 +733,14 @@ mais relevantes.
 
 Trataremos aqui principalmente de mensurações da rede, que é a primeira parte do
 processo de análise de influência. A mensuração, por sua vez, se divide em dois
-momentos: dados \textbf{brutos} e dados \textbf{compilados}. No seu estado
-bruto, a rede guarda os dados como se lhe apresentam através dos medianeiros
-como por exemplo: quantidade de interações, tamanho das interações,
-classificações usadas, data da interação, etc. Esse processo por si so é
-trabalhoso, pois devemos ter o cuidado de guardar não só as interações, mas as
-propriedades relacionadas a elas. Também é comum a formação de hipergrafos,
-isto é, grafos onde os atores são agrupados por alguma relação. Um exemplo claro
-de hipergrafo é a representação formada apartir da afiliação dos atores à
+momentos: dados \textbf{brutos} e dados \textbf{compilados}. No seu estado bruto,
+a rede guarda os dados como se lhe apresentam através dos medianeiros como por
+exemplo: quantidade de interações, tamanho das interações, classificações usadas,
+data da interação, etc. Esse processo por si so é trabalhoso, pois devemos ter o
+cuidado de guardar não só as interações, mas as propriedades relacionadas a elas.
+Também é comum a formação de hipergrafos, isto é, grafos onde os atores são
+agrupados por alguma relação \cite{Breiger1974}\cite{Seidman1978}. Um exemplo
+claro de hipergrafo é a representação formada apartir da afiliação dos atores à
 comunidades, contudo, a rigor, toda interação particiona o grafo em um
 subconjunto.
 \begin{quotation}
@@ -786,7 +787,7 @@ análise de influência se quisermos considerar um ator que influencia muitos em
 uma única interação de outro que o faz através de muitas interações separadas.
 Tendo isso em mente, partimos para as técnicas de mensuração em si.
 
-\section{Interações não-textuais}
+\subsection{Interações não-textuais}
 
 Uma possível abordagem foi a citada no exemplo acima, a da ausência ou presença
 de interação. Ela foi usada por \cite{Xiang2010} e simplifica a representação em
@@ -807,9 +808,13 @@ Cada uma dessas apresenta apenas uma dimensão da relação, de forma que para o
 mesmo medianeiro mais de uma representação pode ser mensurada a partir de
 diferentes formas de agregação. Outras representações ainda podem ser criadas a
 partir da combinação de mensurações diferentes, por exemplo: intensidade x
-frequência, longevidade x similaridade. Não existe forma correta de escolher as
-agregações, porém veremos mais adiante como poderemos diminuir o impacto disso
-no processo como um todo. 
+frequência, longevidade x similaridade. Deve-se ter um cuidado extra no uso de
+agregações porque podem introduzir correlações espúrias no conjunto de dados,
+levando a erros do tipo I (falso positivo) e tipo II (falso negativo), pois a
+agregação mascara quais elementos estão correlacionados de fato
+\cite{Jensen2003}. Não existe forma correta de escolher as agregações, porém
+veremos mais adiante como poderemos diminuir o impacto disso no processo como um
+todo.
 
 No final, teremos uma ou mais representações da rede para cada tipo de
 medianeiro, que por diferença de natureza não são facilmente integráveis.
@@ -828,7 +833,7 @@ avaliações possam ser integradas pela dimensão emocional da força da relaç�
 Por outro lado, avaliações são excelentes opções para a utilização como grupo
 de teste para algoritmos de aprendizagem de máquina ``supervisionados''.
 
-\section{Interações textuais}
+\subsection{Interações textuais}
 
 Na seção anterior investigamos as relações não-textuais, agora vamos nos deter
 nas textuais. Primeiramente, intentamos com essa divisão alcançar uma
@@ -878,85 +883,89 @@ para um determinado público, mais forte também será sua relação direcionada
 com o mesmo. Tal rede, por tanto, integraria insumos de diversos tipos de
 interação mensurados, desde que sejam de conteúdo textual.
 
-\subsection{formalização}
+\subsubsection{$\bigotimes$ Formalização}
 \label{sec:formalizacao}
 Para a formalização dessa métrica, vamos usar um exemplo prático. Em um fórum
 qualquer, vamos tomar um tópico para nosso exemplo. O fórum é o
-\textbf{medianeiro}, os membros assinantes do fórum os \textbf{atores}. O tipo
-de interação é \textbf{textual} quanto ao conteúdo, \textbf{comum} quanto a
+\textbf{medianeiro}, os membros assinantes do fórum os \textbf{atores}. O tipo de
+interação é \textbf{textual} quanto ao conteúdo, \textbf{comum} quanto a
 abrangência e nossa análise será \textbf{ingênua}, isto é, não consideraremos a
-intenção. Considere:
+intenção. Revisando:
 \begin{itemize}
-  \item $G$ o conjunto de $n$ atores e $g_{1..n}$ uma sequência sobre $G$;
-  \item $I$ o conjunto de $m$ tópicos do fórum e $i_{1..m}$ uma sequência sobre
-  $I$;
-  \item $A:I\to G$ tal que $A(i_k)$ seja o autor do tópico $i_k$, a função $A$
-  não é inversível, dado que um ator pode ser autor de mais de um tópico, porém
-  considere a função $A^{-1}:G\to \mathcal{P}(I)$ tal que $A^{-1}(g_h) = \{x \in
-  I|A(x) = g_h\}$ representando o conjunto de tópicos escritos pelo ator;
-  \item $R:I\to \mathcal{P}(G)$ tal que todo $x \in R(i_k)$ é um receptor de
-  $i_k$, considere também o conjunto de tópicos recebidos por um ator como sendo
-  $R^{-1}:G\to \mathcal{P}(I)$ tal que $R^{-1}(g_h) = \{x \in I|g_h\in R(x)\}$;
-  \item $|i_k|$ como a quantidade de palavras de $i_k$; 
+  \item $\mathscr{N}$ o conjunto de $N$ atores e o $i$-ésimo ator é $n_i$,
+  $i=1,2,\ldots,N$;
+  \item $\mathscr{L}$ o conjunto de $L$ tópicos do fórum e o $k$-ésimo
+  tópico é $l_k$, $k=1,2,\ldots,L$;
+  \item $A:\mathscr{L}\to \mathscr{N}$ tal que $A(l_k)$ seja o
+  autor do tópico $l_k$, a função $A$ não é inversível, dado que um ator pode
+  ser autor de mais de um tópico, porém considere a função
+  $A^{-1}:\mathscr{N}\to \mathscr{P}(\mathscr{L})$ tal que $A^{-1}(n_i) = \{x
+  \in \mathscr{L}|A(x) = n_i\}$ representando o conjunto de tópicos escritos
+  pelo ator;
+  \item $R:\mathscr{L}\to \mathscr{P}(\mathscr{N})$ tal que todo $x \in R(l_k)$
+  é um receptor de $l_k$, considere também o conjunto de tópicos recebidos por
+  um ator como sendo $R^{-1}:\mathscr{N}\to \mathscr{P}(\mathscr{L})$ tal que
+  $R^{-1}(n_i) = \{x \in \mathscr{L}|n_i\in R(x)\}$;
+  \item Se $x \in \mathscr{L}$, $|x|$ é a quantidade de palavras de $x$, para
+  todos os outros casos, quando aplicável, é a cardinalidade do conjunto;
 \end{itemize}
 
-Definimos a atenção total cedida de $g_i$ para $g_j$, $p(i,j)$ como a soma de
-suas atenções diretas, residuais e transitivas. A atenção direta é aquela
-formada quando $g_i$ é receptor de $g_j$ e definimos como:
+Definimos a atenção total cedida de $n_i$ para $n_j$, $\vec{v}_{ij+}$
+como a soma de suas atenções diretas $v_{ij+}$, residuais $\dot{v}_{ij+}$ e
+transitivas $\widetriangle{v}_{ij+}$. A atenção direta é aquela formada quando
+$n_i$ é receptor de $n_j$ numa interação $l_k$ e definimos como:
 
 \begin{equation}
 \label{def:atedireta}
-p_{dir}(i,j) = \sum \alpha |k|\text{, para todo $k \in \{x \in I| A(x)=g_j
-\wedge g_i \in R(x)\}$}
+v_{ijk} = \alpha |l_k| 
 \end{equation}
 
-A atenção residual é cedida quando $g_i$ é autor de algum tópico recebido por
-$g_j$ e definimos como:
+A atenção residual é cedida quando $n_j$ esta na abrangência da interação $l_k$
+cujo autor é $n_i$ e definimos como:
 
 \begin{equation}
 \label{def:ateresidual}
-p_{res}(i,j) = \sum \beta |k|\text{, para todo $k \in \{x \in I| A(x)=g_i
-\wedge g_j \in R(x)\}$}
+\dot{v}_{ijk} = \beta |l_k|
 \end{equation}
 
-A atenção transitiva é aquela $g_j$ recebe de $g_i$ se ele foi autor de algum
-tópico que $g_i$ respondeu. Para definirmos $p_tra$ devemos antes modelar o
-encadeamento dos tópicos. Seja $T:I\to I\cup\{\emptyset\}$, se $i_h=T(i_k)$
-então $i_k$ é uma resposta a $i_h$, se $i_k$ é a mensagem que iniciou o tópico
-então $T(i_k)=\emptyset$. Agora faça $T^*:I\to\mathcal{P}(I)$:
+A atenção transitiva é aquela $n_j$ recebe de $n_i$ se este é o autor de algum
+tópico $l_k$ que responde a um anterior de autoria do primeiro. Para definirmos
+$\widetriangle{v}$ devemos antes modelar o encadeamento dos tópicos. Seja
+$T:\mathscr{L}\to \mathscr{L}\cup\{\varnothing\}$, se $l_h=T(l_k)$ então
+$l_k$ é uma resposta a $l_h$, se $l_k$ é a mensagem que iniciou o tópico então
+$T(l_k)=\varnothing$. Agora faça $T^*:\mathscr{L}\to\mathscr{P}(\mathscr{L})$:
 
 \begin{equation}
 \label{def:thread}
-T^*(i_k) = \left\{ \begin{array}{l l} \emptyset &\quad\text{se
-$T(i_k)=\emptyset$}\\ \{T(i_k)\} \cup T^*(T(i_k)) &\quad\text{em todo outro
+T^*(l_k) = \left\{ \begin{array}{l l} \varnothing &\quad\text{se
+$T(l_k)=\varnothing$}\\ \{T(l_k)\} \cup T^*(T(l_k)) &\quad\text{em todo outro
 caso}\end{array} \right.
 \end{equation}
 
-Daí temos que $T^*(i_k)$ é conjunto de todas as $m$ mensagens anteriores na
-\textit{thread} de $i_k$ e podemos definir uma sequência $t^*_{kn}$, onde
-$n=1..m$, sobre esse conjunto considerando a ordenação trivial: $a > b \iff a\in
-T^*(b)$. Dessa forma $i_k$ é uma resposta a $t^*_{k1}$, que por sua vez responde
-a $t^*_{k2}$ e assim sucessivamente até a mensagem inicial. Levando em
-consideração a definição em \ref{def:thread}, definimos a atenção transitiva
+Daí temos que $T^*(l_k)$ é conjunto de todas as $m$ mensagens anteriores na
+\textit{thread} de $l_k$ e podemos definir uma sequência $t^*_{kq}$, onde
+$q=1,2,\ldots,m$, sobre esse conjunto considerando a ordenação trivial: $a > b
+\iff a\in T^*(b)$. Dessa forma $l_k$ é uma resposta a $t^*_{k1}$, que por sua
+vez responde a $t^*_{k2}$ e assim sucessivamente até a mensagem inicial. Levando em
+consideração a definição em (\ref{def:thread}), definimos a atenção transitiva
 como:
 
 \begin{equation}
 \label{def:atetransitiva}
 \begin{array}{ l l }
-p_{tra}(i,j) = \sum_k\sum_l
-(1-\alpha)\gamma^l|t^*_{kl}| &\quad\text{para todo $k$ tal que $i_k \in \{x
-\in I| A(x)=g_i\}$}\\&\quad\text{e todo $l$ tal que $A(t^*_{kl}) = g_j$}
+\widetriangle{v}_{ijk} = \sum_{q}(1-\alpha)\gamma^q|t^*_{kq}| 
+&, q \in \{x | A(t^*_{kx}) = n_j\}
 \end{array}
 \end{equation}
 
-A partir das definições em \ref{def:atedireta}, \ref{def:ateresidual} e
-\ref{def:atetransitiva} podemos calcular a atenção total entre $g_i$ e $g_j$
+A partir das definições em (\ref{def:atedireta}), (\ref{def:ateresidual}) e
+(\ref{def:atetransitiva}) podemos calcular a atenção total entre $n_i$ e $n_j$
 como:
 
 \begin{equation}
 \label{def:atetotal}
-p(i,j) = E(g_i)\frac{p_{dir}(i,j) + p_{res}(i,j) + p_{tra}(i,j)}{\sum_{k|g_k \in
-G}p_{dir}(i,k) + p_{res}(i,k) + p_{tra}(i,k)}
+\vec{v}_{ij+} = E(n_i)\frac{v_{ij+} + \dot{v}_{ij+} +
+\widetriangle{v}_{ij+}}{v_{i++} + \dot{v}_{i++} + \widetriangle{v}_{i++}}
 \end{equation}
 
 Evidentemente, este é um modelo exploratório para a mensuração de redes a partir
@@ -964,12 +973,12 @@ de interações textuais sob um ponto de vista generalista. Nesse sentido há mu
 espaço para aperfeiçoamento dentro do campo experimental. Para finalizar,
 devemos fazer mais algumas considerações:
 \begin{itemize}
-  \item $p(i,j)$ tem sua soma normalizada devido ao limite de atenção
+  \item $\vec{v}_{ij+}$ tem sua soma normalizada devido ao limite de atenção
   natural de cada um;
   \item Porém, cada pessoa dedica quantidades diferentes de atenção total aos
   medianeiros analisados, de forma que seria simplório normalizar todos em 1.
   Por esta razão, cada ator tem a soma de suas atenções distribuídas na rede
-  normalizada em um fator $E(g_i)$ que indica o seu grau de atividade na rede.
+  normalizada em um fator $E(n_i)$ que indica o seu grau de atividade na rede.
   Esse fator, \textit{a priori} será sempre relativo e caso o escolhamos como
   sendo a razão do total de atenção cedido pelo ator sobre a maior atenção
   medida, teremos uma normalização absoluta para toda a rede baseada no seu
@@ -982,11 +991,14 @@ devemos fazer mais algumas considerações:
   igualmente influentes na mensagem atual;
   \item O parâmetro $\beta$ representa a atenção recíproca do agente para os
   seus recptores, também varia de 0 a 1, sendo que $\beta=0$ anula a atenção
-  residual da composição e $beta=1$ indica que o autor da mensagem cedeu
+  residual da composição e $\beta=1$ indica que o autor da mensagem cedeu
   individualmente a cada receptor tanto quanto este para com ele. Um valor
   interessante para $\beta$ é o inverso da quantidade de atores na abrangência
-  da interação em contexto. Assim, o autor cede uma fração igual para cada
-  receptor que é tão menor quanto maior for seu público;
+  da interação em contexto, isto é, $\beta=^1/_{|A(l_k)|}$. Assim, o autor cede
+  uma fração igual para cada receptor que é tão menor quanto maior for seu
+  público. Essa proporção também satisfaz a dimensão de intimidade da força do
+  laço, já que interações mais íntimas (menor abrangência) mobilizam maior
+  atenção;
   \item O parâmetro $\alpha$ representa o quão certos estamos de que a interação
   foi recebida integralmente pelo receptor. A sua escolha depende de diversos
   fatores da análise empregada sobre os medianeiros, pois que para cada caso
@@ -997,105 +1009,29 @@ devemos fazer mais algumas considerações:
   determinada mensagem, igualando os dois casos. Em geral, mesmo que tenhamos o
   indicativo de que o receptor recebeu a interação, é interessante manter um
   valor de $\alpha$ diferente dos extremos para premiar a relação entre atores
-  que se respondem.
+  que se respondem. O parâmetro $\alpha$ também pode ser visto no contexto da
+  dimensão de reciprocidade da força da conexão, já que quanto menor o $\alpha$
+  mais forte será proporcionalmente as conexões em que houveram reciprocidade.
 \end{itemize}
 
-[revisar esta seção considerando o efeito da powerlaw das trhead, de que
-threads com muitas mensagens naturalmente atraem mais mensagens]
+\subsection{Critérios de escolha da representação}
 
-\begin{figure}[h!]
-  \caption{A rede de atenção nos fóruns do A.M.I.G.O.S.}
-  \centering
-    \includegraphics[width=\textwidth]{imgs/amigos-topicos.jpg}
-\end{figure}
-
-\begin{figure}[h!]
-  \caption{A rede de atenção nas narrativas do A.M.I.G.O.S.}
-  \centering
-    \includegraphics[width=\textwidth]{imgs/amigos-narrativas.jpg}
-\end{figure}
-
-\begin{figure}[h!]
-  \caption{A rede de atenção total do A.M.I.G.O.S.}
-  \centering
-    \includegraphics[width=\textwidth]{imgs/amigos-atencao.jpg}
-\end{figure}
-
-\begin{table}[htbp]
-	\begin{boxedminipage}{\textwidth}
-		Utilizamos a formalização descrita na seção \ref{sec:formalizacao} sobre a
-		rede de teste do A.M.I.G.O.S. Os parâmetros foram:
-		\begin{itemize}
-		  \item $\alpha = 0.2$
-		  \item $\beta = ^1/_\text{(quantidade da abrangência)}$
-		  \item $\gamma = 0.5$
-		\end{itemize}
-		Foram consideradas os fórums e as narrativas (com seus comentários).
-		Narrativas são similares aos \textit{posts} de \textit{blog} convencionais.
-		Fizemos testes com várias possibilidades para $|i_k|$ pois a variância
-		indicava muito ruído. Pode se ter como exemplo de ruído uma mensagem de
-		fórum onde o autor copiou enorme lista com os nomes dos arquivos presentes na
-		comunidade, nem o autor dedicou muito tempo ao copiar a lista, nem os outros
-		membros devem ter dado muita atenção à lista inteira. Sendo assim, escolhemos
-		um $|i_k|$ que desprezasse interações com quantidades de palavras muito
-		destoantes. Fizemos $|i_k|=\tanh(0.5\lambda x)$ onde $x$ é a quantidade de
-		fato de palavras e $\lambda=-\frac{\ln(10^{-4})}{\overline{x} + 5\sigma}$,
-		$\overline{x}$ é a média e $\sigma$ é o desvio padrão, logo temos que pelo
-		menos 95\% das interações encontram-se entre 0 e 0.9999.
-		
-		Foi coletado a rede usando apenas a interação por tópicos, depois por
-		narrativas, depois as duas combinadas. A
-		tabela~\ref{tab:comparacao_contato_atencao} apresenta uma comparação entre os
-		quatro tipos de rede coletadas até agora.
-		
-% 		\large       % tamanho da fonte 
-		\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
-		\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
-		\caption{\it Comparação entre a rede de contatos e de atenção.}
-		\centering   % tabela centralizada
-		\begin{tabular}{| l | l | l | l | l |}
-		\hline
-		Métrica & Contatos & Fóruns & Narr. & Atenção \\ \hline
-		Densidade & 0.0136 & 0.1861 & 0.05 & 0.05\\
-		Reciprocidade & 0.5841 & 0.1120 & 0.83 & 0.79\\
-		Coef. Cluster & 0.554 & 0.45 & 0.67 & 0.66\\
-		Coef. Cluster Ponderada & 0.290 & 0.099 & 0.49 & 0.47\\
-		Distância (geodésica) & 4.499 & 1.0340 & 2.54 & 2.63\\
-		Coesão (Distância) & 0.183 & 0.983 & 0.43 & 0.41\\
-		Largura (Distância) & 0.817 & 0.017 & 0.57 & 0.59\\
-		Fitness (Núcleo/Periferia) & 0.257 & 0.0 & 0.44 & 0.44\\
-		\hline
-		\end{tabular}
-		\label{tab:comparacao_contato_atencao}
-		\flushleft
-		\normalsize
-		Nota-se uma maior adensamento da rede com encurtamento de caminhos nas redes
-		de atenção. Porém enquanto a que foi formada a partir das interações nos
-		fóruns tem menor coeficiente de \textit{clusterização} da rede com nenhum
-		indicativo de padrão núcleo/periferia, a proveniente das narrativas tendência
-		oposta. Pode-se dizer, que na rede do A.M.I.G.O.S. os fóruns descentralizam a
-		distribuição da atenção, enquanto que as narrativas atuam em sentido
-		contrário.
-	\end{boxedminipage}
-\end{table}
-
-\section{critérios de escolha da representação}
-
-Qual a rede ideal para o cálculo de proeminência? Não há resposta objetiva para
+Qual a rede ideal para a análise de influência? Não há resposta objetiva para
 essa pergunta. Cada rede é uma representação de um fenômeno social que vai além
 das ferramentas, mesmo sendo capaz de coletar e integrar todas as interações
-digitais, as pessoas ainda vão ser capazes de tomar um café juntas e nossa visão
+digitais, as pessoas ainda vão ser capazes de tomar café juntas e nossa visão
 será apenas parcial. Sendo assim, é evidente que cada representação mensurada é
 uma parte da informação e, portanto, capaz de descrever aspectos diferentes ou
 não do fenômeno. São essas variações entre as representações de redes que
 chamaremos de \textbf{critérios de escolha}.
 
 Para enteder sua utilidade, um exemplo: imaginemos que ao final da análise
-tenhamos duas ou mais representações da rede: uma textual e algumas não
-textuais. Para cada uma encontramos valores diferentes de proeminência,
-então qual usar? Colocando de outra forma, quanto de informação estarei perdendo
-caso considere apenas uma delas? 
+tenhamos duas ou mais representações da rede: uma textual e algumas não textuais.
+Para cada uma encontramos valores diferentes de proeminência, então qual usar?
+Colocando de outra forma, quanto de informação estarei perdendo caso considere
+apenas uma delas?
 
+\cite{Jain1997}\cite{Blum1997}\cite{Jain2000}
 Esse é um problema bastante similar ao que estudiosos de aprendizagem de máquina
 chamam de seleção de características (\textit{feature selection}) e que consiste
 em decidir quais subconjunto de todas as variáveis possíveis que podem ser
@@ -1536,6 +1472,85 @@ sucessivamente.
   \centering
     \includegraphics[width=\textwidth]{imgs/amigos-contatos.jpg}
 \end{figure}
+
+[revisar esta seção considerando o efeito da powerlaw das trhead, de que
+threads com muitas mensagens naturalmente atraem mais mensagens]
+
+\begin{figure}[h!]
+  \caption{A rede de atenção nos fóruns do A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/amigos-topicos.jpg}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{A rede de atenção nas narrativas do A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/amigos-narrativas.jpg}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{A rede de atenção total do A.M.I.G.O.S.}
+  \centering
+    \includegraphics[width=\textwidth]{imgs/amigos-atencao.jpg}
+\end{figure}
+
+\begin{table}[htbp]
+	\begin{boxedminipage}{\textwidth}
+		Utilizamos a formalização descrita na seção \ref{sec:formalizacao} sobre a
+		rede de teste do A.M.I.G.O.S. Os parâmetros foram:
+		\begin{itemize}
+		  \item $\alpha = 0.2$
+		  \item $\beta = ^1/_\text{(quantidade da abrangência)}$
+		  \item $\gamma = 0.5$
+		\end{itemize}
+		Foram consideradas os fórums e as narrativas (com seus comentários).
+		Narrativas são similares aos \textit{posts} de \textit{blog} convencionais.
+		Fizemos testes com várias possibilidades para $|i_k|$ pois a variância
+		indicava muito ruído. Pode se ter como exemplo de ruído uma mensagem de
+		fórum onde o autor copiou enorme lista com os nomes dos arquivos presentes na
+		comunidade, nem o autor dedicou muito tempo ao copiar a lista, nem os outros
+		membros devem ter dado muita atenção à lista inteira. Sendo assim, escolhemos
+		um $|i_k|$ que desprezasse interações com quantidades de palavras muito
+		destoantes. Fizemos $|i_k|=\tanh(0.5\lambda x)$ onde $x$ é a quantidade de
+		fato de palavras e $\lambda=-\frac{\ln(10^{-4})}{\overline{x} + 5\sigma}$,
+		$\overline{x}$ é a média e $\sigma$ é o desvio padrão, logo temos que pelo
+		menos 95\% das interações encontram-se entre 0 e 0.9999.
+		
+		Foi coletado a rede usando apenas a interação por tópicos, depois por
+		narrativas, depois as duas combinadas. A
+		tabela~\ref{tab:comparacao_contato_atencao} apresenta uma comparação entre os
+		quatro tipos de rede coletadas até agora.
+		
+% 		\large       % tamanho da fonte 
+		\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+		\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+		\caption{\it Comparação entre a rede de contatos e de atenção.}
+		\centering   % tabela centralizada
+		\begin{tabular}{| l | l | l | l | l |}
+		\hline
+		Métrica & Contatos & Fóruns & Narr. & Atenção \\ \hline
+		Densidade & 0.0136 & 0.1861 & 0.05 & 0.05\\
+		Reciprocidade & 0.5841 & 0.1120 & 0.83 & 0.79\\
+		Coef. Cluster & 0.554 & 0.45 & 0.67 & 0.66\\
+		Coef. Cluster Ponderada & 0.290 & 0.099 & 0.49 & 0.47\\
+		Distância (geodésica) & 4.499 & 1.0340 & 2.54 & 2.63\\
+		Coesão (Distância) & 0.183 & 0.983 & 0.43 & 0.41\\
+		Largura (Distância) & 0.817 & 0.017 & 0.57 & 0.59\\
+		Fitness (Núcleo/Periferia) & 0.257 & 0.0 & 0.44 & 0.44\\
+		\hline
+		\end{tabular}
+		\label{tab:comparacao_contato_atencao}
+		\flushleft
+		\normalsize
+		Nota-se uma maior adensamento da rede com encurtamento de caminhos nas redes
+		de atenção. Porém enquanto a que foi formada a partir das interações nos
+		fóruns tem menor coeficiente de \textit{clusterização} da rede com nenhum
+		indicativo de padrão núcleo/periferia, a proveniente das narrativas tendência
+		oposta. Pode-se dizer, que na rede do A.M.I.G.O.S. os fóruns descentralizam a
+		distribuição da atenção, enquanto que as narrativas atuam em sentido
+		contrário.
+	\end{boxedminipage}
+\end{table}
 
 
 \bibliographystyle{alpha}
