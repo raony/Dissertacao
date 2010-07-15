@@ -1304,20 +1304,80 @@ seja o mais apropriado.
 
 \subsubsection{Relevância na proeminência}
 
-Voltando a questão da proeminência, mesmo que consigamos definir os medianeiros,
-identificar os tipos de interação, mensurar a atenção investida e formalizar uma
-rede direcionada e valorada, ainda assim teremos que a métrica pode não ser
-significativa dependendo da parte da rede sobre o qual foi aplicada. Nota-se que
-o que as métricas de proeminência fazem é verificar o envolvimento do nó com os
-possíveis caminhos da rede como grafo. Nesse sentido, podemos dividir as
-métricas em dois grandes grupos: as radiais que medem seu envolvimento nas
-extremidades do caminho e as mediais que a fazem nos elos intermediários.
+Quando tudo o que temos é a rede, para medirmos proeminência dos atores
+precisamos ser capazes também de medir sua aplicabilidade. Vimos que
+para alguns tipos de métricas a rede precisa aprensetar determinado padrão de
+aglomeração. Por esta razão, podemos saber \textit{a priori} quando uma
+representação vai produzir métricas significativas de proeminência. É sabido que
+redes sociais são formadas por diversas comunidades sobrepostas
+\cite{Palla2005} e por isso uma representação com alto grau de núcleo/periferia
+nessas condições é pouco provável. Uma abordagem seria quebrar a rede em suas
+comunidades para a partir daí encontrar os atores centrais de cada uma, existem
+diversas ferramentas de decomposição da rede em \textit{k-cliques},
+\textit{k-plexes}, \textit{k-cores} para grafos valorados e
+direcionados (\cite{Peay1975}, \cite{Doreian1969}, \cite{Freeman1992};
+\textit{Apud} \cite{Wasserman}), mas todas elas tendem a ignorar atores
+pendentes que compõem grande parte da periferia. 
 
-[relações intertextuais entre os atores para a formação de comunidades de
-prática.]
+Um modelo mais interessante para o nosso problema é a chamada comunidade de
+prática. A teoria das comunidades de prática não nasceu no meio sociométrico e
+é voltada ao estudo da gestão do conhecimento, porém o trabalho de Schenkel
+\cite{Schenkel2002} revisa as características estruturais típicas das
+comunidades de prática e sugere quatro delas muito similares ao que estamos
+procurando:
 
-Quando tudo o que temos é a rede para medirmos proeminência em atores de redes
-sociais digitais precisamos de uma maneira de medir sua aplicabilidade.
+\begin{description}
+\item[Conectada] A rede possui apenas um componente;
+\item[Densa] A média das conexões por ator é alta; o que é considerado
+alto varia a depender do tamanho da rede e, por tanto, da periferia;
+\item[Compacto] A distância média entre os atores é menor do que o comum para
+\textit{small-worlds}, cujo crescimento é logarítmico em relação ao crescimento
+da rede;
+\item[Núcleo/Periferia] A rede exibe um padrão de núcleo periferia, isto é, alto
+grau de \textit{scale-freeness}.
+\end{description}
+
+Resta-nos encontrar maneiras de reconhecer essas comunidades e, mais importante,
+quais atores a compõem. Comunidades de prática foram definidas como: um grupo de
+pessoas informalmente e contextualmente conectadas a uma situação de trabalho em
+que estão empregando uma competência comum na perseguição de um objetivo comum
+\cite{Wenger1999}. Essas situações de trabalho, no entanto, podem ser
+generalizadas para situações que envolvem perícia, conhecimento técnico e por
+isso encontraremos comunidades de práticas não apenas no contexto organizacional,
+mas entre hobbistas também. O conhecimento em tais comunidades é compartilhado
+através de narrativas, conversação, \textit{mentoring} e aprendizagem por
+experimentos \cite{Brown1991} \cite{Lave1991a}, tais atividades podem ser
+transferidas para o meio digital \cite{Hildreth1998} \cite{Kimble2001} e deixam
+rastros que podem ser mensurados para reconstruir a rede \cite{Tyler2005}
+\cite{Welser2007}.
+
+É de se esperar, por tanto, que os membros de comunidades de prática se reunam
+em torno de focos de interação ondem possam compartilhar histórias, como por
+exemplo comunidades virtuais. Para diminuir o ambiguidade do termo, utilizaremos
+a palavra \textit{coletividade} quando nos referirmos à comunidade virtual na
+qual os atores se afiliam digitalmente. Podemos construir uma rede
+de coletividades, onde um nó está ligado a outro se possuem membros em comum,
+essa rede é menos sucetível à existência de pendentes e por isso podemos aplicar
+algoritmos como os descritos em \cite{Palla2005} para reconhecer coletividades
+que se aglomeram em grupos. Essas coletividades poderiam ser usadas depois para
+filtrar a rede de atores e verificar se atendem às características de
+comunidades de prática, aumentando a relevância da representação para a análise
+da influência.
+
+Outra possibilidade é tentar identificar o objetivo ou competência comum que
+reúne a comunidade através de mineração de texto. Possibilidades vão desde
+encontrar a distância relativa entre os atores baseados em quais palavras
+aparecem em seus textos \cite{Reichling2005}, até criar uma ontologia dos termos
+propriamente dito e a partir daí estimar uma conexão entre os atores
+\cite{Mori2006}. Em \cite{Spertus2005} os autores propõem o uso da métrica de
+similaridade para termos extraídos do texto TF-IDF \cite{Salton1989}
+\cite{Frakes1992} e em \cite{MATSUO2007} encontramos uma versão aperfeiçoada que
+diminui a necessidade de um \textit{corpus} da linguagem. A similaridade, dessa
+forma, pode indicar uma homofilia de interesses quando cruzada com as
+representações mensuradas das interações, essa homofilia poderia ser usada então
+para filtrar a rede de atores e, em verificando as características de comunidades
+de prática, também vir a aumentar a relevância da representação na análise da
+influência.
 
 \section{Conclusão e trabalhos futuros}
 
