@@ -1015,7 +1015,7 @@ devemos fazer mais algumas considerações:
 \end{itemize}
 
 \subsection{Critérios de escolha da representação}
-
+\label{sec:criterios}
 Qual a rede ideal para a análise de influência? Não há resposta objetiva para
 essa pergunta. Cada rede é uma representação de um fenômeno social que vai além
 das ferramentas, mesmo sendo capaz de coletar e integrar todas as interações
@@ -1031,40 +1031,64 @@ Para cada uma encontramos valores diferentes de proeminência, então qual usar?
 Colocando de outra forma, quanto de informação estarei perdendo caso considere
 apenas uma delas?
 
-\cite{Jain1997}\cite{Blum1997}\cite{Jain2000}
-Esse é um problema bastante similar ao que estudiosos de aprendizagem de máquina
-chamam de seleção de características (\textit{feature selection}) e que consiste
-em decidir quais subconjunto de todas as variáveis possíveis que podem ser
-utilizadas no treinamento da máquina são maximamente dependentes do resultado
-esperado, ou seja, é maximamente relevante e minimamente redundante. No nosso
-caso, porém, como afirmado acima, não há a rede \textbf{certa} e por isso a
-relevância de todas elas são iguais. O que podemos procurar, portanto, é um
-subconjunto com minimize a redundância. De acordo com o mais recente algoritmo
-de mRMR (\textit{minimal-redundancy-maximal-relevance}) define-se a mínima
-redundância como:
+A seleção de característica (\textit{feature selection}), na aprendizagem de
+máquina, é a tarefa de escolher quais variáveis serão consideradas no
+treinamento do sistema de forma a obter a melhor aproximação do modelo
+\cite{Jain1997} \cite{Blum1997} \cite{Jain2000}. De forma similar devemos
+ser capazes de selecionar redes que maximizem nossa análise de influência.
+Recentemente \cite{Peng2005} sugere que as variáveis sejam escolhidas de forma a
+maximizar a relevância e reduzir a redundância, mRMR
+(\textit{minimal-redundancy-maximal-relevance}). No nosso caso, não conhecemos o
+modelo da rede \textit{a priori} e a inferência é não-supervisionada. Por isso,
+não temos como avaliar a relevância de uma rede em relação a outra, todas são
+relevantes. Poderíamos considerar que redes que não demonstrem características
+de redes sociais poderiam ser vistas como fortemente enviesadas e por isso de
+baixa relevância, a saber: diâmetro pequeno (\textit{small world})
+\cite{Milgram1967} \cite{Watts1998}, poucos muito conectados e muitos pouco
+conectados (\textit{power-law}) \cite{Liljeros2001} \cite{Mitzenmacher2004} e
+atores com muitas conexões tendem a estar conectados uns aos outros
+(\textit{scale-free}) \cite{Li2005}.
+
+Por outro lado, a redundância da informação nos ajudará a separar as
+representações importantes das que não acrescentam informação substancial, ou
+seja, são redundantes. Sendo assim, nosso objetivo é formular alguns critérios
+de escolha, de modo que tenhamos em mãos o conjunto de representações
+minimamente redundante.
+
+\subsubsection{$\bigotimes$ Mínima redundância}
+
+Dada uma entrada de dados $D$, composta de $N$ amostras e $M$
+características $X=\{x_i, i=1,\ldots,M\}$, dizemos que um subconjunto $S
+\subseteq X$ de $m$ características $\{x_i\}$ é mínimamente redundante se atende
+a condição:
 
 \begin{equation}
 \label{def:min_redun}
-\min R(S), R = \frac{1}{|S|^2}\sum_{x_i, x_j \in S}I(x_i, x_j)
+\min R(S), R = \frac{1}{|S|^2}\sum_{x_i, x_j \in S}I(x_i;x_j)
 \end{equation}
 
-Onde $S$ é um subconjunto de características e $I(.)$ é a função de mútua
-informação. Por definição, a função de mútua informação mede a correlação entre
-duas variáveis aleatórias, porém, para o caso de redes sociais, o procedimento
-comum é modelar cada par de ator como uma variável separada cujos valores
-possíveis depende do tipo da rede. Se considerássemos cada rede como uma única
-variável que representasse a chance de dois atores quaisquer estarem ligados,
-então estaríamos nos limitando a uma correlação de suas densidades, o que de
-forma nenhuma é interessante para nosso objetivo já que o cálculo de
-proeminência varia consideravelmente a depender dos padrões das conexões,
-mesmo em redes com densidade iguais.
+$I(.)$ é a função de informação mútua e que mede uma forma de dependência entre
+duas variáveis aleatórias. Dado duas variáveis aleatórias discretas, $X$ e $Y$
+definimos a informação mútua de ambas como:
 
-Por esta razão, precisamos adaptar nossa função de mútua informação para
-considerar as peculiaridades das redes sociais. Basicamente temos duas opções:
-considerar a redundância das conexões ou calcular a proeminência para cada
-rede e a partir daí determinar sua correlação. 
+\begin{equation}
+\label{def:inf_mutua}
+I(X;Y) = \sum_{x\in X}\sum_{y\in Y}p(x,y)\log \frac{p(x,y)}{p(x)p(y)}
+\end{equation}
 
-\subsection{Redundância das conexões}
+Um dos inconvenientes de utilizar a função de mútua informação como definida é
+que no caso de redes sociais, cada conexão pode ser considerada como uma
+variável aleatória de resultados possíveis $\{0,1\}$ quando binária, ou um
+intervalo definido. Se assim for, não podemos dizer muito da probabilidade da
+relação existir ou não (por enquanto). Se por outro lado considerarmos a
+variável como sendo a prossibilidade da presença da relação (para simplificar) e
+cada par de atores uma amostra dessa variável, então estaremos encontrando
+dependência ou correlação sobre a densidade da rede apenas, deixando de lado
+importante padrões estruturais como a transitividade e a reciprocidade. Por esta
+razão, precisamos adaptar nossa função de mútua informação para considerar as
+peculiaridades das redes sociais. 
+
+\subsubsection{Redundância das conexões}
 
 Uma conexão é redundante quando pode ser encontrada em mais de uma rede. Mais do
 que isso, duas redes são redundantes quando além de compartilhar conexões também
@@ -1074,20 +1098,20 @@ desenvolvidas na literatura são: gráficos aleatórios exponenciais e procedime
 de atribuição quadrática, respectivamente $p*$ (\textit{exponential random
 graphs}) e \textit{QAP} (\textit{quadratic assignment procedure}).
 
-\subsubsection{redes discretas e/ou esparsas}
+\subsubsection{$\bigotimes$ Redes discretas e/ou esparsas}
 
-O primeiro é mais apropriado para redes binárias ou com valores discretos.
-Consiste em criar um modelo exponencial para a criação de grafos aleatórios a
-partir de um conjunto de parâmetros relacionados a \textbf{configurações} de
-interesse. Uma configuração pode ser desde a presença de uma conexão, até a
-quantidade de k-triângulos e outros padrões mais complexos. Cada configuração
-tem um parâmetro relacionado que pode ser negativo, indicando que a rede é tem
-tendência inversa à presença daquela configuração, nula representando a
-indiferença e positiva para uma tendência de mesmo modo. Assim sendo, cada
-parâmetro pode ser visto como tendências da rede em relação a, por exemplo:
-densidade, reciprocidade e transitividade da rede quando suas configurações
-relativas são respectivamente a presença de conexões, a mutualidade das
-relações e a presença de triângulos. 
+O primeiro é mais apropriado para redes binárias ou com valores discretos
+\cite{Dekker2007}. Consiste em criar um modelo exponencial para a criação de
+grafos aleatórios a partir de um conjunto de parâmetros relacionados a
+\textbf{configurações} de interesse \cite{ROBINS2007a}. Uma configuração pode ser
+desde a presença de uma conexão, até a quantidade de k-triângulos e outros
+padrões mais complexos. Cada configuração tem um parâmetro relacionado que pode
+ser negativo, indicando que a rede é tem tendência inversa à presença daquela
+configuração, nula representando a indiferença e positiva para uma tendência de
+mesmo modo. Assim sendo, cada parâmetro pode ser visto como tendências da rede em
+relação a, por exemplo: densidade, reciprocidade e transitividade da rede quando
+suas configurações relativas são respectivamente a presença de conexões, a
+mutualidade das relações e a presença de triângulos.
 
 Modelos exponenciais de gráficos aleatórios tem a seguinte forma geral:
 
@@ -1104,27 +1128,27 @@ forma; (iv) $k$ é uma constante de normalização que garante que
 (\ref{def:p_star_geral}) é uma distribuição de probabilidades. O vetor de
 parâmetros $\eta$ é estimado para o grafo a ser modelado, procurando maximizar
 a sua probabilidade, iterativamente a partir de simulações com o método Monte
-Carlo (\textit{Markov chain Monte Carlo maximum likelihood estimation}).
+Carlo (\textit{Markov chain Monte Carlo maximum likelihood estimation})
+\cite{ROBINS2007b} \cite{Snijders2006}.
 
 Voltando ao problema de minimizar a redundância, podemos considerar o vetor
-$\eta$ no cálculo de ``informação mútua'' entre as redes, no sentido de que
-redes possuem a mesma informação se compartilham conexões e tendências similares
-ao aparecimento de padrões estruturais. Derivamos $I_D$ para redes discretas:
+$\eta$ no cálculo de ``informação mútua'' entre as redes, no sentido de que redes
+que possuem a mesma informação compartilham conexões e tendências similares ao
+aparecimento de padrões estruturais. Derivamos $I_D$ para redes discretas:
 
 \begin{equation}
 \label{def:MI_discreto}
-I_D(x, y) =\frac{\sum_{i,j = 1}^n x_{ij}y_{ij}}{\sum_{i,j = 1}^n
-y_{ij}\sum_{i,j=1}^n x_{ij}} \rho(\eta_x, \eta_y)
+I_D(x, y) = sim(x,y) \rho(\eta_x, \eta_y)
 \end{equation}
 
-Onde (i) o numerador é a quantidade de conexões presentes em ambas $x$ e $y$;
-(ii) o denominador da fração é a soma de todas as conexões de $x$ e todas de
-$y$; e (iii) é a correlação linear entre os parâmetros $\eta$ estimados para $x$
-e os estimados para $y$. Substituindo (\ref{def:MI_discreto}) em
-(\ref{def:min_redun}) temos um modelo para o conjunto de redes com mínima
-redundância.
+Onde (i) $sim(.)$ é a similaridade de Jaccard (\cite{Jaccard1912}; \textit{Apud}
+\cite{Berger-Wolf2006}), utilizada para comparar redes sociais e definida como
+sendo $\frac{2|x\cap y|}{|x| + |y|}$; (ii) $\rho$ é a correlação de Pearson para
+os vetores de parâmetros $\eta$ estimados para $x$ e os estimados para $y$.
+Substituindo (\ref{def:MI_discreto}) em (\ref{def:min_redun}) temos um modelo
+para o conjunto de redes discretas com mínima redundância.
 
-\subsubsection{redes contínuas densas}
+\subsubsection{Redes contínuas densas}
 
 Para rede contínuas, um segundo método pode ser utilizado para calcular a
 correlação diretamente. O procedimento de atribuição quadrática (\textit{QAP})
@@ -1136,70 +1160,149 @@ Y = \alpha X + \epsilon
 \end{equation}
 
 A probabilidade de que a correlação encontrada não seja apenas coincidência é
-acessada através da permuta das colunas da matriz seguindo algoritmo apropriado.
-Não é nosso objetivo nos aprofundar na especifidades do teste, apenas é pertinente
-considerarmos a  utilização da correlação linear como valor para a informação
-mútua em \ref{def:min_redun} para redes de valores contínuos densos.
+acessada através da permuta das colunas da matriz seguindo algoritmo apropriado
+\cite{Anderson2001} \cite{Dekker2007}. Não é nosso objetivo nos aprofundar na
+especifidades do teste, apenas é pertinente considerarmos a  utilização da
+correlação linear $\alpha$ como valor para a informação mútua em
+(\ref{def:min_redun}) para redes de valores contínuos densos.
 
-\subsection{Correlação de Proeminência}
+\section{Mineração dos dados ou análise da influência}
 
-O critério anterior busca relacionar as características da rede em busca de
-informações redundante, porém também é interessante observar a relação que há
-entre o produto final da análise das redes que são as medições de proeminência.
-Para esse fim utilizaremos também a correlação linear de Pearson de forma que
-duas redes podem estar positivamente relacionadas, aparentemente independentes
-ou negativamente relacionadas. Um critério baseado na proeminência pode
-correlacionar redes estruturalmente bastante diferentes, mas que resultam no
+Após as representações haverem sido mensuradas, chegamos no objetivo de todo o
+processo: a análise da influência. Como já foi dito em seções anteriores, o
+entendimento da dinâmica da influência na rede pode facilitar a criação de
+campanhas publicitárias virais baseadas no boca-a-boca; a difusão de novas
+informações para a comunidade, por exemplo, comunicação interna corporativa;
+reconhecimento de especialistas e atores chaves na organização; otimizar buscas
+\cite{Kirchhoff2009}. Abordagens recentes focam em modelos probabilísticos e
+comportamentais para estimar a dinâmica da influência. Métodos mais tradicionais
+de redes sociais voltaram-se para métricas individuais de proeminência para
+reconhecer atores chave. Em \cite{Kempe2003} encontramos uma comparação
+mostrando que apesar de encontrar um subconjunto ótimo de $n$ atores tal que
+maximize a dispersão da influência seja um problema $NP$, algoritmos que
+aproximam a solução para modelos dinâmicos superam soluções baseadas na simples
+escolha de atores centrais em 18\% (para a métrica de grau) e 40\% (para a
+métrica de proximidade). Essas, porém, são métricas tidas na literatura como
+sendo de pouca expressividade, o que deixa aberta ainda a possibilidade real da
+utilização de métricas de proeminência na análise de influência de redes sociais
+digitais.
+
+\subsection{Sobre Proeminência}
+
+Proeminência é a característica dos relacionamentos de um ator que o põe em
+evidência para outros atores na rede \cite{Wasserman}. A proeminência,
+academicamente, foi separada em dois aspectos: centralidade e prestígio.
+Centralidade é como o ator se posiciona na rede, sua interação e envolvimento com
+os outros. Prestígio é como os outros atores se posicionam em relação a ele, como
+interagem e envolvem-se com ele \cite{Knoke1983}.
+
+Nosso objetivo, identificar atores chaves para processos de influência da rede,
+está relacionado diretamente com o conceito de proeminência de forma que podemos
+dizer que a usaremos como uma aproximação da influência do ator na transmissão de
+conhecimento, inovações e opiniões pela rede. Por estes motivos, cuidado especial
+deve ser tomado sobre a forma como calcularemos a proeminência e que
+características são esperadas da representação da rede mensurada.
+
+Durante décadas pesquisadores de redes sociais se debruçaram sobre o estudo da
+proeminência, desenvolvendo inúmeras métricas que conjuntamente são chamadas de
+métricas de centralidade. Quando calculadas considerando os caminhos que
+\textbf{saem} do ator, referem-se a sua centralidade propriamente dita. Quando
+considera-se os caminhos que \textbf{chegam} no ator, referem-se ao seu
+prestígio. Não obstante tenha o comum senso de que essas métricas referem-se de
+alguma forma à proeminência do ator, a forma específica tem ficado a cargo de
+cada pesquisador que já atribuiu ao seu resultado interpretações como autonomia,
+controle, risco, influência, corretagem (\textit{brokerage}), independência,
+etc.
+
+Freeman revisou as métricas existentes à época \cite{Freeman1979} e as compilou
+em três principais centralidades: por grau, por proximidade (\textit{closeness})
+e por intermediação (\textit{betweenness}). Interpretando seus resultados em
+relação ao quanto o grafo se aproxima de uma estrutura de estrela
+(Figura~\ref{fig:star}), sua visão de centralização ideal, onde suas métricas
+alcançam o máximo.
+
+\begin{figure}[h!]
+  \caption{Gráfico estrela}
+  \label{fig:star}
+  \centering
+    \includegraphics[width=0.3\textwidth]{imgs/star.png}
+\end{figure}
+
+Recentemente, Borgatti e Everett \cite{Borgatti2006} nos ofereceram uma
+outra reposta para a questão: O que as métricas de centralidade medem? E
+chegaram a conclusão que todas elas investigam o relacionamento do nó com os
+possíveis caminhos do grafo. Em sua tipologia para a classificação das
+métricas de centralidade, propõem quatro dimensões: tipo do caminho,
+propriedade do caminho, tipo do envolvimento e forma de agregação. Em outras
+palavras, toda métrica de centralidade é uma forma de agregar uma propriedade
+dos caminhos de determinado tipo em que o nó tem um determinado envolvimento.
+Das quatro dimensões, duas são de maior importância: propriedade do caminho e
+tipo de envolvimento. 
+
+\subsubsection{Tipo de envolvimento} 
+
+O tipo de envolvimento é a dimensão de classificação proposta por Borgatti que
+se traduz na maior variância nos resultados. Pode ser de dois tipos: radial ou
+medial.
+
+Métricas radiais são as que analisam os caminhos em que o nó está numa das
+pontas, ou seja, que saem ou chegam nele. Exemplos de métricas radiais são as
+centralidades de grau e proximidade de Freeman. A análise de Borgatti et al veio
+confirmar o que as evidências empíricas já sugeriam, que as métricas radiais
+representam a parcela de responsabilidade que o nó tem na coesão total da rede e
+que, por este motivo, se enfraquecem a medida que a rede não se adequa ao padrão
+de núcleo-periferia \cite{Nakao1990}.
+
+Já as ditas mediais analisam os caminhos que passam pelo nó, classificando-o em
+seu papel de \textit{gateway} entre partes da rede. O \textit{betweenness} de
+Freeman é um exemplo de métrica medial. São mais estáveis em relação à
+característica de núcleo-periferia, por outro lado tendem a dar maior importância
+a atores que conectam grupos distintos, mas que se encontram na periferia dos
+mesmos.
+
+Os dois tipos são complementares e mais de uma métrica devem ser combinadas
+(\cite{Stephenson1989}; \textit{Apud} \cite{Wasserman}). Pelo fato de que
+usaremos métricas radiais de centralidade para estimar a influência do ator na
+rede, já é possível derivarmos uma primeira restrição sobre a representação que
+foi mensurada:
+
+\begin{quotation}
+Quanto mais próximo a representação estiver do modelo de núcleo-periferia,
+melhor será a aplicabilidade das métricas radiais de centralidade.
+\end{quotation}
+
+\subsubsection{Propriedade do caminho}
+
+Borgatti define dois tipos de propriedade: distância e volume. A
+propriedade do tipo distância mais comum é a geodésica que é a quantidade de
+arcos presentes no menor caminho entre um ator e outro. Volume refere-se à
+quantidade de caminhos entre os nós. As centralidades por grau e
+\textit{betweenness} são exemplos de métricas que usam o volume dos caminhos,
+enquanto que \textit{closeness} usa distância.
+
+O critério de escolha depende da aplicação. Para o nosso caso, queremos modelar o
+efeito da influência entre os pares na transmissão de informação. Nesse sentido,
+quanto mais atores próximos estiverem tentando convencer alguém de algo, maior
+será sua influência sobre este \cite{Watts2007}. Daí temos, naturalmente, a
+preferência sobre métricas relacionadas a volume, no lugar de distância, já que
+representa diretamente a quantidade de caminhos que existem entre os nós.
+
+\subsubsection{Redundância na proeminência}
+
+Vimos na seção \ref{sec:criterios} como calcular a redundância das conexões entre
+representações disponíveis, porém também é interessante observar a relação que há
+entre os resultados da análise de cada rede. Para esse fim utilizaremos também a
+correlação linear de Pearson entre os vetores de proeminência calculado de forma
+que duas redes podem estar positivamente relacionadas, aparentemente
+independentes ou negativamente relacionadas. Um critério baseado na proeminência
+pode correlacionar redes estruturalmente bastante diferentes, mas que resultam no
 sobressaimento dos mesmos atores em termos de importância. Porém, se o objetivo
 for minizar a redundância do ponto de vista da ordenação final dos atores por
 grau de proeminência para a utilização em outros algoritmos como por exemplo,
 escolha de subconjunto ótimo para marketing viral, então talvez este critério
 seja o mais apropriado.
 
-\begin{table}[htbp]
-	\begin{boxedminipage}{\textwidth}
-	No caso do A.M.I.G.O.S. só temos duas representações da rede, a primeira 
-	proveniente da interação não textual ``contatos'', a segunda é a união de duas
-	interações textuais: fóruns e narrativas. Sendo assim, só podemos avaliar o
-	quão diferentes são as redes e por isso mesmo, o quanto de informação vamos
-	perder escolhendo uma ou outra.
-	
-	Como a rede de contatos é binária a correlação linear fica prejudicada devido a
-	limitação do modelo em relação a dados tão dicotômicos (0 ou 1), porém não
-	temos uma implementação disponível de um algoritmo de estimativa no modelo $p*$
-	para a nova configuração e executamos um teste de correlação QAP entre as duas
-	redes. Verificamos que a rede de contatos e de atenção possuem um coeficiente
-	de correlação positiva de 0.27, que quer dizer que a chance de encontrarmos um
-	laço entre dois atores em ambas as redes é de 27\%. A chance de uma correlação
-	nessa proporção acontecer entre as redes considerando uma combinação aleatória
-	é menor que 0.001 e $R^2$ de apenas 0.07, parte devido à dicotomia dos dados.
-	
-	Também realizamos um teste de regressão para as duas métricas de proeminência
-	escolhidas, o índice de poder de Bonacich e o de \textit{betweeness} de
-	Freeman. Encontramos nenhuma correlação entre as redes para o primeiro,
-	indicando que quanto a influência ambas as redes são bastante distintas. Já em
-	termos de centralidade, pudemos verificar uma correlação positiva de 0.47, com
-	$R^2=0.22$ e $p. < 0.0001$.
-	
-	Com essas medidas podemos avaliar melhor a perda de informação que teremos ao
-	escolher apenas uma das redes. Não há necessidade de buscar um subconjunto de
-	redes que minimize a redundância por que só temos 2 redes.
-	
-	\end{boxedminipage}
-\end{table}
-
-\subsection{Conclusão e trabalhos futuros}
-
-Cada dia mais e mais interações entre pessoas ocorre em meio digital, essas
-interações podem proporcionar a mensuração de diversas representações da rede
-social que interliga estes indivíduos. O resultado deste processo pode alimentar
-novas ações no campo do marketing, modelos sobre disseminação de idéias,
-doenças e reconhecimento de especialistas. A seleção apropriada de medianeiros
-para o recolhimento 
-
-\title{PARTE II}
-
-\section{outros problemas em relação às métricas de proeminência}
+\subsubsection{Relevância na proeminência}
 
 Voltando a questão da proeminência, mesmo que consigamos definir os medianeiros,
 identificar os tipos de interação, mensurar a atenção investida e formalizar uma
@@ -1215,6 +1318,52 @@ prática.]
 
 Quando tudo o que temos é a rede para medirmos proeminência em atores de redes
 sociais digitais precisamos de uma maneira de medir sua aplicabilidade.
+
+\section{Conclusão e trabalhos futuros}
+
+Cada dia mais e mais interações entre pessoas ocorre em meio digital, essas
+interações podem proporcionar a mensuração de diversas representações da rede
+social que interliga estes indivíduos. O resultado deste processo pode alimentar
+novas ações no campo do marketing, modelos sobre disseminação de idéias,
+doenças e reconhecimento de especialistas. A seleção apropriada de medianeiros
+para o recolhimento 
+
+\title{PARTE II}
+
+\subsection{Métricas de proeminência}
+
+Escolhemos duas medidas para a análise de influência neste trabalho, uma para
+centralidade e outra para prestígio. Ambas são do tipo volume, isto é, medem a
+quantidade de caminhos, o que representa melhor o fenômeno de pressão social na
+difusão de inovações. Para centralidade, utilizaremos a métrica medial
+\textit{flow betweenness} que expande o conceito de \textit{betweenness} para
+grafos não-binários \cite{Freeman1991} levando em consideração não apenas
+geodésicas mas todos os caminhos que passam pelo ator, utilizando o peso das
+arestas para medir a ``vazão'' que ``flui'' pelo mesmo. Para prestígio,
+escolhemos a métrica radial de poder de Bonacich \cite{Bonacich1987} que
+considera a soma dos caminhos que chegam ponderada pelo poder dos atores que a
+compõem.
+
+A interpretabilidade de tais métricas está diretamente relacionada com o que está
+sendo medido na representação da rede. É fácil perceber o que o poder de Bonacich
+significa se o arco do ator $i$ para o ator $j$ quer dizer que $i$ buscou os
+conselhos de $j$. Por esta razão derivamos uma segunda restrição:
+
+\paragraph{\emph{Quanto melhor a representação capturar a força dos
+relacionamentos, tanto melhor será a aplicabilidade das métricas de proeminência;
+Falhar em estimar a força das conexões levará a seleção de atores chaves em uma
+miríade de interações irrelevantes. Da mesma forma, representar as conexões de
+forma binária pode causar o enviesamento da rede ou para a superestimação de sua
+força ou para a subestimação da mesma.}}
+
+\cite{Cooper1997} e \cite{Silverstein2000} - artigo doido sobre formas de
+encontrar relacao causal entre variaveis, pode ser usado para dizer que tal
+influencia causou tal reacao
+
+\cite{Friedman1999} - traz um modelo interessante baseado em probabilidade da
+relacao para aprender relacoes entre atributos de atores, baseado em sua
+aparicao estatistica no banco de dados, pode ser util usar isso para ajudar na
+mensuracao
 
 
 % \center
@@ -1272,138 +1421,6 @@ utilizadas são também informações públicas na rede.
 
 \cite{Spertus2005} - similaridade em orkut
 
-\section{Sobre Proeminência}
-
-Proeminência é a característica dos relacionamentos de um ator que o põe em
-evidência para outros atores na rede \cite{Wasserman}. A proeminência,
-academicamente, foi separada em dois aspectos: centralidade e prestígio.
-Centralidade é como o ator se posiciona na rede, sua interação e envolvimento com
-os outros. Prestígio é como os outros atores se posicionam em relação a ele, como
-interagem e envolvem-se com ele \cite{Knoke1983}.
-
-Nosso objetivo, identificar atores chaves para processos de influência da rede,
-está relacionado diretamente com o conceito de proeminência de forma que podemos
-dizer que a usaremos como uma aproximação da influência do ator na transmissão de
-conhecimento, inovações e opiniões pela rede. Por estes motivos, cuidado especial
-deve ser tomado sobre a forma como calcularemos a proeminência e que
-características são esperadas da representação da rede que será mensurada.
-
-Durante décadas pesquisadores de redes sociais se debruçaram sobre o estudo da
-proeminência, desenvolvendo inúmeras métricas que conjuntamente são chamadas de
-métricas de centralidade. Quando calculadas considerando os caminhos que
-\textbf{saem} do ator, referem-se a sua centralidade propriamente dita. Quando
-considera-se os caminhos que \textbf{chegam} no ator, referem-se ao seu
-prestígio. Não obstante tenha o comum senso de que essas métricas referem-se de
-alguma forma à proeminência do ator, a forma específica tem ficado a cargo de
-cada pesquisador que já atribuiu ao seu resultado interpretações como autonomia,
-controle, risco, influência, corretagem (\textit{brokerage}), independência,
-etc.
-
-Freeman revisou as métricas existentes à época \cite{Freeman1979} e as compilou
-em três principais centralidades: por grau, por proximidade (\textit{closeness})
-e por intermediação (\textit{betweenness}). Interpretando seus resultados em
-relação ao quanto o grafo se aproxima de uma estrutura de estrela
-(Figura~\ref{fig:star}), sua visão de centralização ideal, onde suas métricas
-alcançam o máximo.
-
-\begin{figure}[h!]
-  \caption{Gráfico estrela}
-  \label{fig:star}
-  \centering
-    \includegraphics[width=0.3\textwidth]{imgs/star.png}
-\end{figure}
-
-Recentemente, Borgatti e Everett \cite{Borgatti2006} nos ofereceram uma
-outra reposta para a questão: O que as métricas de centralidade medem? E
-chegaram a conclusão que todas elas investigam o relacionamento do nó com os
-possíveis caminhos do grafo. Em sua tipologia para a classificação das
-métricas de centralidade, propõem quatro dimensões: tipo do caminho,
-propriedade do caminho, tipo do envolvimento e forma de agregação. Em outras
-palavras, toda métrica de centralidade é uma forma de agregar uma propriedade
-dos caminhos de determinado tipo em que o nó tem um determinado envolvimento.
-Das quatro dimensões, duas são de maior importância: propriedade do caminho e
-tipo de envolvimento. 
-
-\subsection{Tipo de envolvimento} 
-
-O tipo de envolvimento é a dimensão de classificação proposta por Borgatti que
-se traduz na maior variância nos resultados. Pode ser de dois tipos: radial ou
-medial.
-
-Métricas radiais são as que analisam os caminhos em que o nó está numa das
-pontas, ou seja, que saem ou chegam nele. Exemplos de métricas radiais são as
-centralidades de grau e proximidade de Freeman. A análise de Borgatti et al veio
-confirmar o que as evidências empíricas já sugeriam, que as métricas radiais
-representam a parcela de responsabilidade que o nó tem na coesão total da rede e
-que, por este motivo, se enfraquecem a medida que a rede não se adequa ao padrão
-de núcleo-periferia \cite{Nakao1990}.
-
-Já as ditas mediais analisam os caminhos que passam pelo nó, classificando-o em
-seu papel de \textit{gateway} entre partes da rede. O \textit{betweenness} de
-Freeman é um exemplo de métrica medial. São mais estáveis em relação à
-característica de núcleo-periferia, por outro lado tendem a dar maior importância
-a atores que conectam grupos distintos, mas que se encontram na periferia dos
-mesmos.
-
-Os dois tipos são complementares e mais de uma métrica devem ser combinadas
-(\cite{Stephenson1989}; \textit{Apud} \cite{Wasserman}). Pelo fato de que
-usaremos métricas radiais de centralidade para estimar a influência do ator na
-rede, já é possível derivarmos uma primeira restrição sobre a representação que
-será mensurada:
-\paragraph{
-\emph{Quanto mais próximo a representação estiver do modelo de núcleo-periferia,
-melhor será a aplicabilidade das métricas radiais de centralidade.}}
-
-\subsection{Propriedade do caminho}
-
-Borgatti define dois tipos de propriedade: distância e volume. A
-propriedade do tipo distância mais comum é a geodésica que é a quantidade de
-arcos presentes no menor caminho entre um ator e outro. Volume refere-se à
-quantidade de caminhos entre os nós. As centralidades por grau e
-\textit{betweenness} são exemplos de métricas que usam o volume dos caminhos,
-enquanto que \textit{closeness} usa distância.
-
-O critério de escolha depende da aplicação. Para o nosso caso, queremos modelar
-o efeito da influência entre os pares na transmissão de informação. Nesse
-sentido, quanto mais atores próximos estiverem tentando convencer alguém de
-algo, maior será sua influência sobre este \cite{Watts2007}. Daí temos,
-naturalmente, a preferência sobre métricas relacionadas a volume, no lugar de distância, já que
-representa diretamente a quantidade de caminhos que existem entre os nós.
-
-\subsection{Métricas de proeminência}
-
-Escolhemos duas medidas para a análise de influência neste trabalho, uma para
-centralidade e outra para prestígio. Ambas são do tipo volume, isto é, medem a
-quantidade de caminhos, o que representa melhor o fenômeno de pressão social na
-difusão de inovações. Para centralidade, utilizaremos a métrica medial
-\textit{flow betweenness} que expande o conceito de \textit{betweenness} para
-grafos não-binários \cite{Freeman1991} levando em consideração não apenas
-geodésicas mas todos os caminhos que passam pelo ator, utilizando o peso das
-arestas para medir a ``vazão'' que ``flui'' pelo mesmo. Para prestígio,
-escolhemos a métrica radial de poder de Bonacich \cite{Bonacich1987} que
-considera a soma dos caminhos que chegam ponderada pelo poder dos atores que a
-compõem.
-
-A interpretabilidade de tais métricas está diretamente relacionada com o que está
-sendo medido na representação da rede. É fácil perceber o que o poder de Bonacich
-significa se o arco do ator $i$ para o ator $j$ quer dizer que $i$ buscou os
-conselhos de $j$. Por esta razão derivamos uma segunda restrição:
-
-\paragraph{\emph{Quanto melhor a representação capturar a força dos
-relacionamentos, tanto melhor será a aplicabilidade das métricas de proeminência;
-Falhar em estimar a força das conexões levará a seleção de atores chaves em uma
-miríade de interações irrelevantes. Da mesma forma, representar as conexões de
-forma binária pode causar o enviesamento da rede ou para a superestimação de sua
-força ou para a subestimação da mesma.}}
-
-\cite{Cooper1997} e \cite{Silverstein2000} - artigo doido sobre formas de
-encontrar relacao causal entre variaveis, pode ser usado para dizer que tal
-influencia causou tal reacao
-
-\cite{Friedman1999} - traz um modelo interessante baseado em probabilidade da
-relacao para aprender relacoes entre atributos de atores, baseado em sua
-aparicao estatistica no banco de dados, pode ser util usar isso para ajudar na
-mensuracao
 
 \begin{table}[htbp]
 	\begin{boxedminipage}{\textwidth}
@@ -1549,6 +1566,38 @@ threads com muitas mensagens naturalmente atraem mais mensagens]
 		oposta. Pode-se dizer, que na rede do A.M.I.G.O.S. os fóruns descentralizam a
 		distribuição da atenção, enquanto que as narrativas atuam em sentido
 		contrário.
+	\end{boxedminipage}
+\end{table}
+
+\begin{table}[htbp]
+	\begin{boxedminipage}{\textwidth}
+	No caso do A.M.I.G.O.S. só temos duas representações da rede, a primeira 
+	proveniente da interação não textual ``contatos'', a segunda é a união de duas
+	interações textuais: fóruns e narrativas. Sendo assim, só podemos avaliar o
+	quão diferentes são as redes e por isso mesmo, o quanto de informação vamos
+	perder escolhendo uma ou outra.
+	
+	Como a rede de contatos é binária a correlação linear fica prejudicada devido a
+	limitação do modelo em relação a dados tão dicotômicos (0 ou 1), porém não
+	temos uma implementação disponível de um algoritmo de estimativa no modelo $p*$
+	para a nova configuração e executamos um teste de correlação QAP entre as duas
+	redes. Verificamos que a rede de contatos e de atenção possuem um coeficiente
+	de correlação positiva de 0.27, que quer dizer que a chance de encontrarmos um
+	laço entre dois atores em ambas as redes é de 27\%. A chance de uma correlação
+	nessa proporção acontecer entre as redes considerando uma combinação aleatória
+	é menor que 0.001 e $R^2$ de apenas 0.07, parte devido à dicotomia dos dados.
+	
+	Também realizamos um teste de regressão para as duas métricas de proeminência
+	escolhidas, o índice de poder de Bonacich e o de \textit{betweeness} de
+	Freeman. Encontramos nenhuma correlação entre as redes para o primeiro,
+	indicando que quanto a influência ambas as redes são bastante distintas. Já em
+	termos de centralidade, pudemos verificar uma correlação positiva de 0.47, com
+	$R^2=0.22$ e $p. < 0.0001$.
+	
+	Com essas medidas podemos avaliar melhor a perda de informação que teremos ao
+	escolher apenas uma das redes. Não há necessidade de buscar um subconjunto de
+	redes que minimize a redundância por que só temos 2 redes.
+	
 	\end{boxedminipage}
 \end{table}
 
