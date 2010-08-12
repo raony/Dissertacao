@@ -1,0 +1,35 @@
+\select@language {brazil}
+\contentsline {chapter}{Lista de Acr\IeC {\^o}nimos}{xii}
+\contentsline {chapter}{\numberline {1}Introdu\IeC {\c c}\IeC {\~a}o}{1}
+\contentsline {chapter}{\numberline {2}Redes Sociais}{2}
+\contentsline {section}{\numberline {2.1}$\DOTSB \bigotimes@ \slimits@ $ Alguma Formaliza\IeC {\c c}\IeC {\~a}o}{3}
+\contentsline {section}{\numberline {2.2}Redes sociais digitais}{3}
+\contentsline {chapter}{\numberline {3}Mensurando a rede}{5}
+\contentsline {chapter}{\numberline {4}Entendendo o dom\IeC {\'\i }nio do problema}{7}
+\contentsline {section}{\numberline {4.1}Dificuldades e crit\IeC {\'e}rios na mensura\IeC {\c c}\IeC {\~a}o}{7}
+\contentsline {chapter}{\numberline {5}Entendendo os dados}{13}
+\contentsline {section}{\numberline {5.1}Por uma tipologia das intera\IeC {\c c}\IeC {\~o}es digitais}{14}
+\contentsline {subsection}{\numberline {5.1.1}Por conte\IeC {\'u}do}{15}
+\contentsline {subsection}{\numberline {5.1.2}Por abrang\IeC {\^e}ncia}{16}
+\contentsline {subsection}{\numberline {5.1.3}Por inten\IeC {\c c}\IeC {\~a}o}{17}
+\contentsline {subsection}{\numberline {5.1.4}Intera\IeC {\c c}\IeC {\~o}es passivas}{17}
+\contentsline {subsection}{\numberline {5.1.5}$\DOTSB \bigotimes@ \slimits@ $ Nota\IeC {\c c}\IeC {\~a}o}{18}
+\contentsline {section}{\numberline {5.2}Uma teoria da aten\IeC {\c c}\IeC {\~a}o como capital social}{18}
+\contentsline {subsection}{\numberline {5.2.1}$\DOTSB \bigotimes@ \slimits@ $ Formaliza\IeC {\c c}\IeC {\~a}o}{20}
+\contentsline {chapter}{\numberline {6}Prepara\IeC {\c c}\IeC {\~a}o dos dados}{21}
+\contentsline {section}{\numberline {6.1}Intera\IeC {\c c}\IeC {\~o}es n\IeC {\~a}o-textuais}{22}
+\contentsline {section}{\numberline {6.2}Intera\IeC {\c c}\IeC {\~o}es textuais}{23}
+\contentsline {subsection}{\numberline {6.2.1}$\DOTSB \bigotimes@ \slimits@ $ Formaliza\IeC {\c c}\IeC {\~a}o}{25}
+\contentsline {section}{\numberline {6.3}Crit\IeC {\'e}rios de escolha da representa\IeC {\c c}\IeC {\~a}o}{27}
+\contentsline {subsection}{\numberline {6.3.1}$\DOTSB \bigotimes@ \slimits@ $ M\IeC {\'\i }nima redund\IeC {\^a}ncia}{28}
+\contentsline {subsection}{\numberline {6.3.2}Redund\IeC {\^a}ncia das conex\IeC {\~o}es}{29}
+\contentsline {subsection}{\numberline {6.3.3}$\DOTSB \bigotimes@ \slimits@ $ Redes discretas e/ou esparsas}{29}
+\contentsline {subsection}{\numberline {6.3.4}Redes cont\IeC {\'\i }nuas densas}{30}
+\contentsline {chapter}{\numberline {7}An\IeC {\'a}lise da influ\IeC {\^e}ncia}{31}
+\contentsline {section}{\numberline {7.1}Sobre Proemin\IeC {\^e}ncia}{31}
+\contentsline {subsection}{\numberline {7.1.1}Tipo de envolvimento}{33}
+\contentsline {subsection}{\numberline {7.1.2}Propriedade do caminho}{33}
+\contentsline {subsection}{\numberline {7.1.3}Redund\IeC {\^a}ncia na proemin\IeC {\^e}ncia}{34}
+\contentsline {subsection}{\numberline {7.1.4}Relev\IeC {\^a}ncia na proemin\IeC {\^e}ncia}{34}
+\contentsline {chapter}{\numberline {8}Conclus\IeC {\~a}o e trabalhos futuros}{37}
+\contentsline {chapter}{Bibliografia}{39}

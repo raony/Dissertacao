@@ -1,0 +1,52 @@
+\chapter{Mensurando a rede}
+\label{ch:kddm}
+
+\emph{Knowledge discovery} é o processo maior ``... não-trivial de identificar,
+em dados, padrões válidos, novos, potencialmente úteis e ultimamente
+compreensíveis'' \citep{Fayyad1996} e mineração de dados é uma de suas etapas.
+Chamamos de mensuração da rede social digital o processo de minerar dados
+proveninentes de meios digitais de interação social para formar uma
+representação. Na última década alguns métodos norteadores para os projetos de
+mineração de dados foram propostos, dentre os quais escolhemos o método de 6
+passos descritos por \cite{Cios2005} e que consiste em sua forma geral:
+
+\begin{description}
+\item[1. Entendendo o domínio do problema]Neste passo devemos determinar os
+objetivos do projeto e aprender sobre as possíveis técnicas conhecidas
+para alcançá-los.
+\item[2. Entendendo os dados]Este passo inclue coletar os dados, decidir quais
+serão utilizados, priorizar atributos, verificar sua utilidade em relação aos
+objetivos. Os dados precisam ser verificados em termos de completude,
+plausabilidade, etc.
+\item[3. Preparação dos dados]Este é o passo chave do qual o sucesso de todo o
+processo depende; Ele geralmente consome metade de todo os esforço da mineração.
+Aqui, decidimos quais dados serão usados como entradas para quais técnicas de
+mineração do passo 4. O que pode envolver levantar amostragem de dados, executar
+testes de correlação e significância, remoção e correção de ruído, etc. Os dados
+tratados depois poderão serem processados para a seleção de características,
+algoritmos de extração para redução da dimensionalidade dos dados, derivação de
+novos atributos (discretização) e agregação dos dados (granularização). O
+resultado é um novo conjunto de dados que atendem aos requesitos específicos
+para servir de entrada às ferramentas de mineração selecionadas.
+\item[4. Mineração dos dados]Aplicação dos métodos de mineração selecionados.
+Apesar de ser através das ferramentas de mineração que as novas informações
+são descobertas, sua utilização normalmente envolve menos esforço do que
+preparar os dados. Ferramentas de mineração reunem diversos tipos de algoritmos
+como conjuntos \emph{fuzzy}, métodos Bayesianos, computação genética,
+aprendizado de máquina, redes neurais, etc. Para uma visão mais detalhada desses
+algoritmos, nos referimos a \cite{JiaweiHan2006}.
+\item[5. Avaliação do conhecimento descoberto]Interpretação dos
+resultados, verificando a relevância da informação encontrada. Somente os
+modelos aprovados são mantidos, todo o processo pode ser revisitado e ações
+alternativas que levem à melhoria dos resultados podem ser identificadas.
+\item[6. Usando o conhecimento descoberto]Entrega do conhecimento produzido.
+Criação de um plano para monitorar sua utilização, documentação do projeto,
+extender sua aplicação para outros domínios.
+\end{description}
+
+O método de 6 passos para mineração de dados foi escolhido dentre outros
+possíveis devido ao seu viés acadêmico e modelo iterativo com ciclos de
+\emph{feedback} explícitos que orientam o retorno a passos anteriores para a
+melhoria do processo \citep{KURGAN2006}. Mostraremos agora, para cada passo do
+método quais as considerações necessárias, dificuldades e possíveis soluções no
+contexto da mensuração de redes sociais digitais para a análise da influência.

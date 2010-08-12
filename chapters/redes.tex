@@ -1,0 +1,101 @@
+\chapter{Redes Sociais}
+\label{ch:redes}
+O estudo de rede sociais inicia nas décadas de 40 e 50, inicialmente voltado para
+o estudo de pequenos grupos de individuos e suas interações, a rede era mensurada
+através de observações, questionários e entrevistas \citep{Wasserman}.
+Diferentemente de outras ciências sociais que consideravam apenas os indivíduo e
+seus atributos, o estudo das redes sociais considera suas relações e os atributos
+dessas relações. A rede social é um fenômeno complexo envolvendo os
+relacionamentos de diversos atores em suas particularidades e que, através de um
+processo que chamamos de mensuração, pode ser traduzido em uma representação.
+Toda representação da rede social, por ser um modelo, é naturalmente parcial e
+enviesado. Comumente, as pesquisas de redes sociais trabalham com grafos onde os
+vértices são os atores e os arcos entre os vértices são as relações mensuradas; e
+matrizes, onde as linhas e colunas são conjuntos de atores e que a posição
+$(i,j)$ da matriz representa o arco \textbf{do} ator $i$ \textbf{para} o ator
+$j$. Para economizar repetições, no decorrer deste trabalho quando estivermos nos
+referindo ao fenômeno observado, utilizaremos o termo \textbf{rede social
+observada}, enquanto que os termos \textbf{representação} e \textbf{rede social}
+serão intercambiáveis.
+
+Devido à disponibilidade de ferramentas matemáticas para o tratamento de grafos,
+a análise de redes sociais desenvolveu-se rapidamente construindo métodos e
+modelos estatísticos apropriados \citep{Butts2009}. A partir desse ferramental,
+o ramo das ciências sociais passou a quantificar diversos fenômenos antes
+considerados apenas do ponto de vista subjetivo, como a proeminência dos atores,
+que estaria relacionada com a sua centralidade no grafo.
+
+\section{$\bigotimes$ Alguma Formalização}
+
+Representamos a rede como um grafo $G(V,E)$ onde $V$ é um conjunto de $n$
+vértices (também chamados de atores) e $E$ o conjunto de arestas que os conectam.
+Quando a representação é não-direcionada o par $(i,j)$ é chamado de aresta e
+temos que $(i,j) \in E$ implica $(j,i) \in E$. No caso em que há direcionamento,
+essa afirmação não se sustenta e por isso $(i,j) \in E$ não implica em $(j,i) \in
+E$ necessariamente, além do que chamamos o par de arco de $i$ para $j$. De
+maneira geral, sempre trataremos a representação como sendo direcionada.
+
+Definimos a matriz de adjacência da rede $X$ com $n$ linhas e colunas, onde
+$x_{ij} = 1$, se $(i,j) \in V$ ou 0 de outra forma. Essa matriz de $X$ é uma
+representação binária da rede. Podemos generalizar essa notação para incluir
+redes com valores discretos onde $0 \leq x_{ij} \leq m$ ou contínuos dispostos em
+um intervalo. Ambas as notações, de grafo e de matriz, serão usadas de forma
+intercalada neste trabalho.
+
+\section{Redes sociais digitais}
+\label{sec:redes_dig}
+Com a popularização da Internet é fato que pessoas se conectam umas às outras
+virtualmente por seu intermédio. Os mecanismos de interação à disposição vão da
+simples troca de mensagens, à venda e troca de produtos, à participação conjunta
+em jogos \textit{multiplayer} massivos. Indo além do que sociólogo algum sonhou
+realizar no início dos estudos de redes sociais, grande parte dessas interações
+estão registradas, ou podem ser registradas eletronicamente a baixo custo,
+fornecendo uma quantidade nunca antes disponível de informações para
+estudos antropológicos e sociais da rede.
+
+E assim tem sido, desde o nível micro com a análise dos conteúdos trocados entre
+as interações pontuais de alguns indivíduos \citep{Recuero2008}, passando por
+análise de potencial de marketing \citep{Clemons2007, Domingos2001,
+Richardson2002, Ma2008}, busca de pessoas \citep{ADAMIC2005}, de especialistas
+\citep{Ehrlich2007}, formação de grupos \citep{Adamic2003, Backstrom2006,
+Kumar2006}, divulgação de notícias \citep{Gruhl2004}, dinâmicas de prestígio
+\citep{Salganik2006, Song2007}.
+
+Enquanto nosso objetivo é alcançar resultados similares as pesquisas anteriores
+de influência em redes sociais digitais, decidimos antes colocar a questão: como
+mensurar a rede social digital? Cada pesquisa teve seu critério: quantidade de
+e-mails trocados, recomendações, similaridades de perfil, participação nas mesmas
+comunidades. Dissemos no começo que a rede social observada é um fenômeno que
+pode ser representado, mas que não é a representação em si, por esta razão, toda
+representação carrega um \emph{bias}. Ora, ao acrescentarmos digital ao termo,
+queremos dizer que estamos tratando da observação do fenômeno através de mídias
+digitais; não mais das interações ao vivo e analógicas, mas através de
+ferramentas eletrônicas que permitem a fácil armazenação, indexação e recuperação
+dessa informação.
+
+Para responder essa questão precisamos definir quais ferramentas são essas. Uma
+resposta óbvia seria sites de relacionamento (ou sites de redes sociais),definido
+como sendo um espaço (virtual) em que seja possível 1) criar um perfil, 2)
+relacionar uma lista públicade amigos, 3) navegar por essa rede de perfis
+interligados \citep{Boyd2007}. Porém tais sites são apenas um dentre muitos
+tipos de ferramentas que podem ser analisados, como por exemplo: fóruns, listas de
+discussão, sites de compartilhamento de conteúdo, comércio eletrônico,
+\emph{blogs}, \emph{microblogs} (e.g., Twitter), salas de bate-papo. Por
+questões de privacidade deixaremos de lado as formas pessoais de interação, como
+\emph{instant messengers} e e-mails.
+
+Ou seja, qualquer espaço (virtual) em que se é possível 1) identificar
+unicamente um ator, 2) mapear atores agentes e receptores a uma determinada
+interação com suas propriedades, pode ser insumo para a mensuração da rede. Mais
+adiante veremos que idealmente também será necessário demarcar a posição dessa
+interação no tempo, para possibilitar uma análise longitudinal da evolução da
+rede. Chamamos de \textbf{medianeiro} qualquer espaço (virtual) que satisfaça a
+condição acima.
+
+Porque nos parece evidente a impossibilidade aplicar questionários ou entrevistas
+com centenas de milhares de atores, respondemos a questão de como mensurar a rede
+assim: através das interações encontradas nos medianeiros. A mensuração é um
+processo de mineração de dados e, portanto, sujeita a todos os empecilhos típicos
+do campo como informações incompletas, ruidosas, esparsas, redundantes. A questão
+que nos aparece agora é como as interações observadas combinam-se para formar tal
+rede e se ela é significativa para a análise de proeminência.

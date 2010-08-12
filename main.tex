@@ -1,0 +1,73 @@
+\documentclass[oneside]{risethesis}
+\usepackage{natbib}
+\usepackage{babel}
+\usepackage{supertabular}
+\usepackage{fancybox}
+\usepackage{acronym}
+
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{yhmath}
+\usepackage{amssymb}
+
+\address{RECIFE}
+\department{Centro de Informática}
+\program{Pós-graduação em Ciência da computação}
+\majorfield{Ciência da Computação}
+\title{Mensurando o Valor de Membros de Redes Sociais Digitais}
+\date{AGO/2010}
+\author{Raony Mascarenhas de Araújo}
+\adviser{Silvio Romero de Lemos Meira}
+
+\begin{document}
+
+\frontmatter
+\frontpage
+\presentationpage
+
+\begin{dedicatory}
+Eu dedico esta dissertação para minha família, amigos e professores que me deram
+todo o apoio necessário para chegar aqui.
+\end{dedicatory}
+
+\acknowledgements
+Eu gostaria de agradecer ao nosso Pai em primeiro lugar, aos meus pais e família
+em segundo; a todos os meus amigos, principalmente aqueles que seguraram a barra
+nos diversos deveres que sacrifiquei para alcançar esse objetivo; ao meu
+orientador e a todos os que compõem o programa de pós-graduação do CIn por
+realizarem um excelente trabalho; e a todas as pessoas que de alguma forma
+contribuíram para essa realização, que o nosso Pai possa somar os meus
+pequenos agradecimentos às bençãos que já distribui para todos nós.
+
+\begin{epigraph}[19:26]{Lucas}
+Pois eu vos digo que a todo o que tem, mais lhe será dado; mas ao que não tem,
+até aquilo que tem ser-lhe-á tirado.
+\end{epigraph}
+
+\resumo
+\input{resumo}
+
+\abstract
+\input{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+% Acronyms
+\input{acronyms}
+\mainmatter
+
+\include{chapters/intro}
+\include{chapters/redes}
+\include{chapters/kddm}
+\include{chapters/dominio}
+\include{chapters/dados}
+\include{chapters/preparacao}
+\include{chapters/mineracao}
+\include{chapters/conclusao}
+
+\bibliographystyle{natbib}
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliography{references}
+
+\end{document}

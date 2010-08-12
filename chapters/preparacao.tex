@@ -1,0 +1,445 @@
+\chapter{Preparação dos dados}
+\label{ch:preparacao}
+
+Essa etapa confunde-se com a próxima que trata da aplicação de técnicas de
+mineração. Isso se dá porque, dependendo do objetivo do estudo, a mensuração da
+rede pode ser o fim ou o meio para a aplicação de um outro processo de análise.
+Por isso nessa seção falaremos um pouco de algumas técnicas de mineração quando
+usadas no contexto da preparação dos dados. Também estaremos atentos para
+algumas dificuldades que se apresentam quando utilizamos aprendizagem de
+máquina e faremos algumas considerações sobre técnicas para a escolha dos dados
+mais relevantes.
+
+Trataremos aqui principalmente de mensurações da rede, que é a primeira parte do
+processo de análise de influência. A mensuração, por sua vez, se divide em dois
+momentos: dados \textbf{brutos} e dados \textbf{compilados}. No seu estado bruto,
+a rede guarda os dados como se lhe apresentam através dos medianeiros como por
+exemplo: quantidade de interações, tamanho das interações, classificações usadas,
+data da interação, etc. Esse processo por si so é trabalhoso, pois devemos ter o
+cuidado de guardar não só as interações, mas as propriedades relacionadas a elas.
+Também é comum a formação de hipergrafos, isto é, grafos onde os atores são
+agrupados por alguma relação \citep{Breiger1974, Seidman1978}. Um exemplo
+claro de hipergrafo é a representação formada apartir da afiliação dos atores à
+comunidades, contudo, a rigor, toda interação particiona o grafo em um
+subconjunto.
+\begin{quote}
+$\bigotimes$ \textbf{Um exemplo de hipergrafo:} Considere dois medianeiros
+$\mathscr{X}_1$ e $\mathscr{X}_2$ com seus respectivo conjuntos de interações
+$\mathscr{L}_1$ e $\mathscr{L}_2$. Ambos referem-se ao mesmo conjunto de atores
+$\mathscr{N} = \{n_1, n_2, n_3\}$. Para $\mathscr{L}_1$ temos duas interações
+$l_1$ e $l_2$, onde $n_1$ é o autor de ambas, ou seja $A(l_1)=A(l_2)=\{n_1\}$. O
+ator $n_2$ é o receptor de $l_1$ e $n_3$ é o de $l_2$, assim temos
+$R(l_1)=\{n_2\}$ e $R(l_2)=\{n_3\}$. Se construirmos uma representação de
+$\mathscr{X}_1$ chamada de $X_1$, onde $x_{ij}=1$ se existir uma interação $l$
+onde $i \in A(l)$ e $j \in R(l)$ então teremos:
+
+\center
+\begin{array}{c | c c c}
+& n_1 & n_2 & n_3 \\ \hline
+n_1&0&1&1\\
+n_2&0&0&0\\
+n_3&0&0&0\\
+\end{array}
+
+\flushleft
+Agora para $\mathscr{L}_2$ temos apenas uma interação $q$ onde $A(q)=\{n_1\}$ e
+$R(q)=\{n_2,n_3\}$. Então em apenas uma interação $n_1$ conseguiu a atenção de
+$n_2$ e $n_3$. Se utilizarmos a mesma regra para construirmos $X_2$ também
+teremos:
+
+\center
+\begin{array}{c | c c c}
+& n_1 & n_2 & n_3 \\ \hline
+n_1&0&1&1\\
+n_2&0&0&0\\
+n_3&0&0&0\\
+\end{array}
+
+\flushleft
+O que é no mínimo inconveniente, já que os dois medianeiros possuem padrões bem
+diferentes, o primeiro possui dois subgrafos e o segundo apenas um. 
+\end{quote}
+
+Nenhum das abordagens citadas no \chapref{ch:dominio} consideram o aspecto de
+hipergrafo das interações. Seria necessário adaptar as técnicas de análise de
+influência se quisermos considerar um ator que influencia muitos em uma única
+interação de outro que o faz através de muitas interações separadas. Tendo isso
+em mente, partimos para as técnicas de mensuração em si.
+
+\section{Interações não-textuais}
+
+Uma possível abordagem foi a citada no exemplo acima, a da ausência ou presença
+de interação. Ela foi usada por \citet{Xiang2010} e simplifica a representação
+em uma rede dicotômica. Outras possibilidades está em contar a quantidade de
+interações ocorridas, a frequência por período, a idade da primeira interação, a
+presença em comunidades comuns, similaridade de perfil, etc. De forma geral
+podemos criar a rede por:
+
+\begin{itemize}
+\item Intensidade/Quantidade
+\item Frequência
+\item Presença/Ausência
+\item Properidade única (e.g., Longevidade)
+\item Similaridade
+\end{itemize}
+
+Cada uma dessas apresenta apenas uma dimensão da relação, de forma que para o
+mesmo medianeiro mais de uma representação pode ser mensurada a partir de
+diferentes formas de agregação. Outras representações ainda podem ser criadas a
+partir da combinação de mensurações diferentes, por exemplo: intensidade x
+frequência, longevidade x similaridade. Deve-se ter um cuidado extra no uso de
+agregações porque podem introduzir correlações espúrias no conjunto de dados,
+levando a erros do tipo I (falso positivo) e tipo II (falso negativo), pois a
+agregação mascara quais elementos estão correlacionados de fato
+\citep{Jensen2003}. Não existe forma correta de escolher as agregações, porém
+veremos mais adiante como poderemos diminuir o impacto disso no processo como um
+todo.
+
+No final, teremos uma ou mais representações da rede para cada tipo de
+medianeiro, que por diferença de natureza não são facilmente integráveis.
+Contando, porém, com uma análise intrínseca dos medianeiros, poríamos apostar
+numa integração pela teoria da atenção. Apesar de que tempo gasto não se traduz
+diretamente em atenção dispendida, poderíamos mensurar o tempo que o usuário do
+medianeiro empregou em cada interação e daí inferir uma valor em unidade única:
+atenção \citep{Davenport2001}. Com isso teríamos o tempo empregado na
+visualização de um vídeo, de uma foto como estimativa da atenção. Essa análise
+nem sempre é possível e mesmo que seja, há interações que são naturalmente
+difíceis de integrar, como as avaliações (\emph{ratings}, \emph{rankings}). As
+avaliações tomam sempre o mesmo tempo (o do clique do mouse) e seu conteúdo é
+totalmente ``emocional'', isto é, polarizado entre positivo e negativo. Caso seja
+utilizado técnicas de análise de sentimentos para as outras interações, então
+talvez as avaliações possam ser integradas pela dimensão emocional da força da
+relação. Por outro lado, avaliações são excelentes opções para a utilização como
+grupo de teste para algoritmos de aprendizagem de máquina ``supervisionados''.
+
+\section{Interações textuais}
+
+Na seção anterior investigamos as relações não-textuais, agora vamos nos deter
+nas textuais. Primeiramente, intentamos com essa divisão alcançar uma
+consequência prática: a integração de diversas interações numa só rede. A rede
+que vamos construir é valorada, isto é, as conexões possuem um peso na forma de
+um número real dentro de um intervalo. Ao contrário de redes binárias, as redes
+valoradas proporcionam um indicativo da \textbf{força} do laço entre os atores.
+
+Dentro de uma teoria da atenção como capital social, devemos então nos voltar
+para a afirmação de que laços por onde trafegam muitos recursos são laços fortes
+e o contrário também é verdade. Em cada interação na rede, como vimos, tem um
+ator-agente que inicia a interação e um grupo de abrangência, que chamaremos de
+atores-receptores, que é afetado por ela. Com esse modelo, podemos estimar que
+os receptores cedem atenção para o agente e a recíproca também é verdadeira,
+pois o agente escolheu interagir com este grupo e essa escolha já é um
+indicativo de atenção cedida.
+
+Idealmente, essa atenção poderia ser mensurada a partir do tempo empregado pelos
+atores na interação, mas quase nunca essa informação está disponível. Por esta
+razão, sugerimos a quantidade de palavras na interação textual como uma
+estimativa para a quantidade de atenção trocada na interação. A sugestão advém
+naturalmente do fato de que quanto maior o texto, mais tempo é empregado na sua
+leitura, possivelmente mais recursos cognitivos também serão empregados para a
+sua apreensão. Isso nem sempre é verdade para todos os textos, ou tipos de
+textos, mas restringindo nosso escopo para comunidades virtuais de amigos e/ou
+comunidades de prática \citep{Lave1991, Lave1991a}, acreditamos ser esse
+um bom ponto de partida.
+
+Outro cuidado necessário é na determinação se de fato a interação foi percebida
+pelos receptores. Na maioria das vezes essa determinação é inviável, aumentando
+a incerteza do modelo. Etretanto, um recurso simples que pode ser utilizado é
+procurar por interações encadeadas, isto é, quando uma interação posterior é 
+reação a outra anterior. Por exemplo, quando uma mensagem é respondida, um texto
+é comentado, um conteúdo é recomendado, em todos esses casos podemos avaliar que
+o agente que reagiu não só percebeu a interação do agente anterior, como se deu
+o trabalho de responder. Em verdade, para interações que normalmente se
+encadeiam como \emph{threads} de fórums ou listas de discussão, podemos
+considerar a resposta como um sinal de atenção não só para com o participante
+imediatamente anterior, mas para vários antes dele que de certa forma
+influenciaram na resposta atual.
+
+Assim, podemos construir uma rede onde os nós são os atores e os laços é o
+somatório da atenção trocada pelos mesmos. Quanto mais textos de um ator $a$
+lidos, respondidos, recomendados, avaliados por um ator $b$, maior será a força
+da relação direcionada de $b$ para $a$. Quanto mais conteúdo um ator $a$ publica
+para um determinado público, mais forte também será sua relação direcionada
+com o mesmo. Tal rede, por tanto, integraria insumos de diversos tipos de
+interação mensurados, desde que sejam de conteúdo textual.
+
+\subsection{$\bigotimes$ Formalização}
+\label{sec:formalizacao}
+Para a formalização dessa métrica, vamos usar um exemplo prático. Em um fórum
+qualquer, vamos tomar um tópico para nosso exemplo. O fórum é o
+\textbf{medianeiro}, os membros assinantes do fórum os \textbf{atores}. O tipo de
+interação é \textbf{textual} quanto ao conteúdo, \textbf{comum} quanto a
+abrangência e nossa análise será \textbf{ingênua}, isto é, não consideraremos a
+intenção. Revisando:
+\begin{itemize}
+  \item $\mathscr{N}$ o conjunto de $N$ atores e o $i$-ésimo ator é $n_i$,
+  $i=1,2,\ldots,N$;
+  \item $\mathscr{L}$ o conjunto de $L$ tópicos do fórum e o $k$-ésimo
+  tópico é $l_k$, $k=1,2,\ldots,L$;
+  \item $A:\mathscr{L}\to \mathscr{N}$ tal que $A(l_k)$ seja o
+  autor do tópico $l_k$, a função $A$ não é inversível, dado que um ator pode
+  ser autor de mais de um tópico, porém considere a função
+  $A^{-1}:\mathscr{N}\to \mathscr{P}(\mathscr{L})$ tal que $A^{-1}(n_i) = \{x
+  \in \mathscr{L}|A(x) = n_i\}$ representando o conjunto de tópicos escritos
+  pelo ator;
+  \item $R:\mathscr{L}\to \mathscr{P}(\mathscr{N})$ tal que todo $x \in R(l_k)$
+  é um receptor de $l_k$, considere também o conjunto de tópicos recebidos por
+  um ator como sendo $R^{-1}:\mathscr{N}\to \mathscr{P}(\mathscr{L})$ tal que
+  $R^{-1}(n_i) = \{x \in \mathscr{L}|n_i\in R(x)\}$;
+  \item Se $x \in \mathscr{L}$, $|x|$ é a quantidade de palavras de $x$, para
+  todos os outros casos, quando aplicável, é a cardinalidade do conjunto;
+\end{itemize}
+
+Definimos a atenção total cedida de $n_i$ para $n_j$, $\vec{v}_{ij+}$
+como a soma de suas atenções diretas $v_{ij+}$, residuais $\dot{v}_{ij+}$ e
+transitivas $\widetriangle{v}_{ij+}$. A atenção direta é aquela formada quando
+$n_i$ é receptor de $n_j$ numa interação $l_k$ e definimos como:
+
+\begin{equation}
+\label{def:atedireta}
+v_{ijk} = \alpha |l_k| 
+\end{equation}
+
+A atenção residual é cedida quando $n_j$ esta na abrangência da interação $l_k$
+cujo autor é $n_i$ e definimos como:
+
+\begin{equation}
+\label{def:ateresidual}
+\dot{v}_{ijk} = \beta |l_k|
+\end{equation}
+
+A atenção transitiva é aquela $n_j$ recebe de $n_i$ se este é o autor de algum
+tópico $l_k$ que responde a um anterior de autoria do primeiro. Para definirmos
+$\widetriangle{v}$ devemos antes modelar o encadeamento dos tópicos. Seja
+$T:\mathscr{L}\to \mathscr{L}\cup\{\varnothing\}$, se $l_h=T(l_k)$ então
+$l_k$ é uma resposta a $l_h$, se $l_k$ é a mensagem que iniciou o tópico então
+$T(l_k)=\varnothing$. Agora faça $T^*:\mathscr{L}\to\mathscr{P}(\mathscr{L})$:
+
+\begin{equation}
+\label{def:thread}
+T^*(l_k) = \left\{ \begin{array}{l l} \varnothing &\quad\text{se
+$T(l_k)=\varnothing$}\\ \{T(l_k)\} \cup T^*(T(l_k)) &\quad\text{em todo outro
+caso}\end{array} \right.
+\end{equation}
+
+Daí temos que $T^*(l_k)$ é conjunto de todas as $m$ mensagens anteriores na
+\emph{thread} de $l_k$ e podemos definir uma sequência $t^*_{kq}$, onde
+$q=1,2,\ldots,m$, sobre esse conjunto considerando a ordenação trivial: $a > b
+\iff a\in T^*(b)$. Dessa forma $l_k$ é uma resposta a $t^*_{k1}$, que por sua
+vez responde a $t^*_{k2}$ e assim sucessivamente até a mensagem inicial. Levando em
+consideração a definição na \defref{def:thread}, definimos a atenção
+transitiva como:
+
+\begin{equation}
+\label{def:atetransitiva}
+\begin{array}{ l l }
+\widetriangle{v}_{ijk} = \sum_{q}(1-\alpha)\gamma^q|t^*_{kq}| 
+&, q \in \{x | A(t^*_{kx}) = n_j\}
+\end{array}
+\end{equation}
+
+A partir das Definições em \ref{def:atedireta}, \ref{def:ateresidual} e
+\ref{def:atetransitiva} podemos calcular a atenção total entre $n_i$ e $n_j$
+como:
+
+\begin{equation}
+\label{def:atetotal}
+\vec{v}_{ij+} = E(n_i)\frac{v_{ij+} + \dot{v}_{ij+} +
+\widetriangle{v}_{ij+}}{v_{i++} + \dot{v}_{i++} + \widetriangle{v}_{i++}}
+\end{equation}
+
+Evidentemente, este é um modelo exploratório para a mensuração de redes a partir
+de interações textuais sob um ponto de vista generalista. Nesse sentido há muito
+espaço para aperfeiçoamento dentro do campo experimental. Para finalizar,
+devemos fazer mais algumas considerações:
+\begin{itemize}
+  \item $\vec{v}_{ij+}$ tem sua soma normalizada devido ao limite de atenção
+  natural de cada um;
+  \item Porém, cada pessoa dedica quantidades diferentes de atenção total aos
+  medianeiros analisados, de forma que seria simplório normalizar todos em 1.
+  Por esta razão, cada ator tem a soma de suas atenções distribuídas na rede
+  normalizada em um fator $E(n_i)$ que indica o seu grau de atividade na rede.
+  Esse fator, \emph{a priori} será sempre relativo e caso o escolhamos como
+  sendo a razão do total de atenção cedido pelo ator sobre a maior atenção
+  medida, teremos uma normalização absoluta para toda a rede baseada no seu
+  máximo. O que pode não ser a melhor escolha, pois idealmente a restrição de
+  atenção deve servir para reduzir a variância das forças dos laços na rede;
+  \item O parâmetro $\gamma$ representa a força da influência de mensagens
+  antigas na $thread$ sobre um determinado ator em sua participação atual. Por
+  esta razão $0 \leq \gamma \leq 1$, sendo que $\gamma=0$ anula toda a atenção
+  transitiva e $\gamma=1$ considera todas as mensagens anteriores como sendo
+  igualmente influentes na mensagem atual;
+  \item O parâmetro $\beta$ representa a atenção recíproca do agente para os
+  seus recptores, também varia de 0 a 1, sendo que $\beta=0$ anula a atenção
+  residual da composição e $\beta=1$ indica que o autor da mensagem cedeu
+  individualmente a cada receptor tanto quanto este para com ele. Um valor
+  interessante para $\beta$ é o inverso da quantidade de atores na abrangência
+  da interação em contexto, isto é, $\beta=^1/_{|A(l_k)|}$. Assim, o autor cede
+  uma fração igual para cada receptor que é tão menor quanto maior for seu
+  público. Essa proporção também satisfaz a dimensão de intimidade da força do
+  laço, já que interações mais íntimas (menor abrangência) mobilizam maior
+  atenção;
+  \item O parâmetro $\alpha$ representa o quão certos estamos de que a interação
+  foi recebida integralmente pelo receptor. A sua escolha depende de diversos
+  fatores da análise empregada sobre os medianeiros, pois que para cada caso
+  poderemos (ou não) averiguar a atenção média cedida por um ator a uma
+  interação que lhe chega qualquer. Se $\alpha=0$ indica que caso o receptor não
+  tenha respondido à interação de alguma forma, ele não foi influenciado por
+  ela. $\alpha=1$ retira qualquer valor do fato do ator ter respondido ou não
+  determinada mensagem, igualando os dois casos. Em geral, mesmo que tenhamos o
+  indicativo de que o receptor recebeu a interação, é interessante manter um
+  valor de $\alpha$ diferente dos extremos para premiar a relação entre atores
+  que se respondem. O parâmetro $\alpha$ também pode ser visto no contexto da
+  dimensão de reciprocidade da força da conexão, já que quanto menor o $\alpha$
+  mais forte será proporcionalmente as conexões em que houveram reciprocidade.
+\end{itemize}
+
+\section{Critérios de escolha da representação}
+\label{sec:criterios}
+Qual a rede ideal para a análise de influência? Não há resposta objetiva para
+essa pergunta. Cada rede é uma representação de um fenômeno social que vai além
+das ferramentas, mesmo sendo capaz de coletar e integrar todas as interações
+digitais, as pessoas ainda vão ser capazes de tomar café juntas e nossa visão
+será apenas parcial. Sendo assim, é evidente que cada representação mensurada é
+uma parte da informação e, portanto, capaz de descrever aspectos diferentes ou
+não do fenômeno. São essas variações entre as representações de redes que
+chamaremos de \textbf{critérios de escolha}.
+
+Para enteder sua utilidade, um exemplo: imaginemos que ao final da análise
+tenhamos duas ou mais representações da rede: uma textual e algumas não textuais.
+Para cada uma encontramos valores diferentes de proeminência, então qual usar?
+Colocando de outra forma, quanto de informação estarei perdendo caso considere
+apenas uma delas?
+
+A seleção de característica (\emph{feature selection}), na aprendizagem de
+máquina, é a tarefa de escolher quais variáveis serão consideradas no treinamento
+do sistema de forma a obter a melhor aproximação do modelo \citep{Jain1997,
+Blum1997, Jain2000}. De forma similar devemos ser capazes de selecionar redes que
+maximizem nossa análise de influência. Recentemente \citet{Peng2005} sugere que
+as variáveis sejam escolhidas de forma a maximizar a relevância e reduzir a
+redundância, mRMR (\emph{minimal-redundancy-maximal-relevance}). No nosso caso,
+não conhecemos o modelo da rede \emph{a priori} e a inferência é
+não-supervisionada. Por isso, não temos como avaliar a relevância de uma rede em
+relação a outra, todas são relevantes. Poderíamos considerar que redes que não
+demonstrem características de redes sociais poderiam ser vistas como fortemente
+enviesadas e por isso de baixa relevância, a saber: diâmetro pequeno (\emph{small
+world}) \citep{Milgram1967, Watts1998}, poucos muito conectados e muitos pouco
+conectados (\emph{power-law}) \citep{Liljeros2001, Mitzenmacher2004} e atores com
+muitas conexões tendem a estar conectados uns aos outros (\emph{scale-free})
+\citep{Li2005}.
+
+Por outro lado, a redundância da informação nos ajudará a separar as
+representações importantes das que não acrescentam informação substancial, ou
+seja, são redundantes. Sendo assim, nosso objetivo é formular alguns critérios
+de escolha, de modo que tenhamos em mãos o conjunto de representações
+minimamente redundante.
+
+\subsection{$\bigotimes$ Mínima redundância}
+
+Dada uma entrada de dados $D$, composta de $N$ amostras e $M$
+características $X=\{x_i, i=1,\ldots,M\}$, dizemos que um subconjunto $S
+\subseteq X$ de $m$ características $\{x_i\}$ é mínimamente redundante se atende
+a condição:
+
+\begin{equation}
+\label{def:min_redun}
+\min R(S), R = \frac{1}{|S|^2}\sum_{x_i, x_j \in S}I(x_i;x_j)
+\end{equation}
+
+$I(.)$ é a função de informação mútua e que mede uma forma de dependência entre
+duas variáveis aleatórias. Dado duas variáveis aleatórias discretas, $X$ e $Y$
+definimos a informação mútua de ambas como:
+
+\begin{equation}
+\label{def:inf_mutua}
+I(X;Y) = \sum_{x\in X}\sum_{y\in Y}p(x,y)\log \frac{p(x,y)}{p(x)p(y)}
+\end{equation}
+
+Um dos inconvenientes de utilizar a função de mútua informação como definida é
+que no caso de redes sociais, cada conexão pode ser considerada como uma
+variável aleatória de resultados possíveis $\{0,1\}$ quando binária, ou um
+intervalo definido. Se assim for, não podemos dizer muito da probabilidade da
+relação existir ou não (por enquanto). Se por outro lado considerarmos a
+variável como sendo a prossibilidade da presença da relação (para simplificar) e
+cada par de atores uma amostra dessa variável, então estaremos encontrando
+dependência ou correlação sobre a densidade da rede apenas, deixando de lado
+importante padrões estruturais como a transitividade e a reciprocidade. Por esta
+razão, precisamos adaptar nossa função de mútua informação para considerar as
+peculiaridades das redes sociais. 
+
+\subsection{Redundância das conexões}
+
+Uma conexão é redundante quando pode ser encontrada em mais de uma rede. Mais do
+que isso, duas redes são redundantes quando além de compartilhar conexões também
+compartilham determinados padrões como triângulos e subgrupos. As duas
+famílias de ferramentas para acessar essa similaridade estrutural mais
+desenvolvidas na literatura são: gráficos aleatórios exponenciais e procedimento
+de atribuição quadrática, respectivamente $p*$ (\emph{exponential random
+graphs}) e \emph{QAP} (\emph{quadratic assignment procedure}).
+
+\subsection{$\bigotimes$ Redes discretas e/ou esparsas}
+
+O primeiro é mais apropriado para redes binárias ou com valores discretos
+\citep{Dekker2007}. Consiste em criar um modelo exponencial para a criação de
+grafos aleatórios a partir de um conjunto de parâmetros relacionados a
+\textbf{configurações} de interesse \citep{ROBINS2007a}. Uma configuração pode
+ser desde a presença de uma conexão, até a quantidade de k-triângulos e outros
+padrões mais complexos. Cada configuração tem um parâmetro relacionado que pode
+ser negativo, indicando que a rede é tem tendência inversa à presença daquela
+configuração, nula representando a indiferença e positiva para uma tendência de
+mesmo modo. Assim sendo, cada parâmetro pode ser visto como tendências da rede em
+relação a, por exemplo: densidade, reciprocidade e transitividade da rede quando
+suas configurações relativas são respectivamente a presença de conexões, a
+mutualidade das relações e a presença de triângulos.
+
+Modelos exponenciais de gráficos aleatórios tem a seguinte forma geral:
+
+\begin{equation}
+\label{def:p_star_geral}
+\Pr(\textbf{Y} = \textbf{y})
+=\left(\frac{1}{k}\right)\exp\left\{\sum_A\eta_Ag_A(\textbf{y})\right\}
+\end{equation}
+
+Onde (i) o somatório é sobre todas as configurações procuradas em \textbf{y};
+(ii) $\eta_A$ é o parâmetro relacionado à configuração $A$; (iii)
+$g_A(\textbf{y})=1$ se a configuração é observada em \textbf{y}, ou 0 de outra
+forma; (iv) $k$ é uma constante de normalização que garante que
+a \defref{def:p_star_geral} seja uma distribuição de probabilidades. O vetor de
+parâmetros $\eta$ é estimado para o grafo a ser modelado, procurando maximizar
+a sua probabilidade, iterativamente a partir de simulações com o método Monte
+Carlo (\emph{Markov chain Monte Carlo maximum likelihood estimation})
+\citep{ROBINS2007b, Snijders2006}.
+
+Voltando ao problema de minimizar a redundância, podemos considerar o vetor
+$\eta$ no cálculo de ``informação mútua'' entre as redes, no sentido de que redes
+que possuem a mesma informação compartilham conexões e tendências similares ao
+aparecimento de padrões estruturais. Derivamos $I_D$ para redes discretas:
+
+\begin{equation}
+\label{def:MI_discreto}
+I_D(x, y) = sim(x,y) \rho(\eta_x, \eta_y)
+\end{equation}
+
+Onde (i) $sim(.)$ é a similaridade de Jaccard (\citealt{Jaccard1912}; apud
+\citealt{Berger-Wolf2006}), utilizada para comparar redes sociais e definida como
+sendo $\frac{2|x\cap y|}{|x| + |y|}$; (ii) $\rho$ é a correlação de Pearson para
+os vetores de parâmetros $\eta$ estimados para $x$ e os estimados para $y$.
+Substituindo a \eqnref{def:MI_discreto} na \eqnref{def:min_redun} temos um
+modelo para o conjunto de redes discretas com mínima redundância.
+
+\subsection{Redes contínuas densas}
+
+Para rede contínuas, um segundo método pode ser utilizado para calcular a
+correlação diretamente. O procedimento de atribuição quadrática (\textit{QAP})
+recomenda um modelo linear para a correlação das redes, assim, temos que:
+
+\begin{equation}
+\label{def:linear_model_qap}
+Y = \alpha X + \epsilon
+\end{equation}
+
+A probabilidade de que a correlação encontrada não seja apenas coincidência é
+acessada através da permuta das colunas da matriz seguindo algoritmo apropriado
+\citep{Anderson2001, Dekker2007}. Não é nosso objetivo nos aprofundar na
+especifidades do teste, apenas é pertinente considerarmos a  utilização da
+correlação linear $\alpha$ como valor para a informação mútua na
+\eqnref{def:min_redun} para redes de valores contínuos densos.
