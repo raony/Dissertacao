@@ -155,12 +155,12 @@ portanto de uma interação de abrangência comum.
 \end{description}
 
 É importante denotar a abrangência de cada medianeiro pois que afeta diretamente
-o cálculo da atenção reflexiva que cada autor tem com seus leitores. Usaremos o
+o cálculo da atenção residual que cada autor tem com seus leitores. Usaremos o
 coeficiente $\beta$ igual ao inverso multiplicativo da quantidade de membros da
 abrangência, assim cada autor cede parcelas iguais a sua audiência por cada
 interação. Para interações de abrangência generalizada para todo o ambiente, como
 é o caso da grande maioria das histórias cadastradas, temos que $\beta=0$, por
-tanto, o autor não cede atenção reflexiva para ninguém.
+tanto, o autor não cede atenção residual para ninguém.
 
 Como nossa anális é intrínseca, pela disposição da informação no banco de dados
 podemos saber exatamente qual membro acessou e leu quais tópicos e histórias.
@@ -180,245 +180,236 @@ parâmetro.
 \section{Preparando os dados}
 \label{ap:sec:preparacao}
 
+Segundo \citet{Cios2005}, em torno de 45\% do esforço total empregado no
+processo de mineração de dados é usado no passo de preparação dos dados, como
+podemos ver na \figref{ap:fig:esforco}. Por esta razão produzimos como
+subproduto dessa atividade um \emph{framework} enxuto para a extração e
+manipulação dos dados. O banco original é acessível via \emph{SQL}, através do
+qual extraímos as interações e armazenamos em outro banco com controle de data
+de quando cada interação foi capturada; em cima desse banco criamos uma
+estrutura que abstrai a camada de dados da aplicação, permitindo ao pesquisador
+utilizar se concentrar na exploração do grafo.
 
-
-\def \tick{
-$[$\hspace{0.3cm}$]$
-}
-
-\def \twooption#1#2{
-\tick #1.  \tick #2.
-}
-
-\def \threeoption#1#2#3{
-\tick #1.\newline
-\tick #2.\newline
-\tick #3.
-}
-
-\def \fouroption#1#2#3#4{
-\tick #1.\newline
-\tick #2.\newline
-\tick #3.\newline
-\tick #4.
-}
-
-\def \fiveoption#1#2#3#4#5{
-\tick #1.\newline
-\tick #2.\newline
-\tick #3.\newline
-\tick #4.\newline
-\tick #5.
-}
-\def \datefield{
-%date fied used in time sheets
-    /\hspace{0.4cm}/
-}
-
-\def \rcolor{
-%table row color
-    \rowcolor[gray]{0.9}
-}
-
-\def \hcolor{
-    \rowcolor[gray]{0.7}
-}
-
-\section{Time sheet}
-\label{ap:sec:time-sheet}
-
-\begin{table*}[h]
+\begin{figure}[h!]
+  \caption{Esforço relativo para cada passo do KDDM \citep{Cios2005}}
   \centering
-  \begin{tabular}{|c|c|c|c|c|p{5cm}|}
-    \hline
-    \hcolor ID & $Start~date$ & $Start~time$ & $End~date$ & $End~time$ & 
-        $Is~it~a~duplicate?$\\
-    \hline
-       1 & \datefield  & : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 2 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:
-       \\
-    \hline
-       3 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 4 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       5 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 6 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       7 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 8 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       9 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 10 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-        \multicolumn{6}{|c|}{\ldots}\\
-    \hline
-       23 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 24 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       25 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 26 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       27 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 28 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       29 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 30 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       31 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-       \rcolor 32 & \datefield  &  : & \datefield & : & \twooption{Yes}{No} ID:\\
-    \hline
-  \end{tabular}
-\caption{Time sheet used in the study.
-%The subjects use this time
-%sheet to note the start and end timestamps of a bug-report analysis, and mark
-%if has been found a duplicate for the bug-report under analysis.
-}
-\end{table*}
+    \includegraphics[width=0.7\textwidth]{imgs/preparation-time.png}
+    \label{ap:fig:esforco}
+\end{figure}
 
-\newpage
-\section{Questionnaire for Subjects Profile}
-\label{ap:sec:profile}
+O \emph{framework} foi escrito em \emph{Python} e utiliza uma \emph{API} de
+\emph{ORM} para esconder o serviço de banco de dados utilizado. Através dessa
+modelagem o pesquisador tem simples acesso ao conjunto de membros da rede, ao
+conjunto de suas interações (e propriedades) e a abrangência de cada. Nesse
+quesito, precisamos separar o público-alvo esperado e o real (ver
+\figref{ap:fig:grafo}), com isso, a atenção reflexiva é calculada em cima do
+público-alvo esperado, enquanto que só o público-alvo direto cede atenção direta
+para o autor. Com isso é possível que autores cedam mais do que recebem, à medida
+que produzem para uma comunidade onde poucos ou nenhum de seus membros consomem
+este conteúdo.
 
-\begin{table}[h]
-\centering
-\resizebox{15cm}{!}{
-\begin{tabular}{|p{\columnwidth}|}
-    \hline
-    \hcolor \textbf{\textsf{Questionnaire for Subjects Profile}}\\
-    \hline
-	    \textbf{How many years since graduation?}\\\\
-	    \tick years.\\\\
-    \hline
-        \textbf{How many projects do you have participated according to the
-        following categories?}\\ \\
-        \tick Low complexity.\\
-        \tick Medium complexity.\\
-        \tick High complexity.\\\\
-    \hline
-        \textbf{What were the roles that you played in the projects cited before
-        (developer, configuration manager, tester\ldots)?}
-        \\
-        \\
-    \hline
-        \textbf{How do you define your experience with bug-trackers?}\\\\
-        \tick I never used them before.\\
-        \tick I used them in every project i participated.\\
-        I used them in \tick projects.\\\\
-    \hline
-        \textbf{Do you have used any of the following bug-trackers?}\\\\
-        \tick Bugzilla. In: \tick industry  \tick academia\\
-        \tick Trac. In: \tick industry  \tick academia\\
-        \tick Mantis. In: \tick industry  \tick academia\\
-        \tick Jyra. In: \tick industry  \tick academia\\
-        \tick BSD Bug-tracker. In: \tick industry  \tick academia\\
-        \tick Other: \\\\
-    \hline
-        \textbf{Have you performed any analysis of Firefox bug-reports before?}
-        \\\\\twooption{Yes}{No}\\\\
-    \hline
-\end{tabular}
-}
-\caption{Questionnaire for bug-report submitters.}
+\begin{figure}[h!]
+  \caption{Exemplo de modelagem no \emph{framework}}
+  \centering
+    \includegraphics[width=0.7\textwidth]{imgs/naif-grafo.png}
+    \label{ap:fig:grafo}
+\end{figure}
+
+Implementamos o algoritmo de cálculo de atenção como apresentado na
+\secref{sec:formalizacao}, e obtivemos o resultado separado para os dois grupos
+de interações textuais: tópicos e resposta; histórias e comentários. O resultado
+que encontramos é apresentado na \figref{ap:fig:cdf}, onde a distribuição da
+carga de atenção parece seguir uma lei de potência. Essa característica é
+interessante porque mimetiza a propriedade \emph{scale-free} das redes
+sociais. 
+
+As Figuras \ref{ap:fig:contatos}, \ref{ap:fig:topicos}, \ref{ap:fig:narrativas} e
+\ref{ap:fig:completa} aprensentam visualizações das quatro redes concebidas: uma
+não textual, que é a de contatos; três textuais, ou seja, utilizando nosso
+algoritmo de atenção, sobre apenas tópicos e suas repostas, apenas histórias e
+seus comentários e uma completa considerando tópicos e histórias. Na
+\tabref{ap:tab:estatisticas} apresentamos algumas estatísticas sobre as quatro
+redes, indicando grau médio de reciprocidade em todas as representações. Alto
+grau de reciprocidade era esperado para as redes de atenção devido à atenção
+residual, assim toda interação gera uma conexão da audiência para o autor e sua
+recíproca do autor para a audiência, mesmo que em menor intensidade. O resultado
+encontrado, principalmente na rede de tópicos, indica que apesar do autor da
+mensagem visar obter a atenção de toda uma comunidade, poucos foram os que
+efetivamente se prestaram a isso.
+
+\begin{figure}[h!]
+  \caption{Distribuição da Probabilidade Cumulativa da Atenção}
+  \centering
+    \includegraphics[width=0.7\textwidth]{imgs/cdf-final.png}
+    \label{ap:fig:cdf}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{Visualização da rede de contatos do a.m.i.g.o.s.}
+  \centering
+    \includegraphics[width=0.7\textwidth]{imgs/contatos.jpg}
+    \label{ap:fig:contatos}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{Visualização da rede de tópicos do a.m.i.g.o.s.}
+  \centering
+    \includegraphics[width=0.7\textwidth]{imgs/topicos.jpg}
+    \label{ap:fig:topicos}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{Visualização da rede de histórias do a.m.i.g.o.s.}
+  \centering
+    \includegraphics[width=0.7\textwidth]{imgs/narrativas.jpg}
+    \label{ap:fig:narrativas}
+\end{figure}
+
+\begin{figure}[h!]
+  \caption{Visualização da rede de atenção completa do a.m.i.g.o.s.}
+  \centering
+    \includegraphics[width=0.7\textwidth]{imgs/completa.jpg}
+    \label{ap:fig:completa}
+\end{figure}
+
+\begin{table} [htbp]
+	\large       % tamanho da fonte 
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+	\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+	\caption{Tamanho e propriedades das redes} \centering   % tabela centralizada
+	\begin{tabular}{| c | c | c | c | c |}
+	\hline
+	Rede & Tam. Componente & Densidade & Desv. Padrão & Reciprocidade \\ \hline
+	Contatos & 680 & 0,01 & - & 0,55 \\
+	Tópicos & 618 & 1,57 & 64,72 & 0,42\\
+	Narrativa & 815 & 2,37 & 38,04 & 0,53\\
+	Completa & 838 & 3,09 & 63,93 & 0,57\\ \hline
+	\end{tabular}
+	\label{ap:tab:estatisticas}
 \end{table}
 
-\newpage
-\section{Form for Qualitative Analysis}
-\label{ap:sec:feedback}
+Antes de prosseguir com a análise da influência, podemos avaliar o quanto de
+informação mútua existe nas redes mensuradas. Como foi mostrado na
+\secref{sec:criterios}, redes com alto grau de sobreposição podem ser
+descartadas uma em favor da outra para reduzir o conjunto a ser analisado na
+próxima etapa. Na \tabref{ap:tab:qap} temos o resultado para as quatro redes
+mensuradas. Se considerarmos separadamente tópicos e histórias, veremos que eles
+tem pouca coisa em comum; mas a rede completa de atenção por sua vez é
+fortemente correlacionada com ambas, sugerindo sua utilização no lugar das
+primeiras. Também notamos uma leve para moderada correlação positiva entre a
+rede de contatos e a de atenção, apesar de não estarem relacionadas diretamente.
+Essa diferença entre as redes justificaria também uma forte diferença na análise
+da influência?
 
-\begin{table}[h]
-\centering
-\resizebox{14cm}{!}{
-\begin{tabular}{|p{\columnwidth}|}
-    \hline
-    \hcolor \textbf{\textsf{Questionnaire for Qualitative Analysis}}\\
-    \hline
-        \textbf{Did you use any of the search filters provided by BAST?}
-        \\
-        \twooption{Yes}{No}
-        \\
-    \hline
-        \textbf{Is there any search filter you think it must be present in BAST?}
-        \\
-        \twooption{Yes}{No}
-        Cite them:
-        \\
-    \hline
-        \textbf{Did you have any problem with the search filters usage?}
-        \\
-        \twooption{Yes}{No}
-        Cite them:
-        \\
-    \hline
-        \textbf{Did you use the ordering features of BAST?}
-        \\
-        \twooption{Yes}{No}
-        \\
-    \hline
-        \textbf{Did you have any problem with ordering features?}
-        \\
-        \twooption{Yes}{No}
-        Cite them:
-        \\
-    \hline
-        \textbf{Do you think there is any other important information that
-        must be present in the list of search results?}
-        \\
-        \twooption{Yes}{No}
-        Cite them:
-        \\
-    \hline
-        \textbf{Did you have any problem to visualize the details from some
-        bug-report?} \\
-        \twooption{Yes}{No}
-        Cite them:
-        \\
-    \hline
-        \textbf{Do you believe the way bug-reports details are presented was
-        helpful to perform the analysis?}
-        \\
-        \twooption{Yes}{No}
-        \\
-    \hline 
-        \textbf{Was the recommendation of related bug-reports, presented  in
-        the bug-report details, useful for the analysis?}
-        \\
-        \twooption{Yes}{No}
-        \\
-    \hline
-        \textbf{Is there any other information concerning bug-reports details
-        you believe it should be present or emphasized?}
-        \\
-        \twooption{Yes}{No}
-        Cite them:
-        \\\\
-    \hline
-        \textbf{Did you use the help provided by BAST?}
-        \\
-        \twooption{Yes}{No}
-        \\
-    \hline
-        \textbf{Did you found any other problem/enhacement/defect that was not
-        mentioned before? Cite them.}
-        \\
-        \\
-        \\
-    \hline
-        \textbf{Please, write down any suggestion you think might would be useful.}
-        \\
-        \\
-        \\
-    \hline
-\end{tabular}
-}
-\caption{Questionnaire for qualitative analysis.}
+\begin{table}[htbp]
+	\large
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}
+	\setlength{\belowcaptionskip}{10pt}
+	\caption{\emph{QAP} aplicado as quatro redes (p. < 0,001)} \centering
+	\begin{tabular}{|c | c  c  c  c |}
+	\hline
+	QAP corr & completa & contatos & histórias & tópicos \\ \hline
+	completa & 1 & 0,22 & 0,67 & 0,82 \\
+	contatos & 0,22 & 1 & 0,23 & 0,12 \\
+	histórias & 0,67 & 0,23 & 1 & 0,13 \\
+	tópicos	& 0,82 & 0,12 & 0,13 & 1 \\ \hline
+	\end{tabular}
+	\label{ap:tab:qap}
 \end{table}
+
+
+\section{Análise da influência}
+\label{ap:sec:analise}
+
+Após a mensuração das redes, apresentada na seção anterior, passamos à análise
+de influência propriamente dita. Havíamos decidido usar o \emph{Flow
+Betweenness} no passo 1 desse projeto, devido à natureza valorada da
+representação, porém não nos foi possível alcançar nosso intento devido ao alto
+custo computacional que se mostrou para essa métrica. Sendo assim, substituímos
+pela métrica simples de \emph{Betweenness} que dicotomiza a rede pela média,
+isto é, os laços cuja força seja maior ou igual que a média continuam (1) e os
+abaixo são removidos (0). A métrica de \citeauthor{Bonacich1987} foi calculada
+como planejada.
+
+As Tabelas \ref{ap:tab:cent-contatos} e \ref{ap:tab:cent-completa} apresentam os
+resultados para a métrica de \emph{Betweenness} nas rede de contatos e na de
+atenção. No cabeçalho temos o índice de centralização de
+\citeauthor{Freeman1979} que indica o quão próximo a rede está de um gráfico do
+tipo estrela. É interessante notar que a rede de atenção formada apenas com os
+tópicos e suas resposta apresentou o maior grau de centralização: 37,18\%;
+enquanto que as histórias apresentaram: 24,20\%. Destacamos em negrito os
+membros que se repetiram nas quatro representações: contatos, tópicos, histórias
+e completa. É interessante notar que apesar não haver nenhuma relação direta
+entre a rede completa e a de contatos, aquela manteve quase que inalterada a
+ordenação do grupo que intersecta ambas.
+
+\begin{table}[htbp]
+	\large       % tamanho da fonte 
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+	\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+	\caption{Os 9 membros mais bem posicionados na rede de Contatos} \centering   
+	\begin{tabular}{| c | c |}
+	\hline
+	Contatos & Centralização=30,81\% \\ \hline\hline
+	Membro & \emph{Betweenness} \\ \hline
+	\textbf{3} & \textbf{31,06} \\
+	\textbf{8} & \textbf{13,48} \\
+	135 & 11,44 \\
+	\textbf{2} & \textbf{8,68} \\
+	\textbf{200} & \textbf{5,14} \\
+	201 & 4,84 \\
+	\textbf{796} & \textbf{4,82} \\
+	601 & 4,57 \\
+	665 & 4,55 \\ \hline
+	\end{tabular}
+	\label{ap:tab:cent-contatos}
+\end{table}
+
+\begin{table}[htbp]
+	\large       % tamanho da fonte 
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+	\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+	\caption{Os 9 membros mais bem posicionados na rede de Atenção} \centering   
+	\begin{tabular}{| c | c |}
+	\hline
+	Completa & Centralização=23,07\% \\ \hline\hline
+	Membro & \emph{Betweenness} \\ \hline
+	\textbf{3} & \textbf{23,18} \\
+	\textbf{2} & \textbf{12,53} \\
+	\textbf{8} & \textbf{8,99} \\
+	\textbf{200} & \textbf{3,65} \\
+	\textbf{796} & \textbf{3,37} \\
+	6 & 1,79 \\
+	665 & 1,7 \\
+	397 & 1,61 \\
+	201 & 1,5 \\\hline
+	\end{tabular}
+	\label{ap:tab:cent-completa}
+\end{table}
+
+Quando analisamos a correlação entre os resultados de centralidade das quatro
+redes mensuradas, apresentada na \tabref{ap:tab:cent-corr}, podemos perceber o
+impacto da decisão em usar a métrica de \emph{Betweenness} no lugar da original.
+A dicotomização da rede quase que totalmente mimetiza o padrão de posicionamento
+encontrado na rede de contatos; i.e., removido o peso dos laços, parece-nos que
+os atores fazem as mesmas escolhas em termos de quem interagir e de quem
+adicionar aos seus contatos. Entretando, o índice de \citeauthor{Bonacich1987}
+leva em consideração este peso para a rede de atenção, logo seus resultados
+devem se diferenciar bastante da rede não-textual.
+
+\begin{table}[htbp]
+	\large       % tamanho da fonte 
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+	\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+	\caption{Correlação do índice de centralidade} \centering   
+	\begin{tabular}{| c | c c c c|}
+	\hline
+	\emph{Betweenness} & completa & contatos & histórias & tópicos \\ \hline
+	completa & 1 & 0,89 & 0,96 & 0,94 \\
+	contatos & 0,89 & 1 & 0,91 & 0,87 \\
+	histórias & 0,96 & 0,91 & 1 & 0,93 \\
+	tópicos & 0,94 & 0,87 & 0,93 & 1 \\\hline
+	\end{tabular}
+	\label{ap:tab:cent-corr}
+\end{table}
+
