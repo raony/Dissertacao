@@ -249,7 +249,7 @@ FUNCTION {format.names}
               if$
               t "others" =
                 { " " * "et~al." emphasize * }
-                { " and " * t * }
+                { " e " * t * }
               if$
             }
           if$
@@ -282,7 +282,7 @@ FUNCTION {format.names.ed}
               if$
               t "others" =
                 { " " * "et~al." emphasize * }
-                { " and " * t * }
+                { " e " * t * }
               if$
             }
           if$
@@ -360,7 +360,7 @@ FUNCTION {format.full.names}
               if$
               t "others" =
                 { " " * "et~al." emphasize * }
-                { " and " * t * }
+                { " e " * t * }
               if$
             }
           if$
@@ -686,12 +686,12 @@ FUNCTION {article}
 FUNCTION {book}
 { output.bibitem
   author empty$
-    { format.editors "author and editor" output.check
+    { format.editors "author e editor" output.check
       editor format.key output
     }
     { format.authors output.nonnull
       crossref missing$
-        { "author and editor" editor either.or.check }
+        { "author e editor" editor either.or.check }
         'skip$
       if$
     }
@@ -736,12 +736,12 @@ FUNCTION {booklet}
 FUNCTION {inbook}
 { output.bibitem
   author empty$
-    { format.editors "author and editor" output.check
+    { format.editors "author e editor" output.check
       editor format.key output
     }
     { format.authors output.nonnull
       crossref missing$
-        { "author and editor" editor either.or.check }
+        { "author e editor" editor either.or.check }
         'skip$
       if$
     }
@@ -751,14 +751,14 @@ FUNCTION {inbook}
   format.btitle "title" output.check
   crossref missing$
     { format.bvolume output
-      format.chapter.pages "chapter and pages" output.check
+      format.chapter.pages "chapter e pages" output.check
       new.block
       format.number.series output
       new.sentence
       publisher "publisher" output.check
       address output
     }
-    { format.chapter.pages "chapter and pages" output.check
+    { format.chapter.pages "chapter e pages" output.check
       new.block
       format.book.crossref output.nonnull
     }
@@ -1028,7 +1028,7 @@ FUNCTION {format.lab.names}
         'skip$
         { s #2 "{ff }{vv }{ll}{ jj}" format.name$ "others" =
             { " " * "et~al." emphasize * }
-            { " and " * s #2 "{vv~}{ll}" format.name$ * }
+            { " e " * s #2 "{vv~}{ll}" format.name$ * }
           if$
         }
       if$

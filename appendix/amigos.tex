@@ -115,11 +115,15 @@ Considerando os critérios estabelecidos no \chapref{ch:dominio}, temos que a
 representação da rede precisa ser não-binária e envolver a maior quantidade de
 dimensões da força do laço possível; Por esta razão focaremos nas interações
 textuais do a.m.i.g.o.s. usando o conceito de atenção apresentado na
-\secref{sec:teoria_atencao}. Para a análise de influência, usaremos as métricas
-de \emph{Flow betweenness} de \citeauthor{Freeman1991} e o poder de
+\secref{sec:teoria_atencao}. Para a análise de influência, seguindo a orientação
+apresentada na \secref{sec:sobre-proem}, usaremos duas métricas, uma medial e
+outra radial; ambas baseadas no volume dos caminhos. As escolhidas foram a
+\emph{Flow betweenness} de \citeauthor{Freeman1991} e o poder de
 \citeauthor{Bonacich1987}; as razões dessa escolha são a de que atendem aos
 critérios de serem sensíveis tanto à estrutura macro da rede, quanto a
 configuração local do nó, e também por simplicidade de implementação.
+
+ 
 
 \section{Entendendo os Dados}
 \label{ap:sec:dados}
@@ -412,4 +416,188 @@ devem se diferenciar bastante da rede não-textual.
 	\end{tabular}
 	\label{ap:tab:cent-corr}
 \end{table}
+
+Para o índice de prestígio, temos grande disparidade nos resultados apresentados
+pelas redes textuais e não-textuais, como era de se esperar. As Tabelas
+\ref{ap:tab:prest-contato} e \ref{ap:tab:prest-completa} nos traz os melhores
+colocados no índice de \citeauthor{Bonacich1987} para as redes de contatos e de
+atenção respectivamente. Da mesma forma como nas de centralidade, os membros que
+se repetiram nas melhores colocações em todas as quatro redes foram marcados em
+negrito; neste caso, houve apenas um. Esse resultado nos diz que apesar de
+estruturalmente a rede de atenção ser similar a de contatos, quando levamos em
+consideração a intensidade dessas interações, a distribuição desigual da atenção
+nos revela os influenciadores realmente ativos.
+
+\begin{table}[htbp]
+	\large       % tamanho da fonte 
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+	\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+	\caption{Os 9 membros mais prestigiados na rede de Contatos} \centering   
+	\begin{tabular}{| c | c |}
+	\hline
+	\citeauthor{Bonacich1987} & Contatos\\ \hline\hline
+	Membro & \emph{Power} \\ \hline
+	8 & 240,311 \\
+	\textbf{3} & \textbf{189,279} \\
+	397 & 128,291 \\
+	385 & 120,024 \\
+	419 & 119,683 \\
+ 	481 & 109,363 \\
+ 	422 & 108,501 \\
+ 	436 & 106,941 \\ 
+ 	452 & 106,314 \\\hline
+	\end{tabular}
+	\label{ap:tab:prest-contato}
+\end{table}
+
+\begin{table}[htbp]
+	\large       % tamanho da fonte 
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+	\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+	\caption{Os 9 membros mais prestigiados na rede de Atenção} \centering   
+	\begin{tabular}{| c | c |}
+	\hline
+	\citeauthor{Bonacich1987} & Atenção\\ \hline\hline
+	Membro & \emph{Power} \\ \hline
+	2 & 649,7 \\
+	665 & 304,450 \\
+	681 & 264,112 \\
+	711 & 205,687 \\
+	668 & 132,357 \\
+	\textbf{3} & \textbf{108,871} \\
+	201 & 104,042 \\
+	781 & 79,441 \\
+	826 & 76,397 \\\hline
+	\end{tabular}
+	\label{ap:tab:prest-completa}
+\end{table}
+
+Como era de se esperar, não poderíamos ter muita compatibilidade entre o
+resultado de contatos e o de atenção. A \tabref{ap:tab:prest-corr} nos confirma
+isso, mas também nos indica que a quase totalidade (98\%) do prestígio advém
+das interações nos fóruns (tópicos e respostas). Certamente também
+encontraríamos essa diferença na centralidade se não tivessemos dicotomizado os
+dados.
+
+\begin{table}[htbp]
+	\large       % tamanho da fonte 
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+	\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+	\caption{Correlação do índice de prestígio} \centering   
+	\begin{tabular}{| c | c c c c|}
+	\hline
+	\emph{Betweenness} & completa & contatos & histórias & tópicos \\ \hline
+	completa & 1 & 0,07 & 0,1 & 0,98 \\
+	contatos & 0,07 & 1 & 0,28 & 0,06 \\
+	histórias & 0,1 & 0,28 & 1 & 0,06 \\
+	tópicos & 0,98 & 0,06 & 0,06 & 1 \\\hline
+	\end{tabular}
+	\label{ap:tab:prest-corr}
+\end{table}
+
+Finalmente, avaliamos a utilidade das métricas calculadas tendo por base o que
+foi apresentado na \secref{sec:rel_proe}. Sendo assim, caso a rede mensurada
+não tenha propriedades estruturais de uma comunidade de prática, então a métrica
+radial que escolhemos, o poder de \citeauthor{Bonacich1987}, terá pouca
+utilidade prática já que os \emph{hubs} estarão isolados em seus
+\emph{clusters}. A \tabref{ap:tab:comu_prat} nos mostra que esse não é o caso,
+encontramos um alto grau de coesão e padrão núcleo/periferia nas redes
+mensuradas. Sendo a rede de tópicos a que mais se destacou com esse padrão,
+talvez por representar o dia a dia dos colaboradores em suas trocas de
+mensagens.
+
+\begin{table}[htbp]
+	\large       % tamanho da fonte 
+	\setlength{\arrayrulewidth}{2\arrayrulewidth}  % espessura da  linha
+	\setlength{\belowcaptionskip}{10pt}  % espaço entre caption e tabela
+	\caption{Indícios de comunidades de prática} \centering   
+	\begin{tabular}{| c | c | c | c | c |}
+	\hline
+	 & completa & contatos & histórias & tópicos \\ \hline
+	Coeficiente Clusterização & 0,68 & 0,55 & 0,66 & 0,74 \\
+	Coef. Cluster. Ponderado & 0,5 & 0,26 & 0,5 & 0,4 \\
+	Distância média & 2,84 & 3,82 & 2,64 & 1,72 \\
+	Adequação Núcleo/Perif. & 0,52 & 0,02 & 0,38 & 0,62 \\\hline
+	\end{tabular}
+	\label{ap:tab:comu_prat}
+\end{table}
+
+Para ilustrar a aplicação desse novo conhecimento adquirido, vamos utilizar uma
+quinta e ultima mensuração do a.m.i.g.o.s.: a rede de recomendação. A rede de
+atenção se comporta de certa forma às avessas, se um laço vai de $a$ para $b$ é
+por que houve uma interação de $b$ para $a$. Então temos que prestígio, na rede
+atenção, é sinônimo de atividade; Usuários ativos que publicam muito conteúdo
+recebem muita atenção e por isso possuem alto prestígio. Para testar essa
+afirmação, mensuramos uma rede binária direcionada ingênua a partir das
+recomendações encontradas no sistema. Nessa representação, se $X_{ab}=1$ então
+$a$ enviou uma recomendação de algo (comunidade, tópico ou história) para $b$.
+Só pra constar, recomendações são interações de conteúdo não-textual e de
+abrangência individual básica (i.e., de membro a membro), no geral, sua
+intenção é informativa ou conectiva.
+
+\begin{figure}[h!]
+  \caption{Visualização da rede de recomendação do a.m.i.g.o.s.}
+  \centering
+    \includegraphics[width=0.7\textwidth]{imgs/recmd.jpg}
+    \label{ap:fig:recmd}
+\end{figure}
+
+Para o caso de uma rede como a da \figref{ap:fig:recmd}, temos que os atores
+mais centrais são também os mais ativos, por que recomendam algo aos outros.
+Neste caso em particular, como foram poucas recomendações registradas no sistema
+até o momento em que nos foi fornecido o acesso, calculamos apenas 10 atores com
+alguma centralidade. Se o prestígio em nossa rede de atenção mede realmente a
+intensidade que um membro atua no ambiente, então é de se esperar que
+encontremos uma forte interseção entre esses dois conjuntos (prestígio na rede
+de atenção e centralidade na rede de recomendação).
+
+É exatamente o que encontramos, os 5 membros mais centrais nas recomendações já
+aparecem na lista dos 10 mais em prestígio. Encontramos até o 9 na  lista dos 100
+mais e o último colocado nas recomendações ocupa o 210\textordmasculine~lugar
+na de prestígio. Quanto a ordenação, encontramos uma correlação espantosa entre os
+dois atributos: 0,929. O que indica que com muita pouca variação, quem tem mais
+prestígio também recomendou mais.
+
+E no caso da centralidade para redes de atenção, o que representa? No nosso
+caso, pouco devido à dicotomização da rede que mascarou a diferença entre
+autores e receptores. Entretanto, considerando o uso da \emph{Flow Betweenness}
+original, o esperado é que os atores centrais fossem aqueles com muitas ligações
+fortes entre vários atores, isto quer dizer que são membros receptores que se
+posicionam na rede consumindo informação de fontes variadas. Esses receptores
+atuam então como \emph{brokers} repassando as informações que acham válidas. 
+
+Em uma utilização do resultado desse exercício para o marketing ou a simples
+divulgação de informação, deveriamos visar primeiro os de alto prestígio, esses
+serão aqueles onde a cascata começará, mas também não devemos esquecer dos de
+alta centralidade. Se no propagar da cascata a novidade encontrar um
+\emph{broker} já inclinado a aceitar, a probabilidade vai ser muito maior da
+onda se espalhar em novos ambientes.
+
+\section{Resultados encontrados}
+\label{ap:sec:resultados}
+
+Em primeiro lugar, o resultado positivo encontrado nos dados para as hipóteses
+levantadas no começo do processo, sugere que o método de mineração de dados
+serviu seu propósito de orientar a pesquisa com segurança. A tipologia de
+interações e o \emph{framework} conceitual que descrevemos no decorrer desse
+trabalho, aplicaram-se adequadamente ao estudo de caso. Não obstante disso
+deduza-se necessariamente sua aplicabilidade a outros tipos de casos,
+acreditamos que ele foi definido geral o suficiente para tal.
+
+Inesperadamente, talvez por necessidade, também iniciamos a construção de uma
+ferramenta simples para o auxílio na preparação dos dados. Em uma busca rápida ao
+site da \emph{Internacional Network for Social Network Analysis}
+\citep{INSNA2010} encontramos de um total de 29 \emph{softwares} catalogados para
+o uso em SNA, desses observamos: 11 são para visualização da rede, 5 são pacotes
+estatísticos e matemáticos, 2 são de transformação de dados (XML e áudio), 8 são
+voltados para algoritmos de SNA propriamente, como o UCINET \citep{Borgatti2010}
+que foi usado para calcular as métricas nesse estudo de caso) e 3 envolvem a
+extração dos dados propriamente dita. Desses últimos, o que mais se aproxima da
+ferramenta desenvolvida nesse projeto é o UrlNet \citep{Hunscher2010} que
+facilita a criação de \emph{crawlers} para a \emph{web}; curiosamente também
+desenvolvido na linguagem Python. Mesmo assim, acreditamos que há espaço para a
+nossa ferramenta, pois é de propósito geral e permite reunir o resultados dos
+\emph{crawlers} em modelos: membros x interação.
+
+ 
 
