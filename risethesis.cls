@@ -338,7 +338,7 @@ fulfillment of the requirements for the degree of M.Sc. in Computer Science.
     \begin{center}
       {\Large {``\@title''}}\\
       \vskip\baselineskip
-      {\large By}
+      {\large \@textby}
       \vskip\baselineskip
       {\LARGE \textbf{\@author}}
       \vskip\baselineskip

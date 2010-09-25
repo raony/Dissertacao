@@ -13,7 +13,7 @@ mais relevantes.
 Trataremos aqui principalmente de mensurações da rede, que é a primeira parte do
 processo de análise de influência. A mensuração, por sua vez, se divide em dois
 momentos: dados \textbf{brutos} e dados \textbf{compilados}. No seu estado bruto,
-a rede guarda os dados como se lhe apresentam através dos medianeiros como por
+a rede guarda os dados como se lhe apresentam através dos medianeiros, por
 exemplo: quantidade de interações, tamanho das interações, classificações usadas,
 data da interação, etc. Esse processo por si so é trabalhoso, pois devemos ter o
 cuidado de guardar não só as interações, mas as propriedades relacionadas a elas.
@@ -119,7 +119,8 @@ nas textuais. Primeiramente, intentamos com essa divisão alcançar uma
 consequência prática: a integração de diversas interações numa só rede. A rede
 que vamos construir é valorada, isto é, as conexões possuem um peso na forma de
 um número real dentro de um intervalo. Ao contrário de redes binárias, as redes
-valoradas proporcionam um indicativo da \textbf{força} do laço entre os atores.
+valoradas proporcionam um indicativo da \textbf{força} da conexão entre os
+atores.
 
 Dentro de uma teoria da atenção como capital social, devemos então nos voltar
 para a afirmação de que laços por onde trafegam muitos recursos são laços fortes
@@ -226,8 +227,7 @@ Daí temos que $T^*(l_k)$ é conjunto de todas as $m$ mensagens anteriores na
 $q=1,2,\ldots,m$, sobre esse conjunto considerando a ordenação trivial: $a > b
 \iff a\in T^*(b)$. Dessa forma $l_k$ é uma resposta a $t^*_{k1}$, que por sua
 vez responde a $t^*_{k2}$ e assim sucessivamente até a mensagem inicial. Levando em
-consideração a definição na \defref{def:thread}, definimos a atenção
-transitiva como:
+consideração a \defref{def:thread}, definimos a atenção transitiva como:
 
 \begin{equation}
 \label{def:atetransitiva}
@@ -262,7 +262,7 @@ devemos fazer mais algumas considerações:
   sendo a razão do total de atenção cedido pelo ator sobre a maior atenção
   medida, teremos uma normalização absoluta para toda a rede baseada no seu
   máximo. O que pode não ser a melhor escolha, pois idealmente a restrição de
-  atenção deve servir para reduzir a variância das forças dos laços na rede;
+  atenção deve servir para reduzir a variância da força das conexões na rede;
   \item O parâmetro $\gamma$ representa a força da influência de mensagens
   antigas na $thread$ sobre um determinado ator em sua participação atual. Por
   esta razão $0 \leq \gamma \leq 1$, sendo que $\gamma=0$ anula toda a atenção
@@ -275,8 +275,8 @@ devemos fazer mais algumas considerações:
   interessante para $\beta$ é o inverso da quantidade de atores na abrangência
   da interação em contexto, isto é, $\beta=^1/_{|A(l_k)|}$. Assim, o autor cede
   uma fração igual para cada receptor que é tão menor quanto maior for seu
-  público. Essa proporção também satisfaz a dimensão de intimidade da força do
-  laço, já que interações mais íntimas (menor abrangência) mobilizam maior
+  público. Essa proporção também satisfaz a dimensão de intimidade da força da
+  conexão, já que interações mais íntimas (menor abrangência) mobilizam maior
   atenção;
   \item O parâmetro $\alpha$ representa o quão certos estamos de que a interação
   foi recebida integralmente pelo receptor. A sua escolha depende de diversos
@@ -314,7 +314,7 @@ A seleção de característica (\emph{feature selection}), na aprendizagem de
 máquina, é a tarefa de escolher quais variáveis serão consideradas no treinamento
 do sistema de forma a obter a melhor aproximação do modelo \citep{Jain1997,
 Blum1997, Jain2000}. De forma similar devemos ser capazes de selecionar redes que
-maximizem nossa análise de influência. Recentemente \citet{Peng2005} sugere que
+maximizem nossa análise de influência. Recentemente, \citet{Peng2005} sugere que
 as variáveis sejam escolhidas de forma a maximizar a relevância e reduzir a
 redundância, mRMR (\emph{minimal-redundancy-maximal-relevance}). No nosso caso,
 não conhecemos o modelo da rede \emph{a priori} e a inferência é
@@ -384,7 +384,7 @@ grafos aleatórios a partir de um conjunto de parâmetros relacionados a
 \textbf{configurações} de interesse \citep{ROBINS2007a}. Uma configuração pode
 ser desde a presença de uma conexão, até a quantidade de k-triângulos e outros
 padrões mais complexos. Cada configuração tem um parâmetro relacionado que pode
-ser negativo, indicando que a rede é tem tendência inversa à presença daquela
+ser negativo, indicando que a rede tem tendência inversa à presença daquela
 configuração, nula representando a indiferença e positiva para uma tendência de
 mesmo modo. Assim sendo, cada parâmetro pode ser visto como tendências da rede em
 relação a, por exemplo: densidade, reciprocidade e transitividade da rede quando

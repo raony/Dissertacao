@@ -15,7 +15,7 @@ probabilística, mas também deve satisfazer alguns critérios que serão vistos
 mais adiante.
 
 Em \cite{Domingos2001}, os autores levantaram a questão: como selecionar o
-conjunto ótimo de atores para a influência na rede? Demontraram que a solução
+conjunto ótimo de atores para a influência na rede? Demonstraram que a solução
 dessa questão é \textit{NP} e apresentaram três algoritmos de aproximação
 considerando uma representação probabilística da rede. Depois deles, outros
 vieram, mas todos voltados para modelos probabilísticos da rede. Devido a essa
@@ -42,34 +42,36 @@ probabilísticos, classificadores Bayesianos de primeira ordem e árvores de
 probabilidades relacionais \citep{Jensen2003}. Técnicas mais antigas incluem
 programação de lógica indutiva e a análise de redes sociais tradicional.
 
-Recentes trabalhos na área utilizam de diversos tipos de interação para a
-mensuração da rede como por exemplo a similaridade entre classificação de
-produtos \citep{Richardson2002}, similaridade em termos extraídos de mecanismos
-de busca na internet \citep{MATSUO2007} e co-autoria em artigos científicos
+Recentes trabalhos na área utilizam diversos tipos de interação para a mensuração
+da rede, como por exemplo a similaridade entre classificação de produtos
+\citep{Richardson2002}, similaridade em termos extraídos de mecanismos de busca
+na internet \citep{MATSUO2007} e co-autoria em artigos científicos
 \citep{Kempe2003}. Em \citet{Xiang2010} temos uma mensuração combinando diversas
-interações observadas nos sites de relacionamento Facebook e LikedIn, que
-possuem propostas diferentes de utilização. A existência ou ausência de cada
-interação, como a recomendação, troca de mensagens, marcação em fotos, é reunida
-em um vetor binário. Da mesma forma, a similaridade entre os atores é reunido em
-outro vetor binário, onde cada dimensão representa uma propriedade comparada e
-recebe 0 caso seja diferente, 1 se igual. A partir de então, os autores propõem
-um modelo de força da relação como variável escondida com causa na similaridade
-e com consequência na interação. 
+interações observadas nos sites de relacionamento Facebook e LikedIn, que possuem
+propostas diferentes de utilização. A existência ou ausência de cada interação,
+como a recomendação, troca de mensagens, marcação em fotos, são reunidas em um
+vetor binário. Da mesma forma, a similaridade entre os atores é representada em
+outro vetor binário, onde cada dimensão traduz uma propriedade comparada e recebe
+0 caso seja diferente, 1 se igual. A partir de então, os autores propõem um
+modelo que considera a força da conexão como uma variável escondida do processo,
+com sua causa na similaridade dos atores e com sua consequência nos padrões de
+interação observados.
 
-Para a relação força e interação os autores propõe um modelo discriminativo que
-possibilita o calculo da probabilidade condicional da interação a partir da
-força da relação, isso é feito por amostragem da população. Essa estimativa é
-usada para calibrar um modelo generativo que relaciona a similaridade à força da
-conexão, que é utilizado por sua vez para calcular a força entre dois atores
-quaisqueres. Essa combinação de modelo discriminativo e generativo possibilita a
-inferência não supervisionada da força do laço, o que é um ponto positivo para
-esta abordagem, porém ela subestima outros fatores igualmente importantes.
+Em um primeiro momento o método estima a força da conexão com um modelo
+discriminativo que busca maximizar a probabilidade da ocorrência das interações
+observadas, a partir de uma amostragem da população. Depois, essa estimativa é
+usada para calibrar um modelo generativo que relaciona similaridade com força.
+Uma vez relacionadas, a partir da similaridade de dois atores quaisquer é
+possível calcular a força de sua conexão. Essa combinação de modelo
+discriminativo e generativo possibilita a inferência não supervisionada da força
+da conexão, o que é um ponto positivo para esta abordagem, porém ela subestima
+outros fatores igualmente importantes.
 
 A similaridade é apenas uma das possíveis componentes da força da conexão,
 propriedade conhecida como homofilia. Para um entendimento de um processo geral
 de mensuração da rede digital, precisamos remontar a um dos trabalhos fundantes
-da análise de redes sociais onde Granovetter lança, pela primeira vez, a
-hipótese:
+da análise de redes sociais onde \citeauthor{Granovetter1973} lança, pela
+primeira vez, a hipótese:
 
 	\begin{quote}{\citep{Granovetter1973}}
 	\emph{A força da conexão [entre dois atores] é uma combinação
@@ -78,21 +80,22 @@ hipótese:
 	caracterizam.} 
 	\end{quote}
 
-Granovetter também separa indicadores de pescritores, indicadores são
-componentes de fato da força da conexão, enquanto que prescritores são
-contigências contextuais que influenciam, mas não são componentes. Dentre os
-prescritores está a homofilia, o que quer dizer que a similaridade entre os
-atores influencia a conexão, mas é a intensidade, duração, intimidade e
-reciprocidade que indicam a sua força. Dessas quatro dimensões iniciais
-(tempo, intensidade, intimidade, reciprocidade), acrescentaram-se nove outras no
-decorrer de três décadas de pesquisa. Na \tabref{tab:resumao} temos um
-apanhado dos indicadores propostos na literatura. 
+\citeauthor{Granovetter1973} também separa indicadores de pescritores,
+indicadores são componentes de fato da força da conexão, enquanto que
+prescritores são contigências contextuais que influenciam, mas não são
+componentes. Dentre os prescritores está a homofilia, o que quer dizer que a
+similaridade entre os atores tem, de fato, alguma influencia sobre a conexão, mas
+é a intensidade, duração, intimidade e reciprocidade da interação que indicam a
+sua força. Dessas quatro dimensões iniciais (tempo, intensidade, intimidade,
+reciprocidade), acrescentaram-se nove outras no decorrer de três décadas de
+pesquisa. Na \tabref{tab:resumao} temos um apanhado dos indicadores propostos na
+literatura.
 
 Em \citet{Gilbert2009} encontramos uma análise da composição desses indicadores
 na força da conexão. Através de um modelo discriminativo os autores encontram a
 correlação linear entre 74 variáveis em cima das interações coletadas no site de
-relacionamento Facebook e a força da relação coletada através de questionário com
-uma amostra de 32 indivíduos. Sua análise leva em consideração sete indicadores
+relacionamento Facebook e a força da conexão coletada através de questionário
+com uma amostra de 32 indivíduos. Sua análise leva em consideração sete indicadores
 de força, separando as variáveis em dimensões do tipo intensidade, intimidade,
 duração, reciprocidade, estrutural, emocional, similaridade. É interessante
 notar que duas dimensões escolhidas são consideradas como prescitoras da força e
@@ -102,11 +105,11 @@ transitividade, i.e., amigo de amigo seu tem maior chance de ser seu amigo
 também.
 
 Os resultados mostram uma partição da força por dimensão que pode ser vista na
-\figref{fig:forca}. As dimensões de intimidade, intensidade e duração são
-as três maiores componentes da força. As variáveis de estrutura, sozinhas, são as
-que menos utilidade tem para a previsão da força, porém quando analisada em par
-com outras dimensões demonstram alto de grau de interação. Nas palavras dos
-autores:
+\figref{fig:forca}. As dimensões de intimidade, intensidade e duração são as três
+maiores componentes da força, como previsto por \citeauthor{Granovetter1973}. As
+variáveis de estrutura, sozinhas, são as que menos utilidade tem para a previsão
+da força, porém quando analisada em par com outras dimensões demonstram alto de
+grau de interação. Nas palavras dos autores:
 
 	\begin{quote}{\citep{Gilbert2009}}
 	\emph{A dimensão estrutural possui um papel menor como fator linear.
@@ -185,7 +188,7 @@ momentos diferentes ou agregações das interações por período. A partir daí
 utiliza-se modelos probabilísticos \citep{Sarkar2005}, meta-grupos
 \citep{Berger-Wolf2006} ou modelos provenientes da psicologia comportamental e da
 administração \citep{Brelger2004}. Nenhum deles, entretanto, é combinado com
-a teoria da força das relações para permitir sua aplicação em processos de
+a teoria da força das conexões para permitir sua aplicação em processos de
 mensuração de redes sociais digitais.
 
 A partir de então sugerimos alguns critérios para as ferramentas de mineração
@@ -205,5 +208,6 @@ que serão usadas no processo de análise de influência:
 \end{enumerate}
 
 Uma vez escolhida as ferramentas de mensuração e análise, devemos agora avançar
-para o passo seguinte e selecionar quais dados serão usados e se são válidos.
+para o passo seguinte e selecionar quais dados serão usados e se eles são
+válidos.
 

@@ -11,12 +11,12 @@ processo que chamamos de mensuração, pode ser traduzido em uma representação
 Toda representação da rede social, por ser um modelo, é naturalmente parcial e
 enviesado. Comumente, as pesquisas de redes sociais trabalham com grafos onde os
 vértices são os atores e os arcos entre os vértices são as relações mensuradas; e
-matrizes, onde as linhas e colunas são conjuntos de atores e que a posição
-$(i,j)$ da matriz representa o arco \textbf{do} ator $i$ \textbf{para} o ator
-$j$. Para economizar repetições, no decorrer deste trabalho quando estivermos nos
-referindo ao fenômeno observado, utilizaremos o termo \textbf{rede social
-observada}, enquanto que os termos \textbf{representação} e \textbf{rede social}
-serão intercambiáveis.
+matrizes, onde as linhas e colunas são os atores e a posição $(i,j)$ da matriz
+representa o arco \textbf{do} ator $i$ \textbf{para} o ator $j$. Para economizar
+repetições, no decorrer deste trabalho quando estivermos nos referindo ao
+fenômeno observado, utilizaremos o termo \textbf{rede social observada}, enquanto
+que os termos \textbf{representação} e \textbf{rede social} serão
+intercambiáveis.
 
 Devido à disponibilidade de ferramentas matemáticas para o tratamento de grafos,
 a análise de redes sociais desenvolveu-se rapidamente construindo métodos e
@@ -36,7 +36,7 @@ E$ necessariamente, além do que chamamos o par de arco de $i$ para $j$. De
 maneira geral, sempre trataremos a representação como sendo direcionada.
 
 Definimos a matriz de adjacência da rede $X$ com $n$ linhas e colunas, onde
-$x_{ij} = 1$, se $(i,j) \in V$ ou 0 de outra forma. Essa matriz de $X$ é uma
+$x_{ij} = 1$, se $(i,j) \in E$ ou 0 de outra forma. Essa matriz de $X$ é uma
 representação binária da rede. Podemos generalizar essa notação para incluir
 redes com valores discretos onde $0 \leq x_{ij} \leq m$ ou contínuos dispostos em
 um intervalo. Ambas as notações, de grafo e de matriz, serão usadas de forma
@@ -74,14 +74,14 @@ ferramentas eletrônicas que permitem a fácil armazenação, indexação e recu
 dessa informação.
 
 Para responder essa questão precisamos definir quais ferramentas são essas. Uma
-resposta óbvia seria sites de relacionamento (ou sites de redes sociais),definido
-como sendo um espaço (virtual) em que seja possível 1) criar um perfil, 2)
-relacionar uma lista públicade amigos, 3) navegar por essa rede de perfis
-interligados \citep{Boyd2007}. Porém tais sites são apenas um dentre muitos
-tipos de ferramentas que podem ser analisados, como por exemplo: fóruns, listas de
+resposta óbvia seria sites de relacionamento (ou sites de redes sociais),
+definido como sendo um espaço (virtual) em que seja possível 1) criar um perfil,
+2) relacionar uma lista públicade amigos, 3) navegar por essa rede de perfis
+interligados \citep{Boyd2007}. Porém tais sites são apenas um dentre muitos tipos
+de ferramentas que podem ser analisados, como por exemplo: fóruns, listas de
 discussão, sites de compartilhamento de conteúdo, comércio eletrônico,
-\emph{blogs}, \emph{microblogs} (e.g., Twitter), salas de bate-papo. Por
-questões de privacidade deixaremos de lado as formas pessoais de interação, como
+\emph{blogs}, \emph{microblogs} (e.g., Twitter), salas de bate-papo. Por questões
+de privacidade deixaremos de lado as formas pessoais de interação, como
 \emph{instant messengers} e e-mails.
 
 Ou seja, qualquer espaço (virtual) em que se é possível 1) identificar
@@ -92,10 +92,11 @@ interação no tempo, para possibilitar uma análise longitudinal da evolução 
 rede. Chamamos de \textbf{medianeiro} qualquer espaço (virtual) que satisfaça a
 condição acima.
 
-Porque nos parece evidente a impossibilidade aplicar questionários ou entrevistas
-com centenas de milhares de atores, respondemos a questão de como mensurar a rede
-assim: através das interações encontradas nos medianeiros. A mensuração é um
-processo de mineração de dados e, portanto, sujeita a todos os empecilhos típicos
-do campo como informações incompletas, ruidosas, esparsas, redundantes. A questão
-que nos aparece agora é como as interações observadas combinam-se para formar tal
-rede e se ela é significativa para a análise de proeminência.
+Porque nos parece evidente a impossibilidade de aplicar questionários ou
+entrevistas com centenas de milhares de atores, respondemos a questão de como
+mensurar a rede assim: através das interações encontradas nos medianeiros. A
+mensuração é um processo de mineração de dados e, portanto, sujeita a todos os
+empecilhos típicos do campo como informações incompletas, ruidosas, esparsas,
+redundantes. A questão que nos aparece agora é como as interações observadas
+combinam-se para formar tal rede e se ela é significativa para a análise de
+proeminência.
