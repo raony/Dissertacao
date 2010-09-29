@@ -17,8 +17,8 @@ digitais em larga escala e tempo real, especificamente para aplicações que fa�
 uso da rede para identificar atores chaves em processos de difusão de
 conhecimento, inovações e recursos.
 
-\section{Marketing viral}
-\label{sec:viral}
+\section{Problema}
+\label{sec:problema}
 
 Em 1996, Sabeer Bhatia e Jack Smith fundam um serviço de e-mail baseado
 puramente em HTML chamado de Hotmail. Um ano e meio depois, o Hotmail já contava
@@ -26,7 +26,8 @@ com uma base de 12 milhões de usuários, sendo vendido para a Microsoft por US\
 400 milhões. Sua concorrente mais próxima, o serviço de e-mail Juno, levara o
 dobro do tempo para conseguir um terço dessa quantidade de usuários, 4 milhões,
 gastando em torno de US\$ 20 milhões em publicidade. O Hotmail utilizou menos de
-US\$ 500 mil em propaganda. Esse é o caso clássico de \emph{Marketing Viral}.
+US\$ 500 mil em propaganda \citep{Jurvetson1997}. Esse é o caso clássico de
+\emph{marketing} viral.
 
 O Hotmail e muitos outros serviços na internet depois dele utilizam-se do boca a
 boca de seus usuários para se promover. O potencial de \emph{marketing} de um
@@ -36,18 +37,185 @@ com grande potencial são os chamados atores-chaves e através da análise de
 influência é possível mapeá-los. Uma vez identificados, os atores-chaves podem
 ser envolvidos em diferentes processos de difusão pela rede atuando como fontes
 de informação e provocando um efeito cascata em maior escala que aquele
-provocado pela escolha aleatória das fontes.
+provocado pela escolha aleatória das fontes. O problema em questão é como
+modelar a rede, quais dados levar em consideração, quais ferramentas usar para a
+análise e quão confiável será os resultados.
 
-@*&(#!*&(#@!&(* AGORA REDES)))
+\section{Objetivos}
+\label{sec:objetivos}
 
-No \chapref{ch:redes} introduziremos os conceitos de redes sociais, redes sociais
-digitais e mensuração. Depois aprofundaremos o conceito de mensuração da rede a
-análise de influência trazendo métodos da mineração de dados e \emph{knowledge
-discovery} no \chapref{ch:kddm}. Nos Capítulos \ref{ch:dominio}, \ref{ch:dados},
-\ref{ch:preparacao} e \ref{ch:mineracao} visitamos cada passo do processo
-delineando as dificuldades e soluções existentes no tratamento de dados
-relacionais, na agregação das interações em uma representação da rede e na
-análise de influência através de técnicas de cálculo de proeminência
-tradicionais; também introduziremos uma forma de agregar as interações através do
-montante de atenção investido. Finalmente encerramos com a conclusão e trabalhos
-futuros.
+A pergunta central que este trabalho busca responder é: ``como fazer a análise
+de influência em redes sociais digitais?``. Para tal estabelecemos os seguintes
+objetivos específicos:
+
+\begin{itemize}
+  \item definir redes sociais digitais;
+  \item identificar uma metodologia apropriada para coletar, medir, armazenar os
+  dados;
+  \item apresentar ferramentas para a análise de influência, com suas vantagens
+  e desvantagens;
+  \item apontar caminhos futuros.
+\end{itemize}
+
+\section{Redes sociais}
+\label{ch:redes}
+O estudo de rede sociais inicia nas décadas de 40 e 50, inicialmente voltado para
+o estudo de pequenos grupos de individuos e suas interações, a rede era mensurada
+através de observações, questionários e entrevistas \citep{Wasserman}.
+Diferentemente de outras ciências sociais que consideravam apenas os indivíduo e
+seus atributos, o estudo das redes sociais considera suas relações e os atributos
+dessas relações. A rede social é um fenômeno complexo envolvendo os
+relacionamentos de diversos atores em suas particularidades e que, através de um
+processo que chamamos de mensuração, pode ser traduzido em uma representação.
+Toda representação da rede social, por ser um modelo, é naturalmente parcial e
+enviesado. Comumente, as pesquisas de redes sociais trabalham com grafos onde os
+vértices são os atores e os arcos entre os vértices são as relações mensuradas; e
+matrizes, onde as linhas e colunas são os atores e a posição $(i,j)$ da matriz
+representa o arco \textbf{do} ator $i$ \textbf{para} o ator $j$. Para economizar
+repetições, no decorrer deste trabalho quando estivermos nos referindo ao
+fenômeno observado, utilizaremos o termo \textbf{rede social observada}, enquanto
+que os termos \textbf{representação} e \textbf{rede social} serão
+intercambiáveis.
+
+Devido à disponibilidade de ferramentas matemáticas para o tratamento de grafos,
+a análise de redes sociais desenvolveu-se rapidamente construindo métodos e
+modelos estatísticos apropriados \citep{Butts2009}. A partir desse ferramental,
+o ramo das ciências sociais passou a quantificar diversos fenômenos antes
+considerados apenas do ponto de vista subjetivo, como a proeminência dos atores,
+que estaria relacionada com a sua centralidade no grafo.
+
+\section{Redes sociais digitais}
+\label{sec:redes_dig}
+Com a popularização da Internet é fato que pessoas se conectam umas às outras
+virtualmente por seu intermédio. Os mecanismos de interação à disposição vão da
+simples troca de mensagens, à venda e troca de produtos, à participação conjunta
+em jogos \textit{multiplayer} massivos. Indo além do que sociólogo algum sonhou
+realizar no início dos estudos de redes sociais, grande parte dessas interações
+estão registradas, ou podem ser registradas eletronicamente a baixo custo,
+fornecendo uma quantidade nunca antes disponível de informações para
+estudos antropológicos e sociais da rede.
+
+E assim tem sido, desde o nível micro com a análise dos conteúdos trocados entre
+as interações pontuais de alguns indivíduos \citep{Recuero2008}, passando por
+análise de potencial de marketing \citep{Clemons2007, Domingos2001,
+Richardson2002, Ma2008}, busca de pessoas \citep{ADAMIC2005}, de especialistas
+\citep{Ehrlich2007}, formação de grupos \citep{Adamic2003, Backstrom2006,
+Kumar2006}, divulgação de notícias \citep{Gruhl2004}, dinâmicas de prestígio
+\citep{Salganik2006, Song2007}.
+
+Enquanto nosso objetivo é alcançar resultados similares as pesquisas anteriores
+de influência em redes sociais digitais, decidimos antes colocar a questão: como
+mensurar a rede social digital? Cada pesquisa teve seu critério: quantidade de
+e-mails trocados, recomendações, similaridades de perfil, participação nas mesmas
+comunidades. Dissemos no começo que a rede social observada é um fenômeno que
+pode ser representado, mas que não é a representação em si, por esta razão, toda
+representação possui um viés. Ora, ao acrescentarmos digital ao termo,
+queremos dizer que estamos tratando da observação do fenômeno através de mídias
+digitais; não mais das interações ao vivo e analógicas, mas através de
+ferramentas eletrônicas que permitem a fácil armazenação, indexação e recuperação
+dessa informação.
+
+Para responder essa questão precisamos definir quais ferramentas são essas. Uma
+resposta óbvia seria sites de relacionamento (ou sites de redes sociais),
+definido como sendo um espaço (virtual) em que seja possível 1) criar um perfil,
+2) relacionar uma lista públicade amigos, 3) navegar por essa rede de perfis
+interligados \citep{Boyd2007}. Porém tais sites são apenas um dentre muitos tipos
+de ferramentas que podem ser analisados, como por exemplo: fóruns, listas de
+discussão, sites de compartilhamento de conteúdo, comércio eletrônico,
+\emph{blogs}, \emph{microblogs} (e.g., Twitter), salas de bate-papo. Por questões
+de privacidade deixaremos de lado as formas pessoais de interação, como
+\emph{instant messengers} e e-mails.
+
+Ou seja, qualquer espaço (virtual) em que se é possível 1) identificar
+unicamente um ator, 2) mapear atores agentes e receptores a uma determinada
+interação com suas propriedades, pode ser insumo para a mensuração da rede. Mais
+adiante veremos que idealmente também será necessário demarcar a posição dessa
+interação no tempo, para possibilitar uma análise longitudinal da evolução da
+rede. Chamamos de \textbf{medianeiro} qualquer espaço (virtual) que satisfaça a
+condição acima.
+
+Porque nos parece evidente a impossibilidade de aplicar questionários ou
+entrevistas com centenas de milhares de atores, respondemos a questão de como
+mensurar a rede assim: através das interações encontradas nos medianeiros. A
+mensuração é um processo de mineração de dados e, portanto, sujeita a todos os
+empecilhos típicos do campo como informações incompletas, ruidosas, esparsas,
+redundantes. A questão que nos aparece agora é como as interações observadas
+combinam-se para formar tal rede e se ela é significativa para a análise de
+proeminência.
+
+\section{Mensurando a rede}
+\label{ch:kddm}
+
+\emph{Knowledge discovery} é o processo ``... não-trivial de identificar,
+em dados, padrões válidos, novos, potencialmente úteis e ultimamente
+compreensíveis'' \citep{Fayyad1996} e mineração de dados é uma de suas etapas.
+Chamamos de mensuração da rede social digital o processo de minerar dados
+proveninentes de meios digitais de interação social para formar uma
+representação. Na última década alguns métodos norteadores para os projetos de
+mineração de dados foram propostos, dentre os quais escolhemos o método de 6
+passos descritos por \cite{Cios2005} e que consiste em sua forma geral:
+
+\begin{description}
+\item[1. Entendendo o domínio do problema]Neste passo devemos determinar os
+objetivos do projeto e aprender sobre as possíveis técnicas conhecidas
+para alcançá-los.
+\item[2. Entendendo os dados]Este passo inclui coletar os dados, decidir quais
+serão utilizados, priorizar atributos, verificar sua utilidade em relação aos
+objetivos. Os dados precisam ser verificados em termos de completude,
+plausabilidade, etc.
+\item[3. Preparação dos dados]Este é o passo chave do qual o sucesso de todo o
+processo depende; Ele geralmente consome metade de todo o esforço da mineração.
+Aqui, decidimos quais dados serão usados como entradas para quais técnicas de
+mineração do passo 4. O que pode envolver levantar amostragem de dados, executar
+testes de correlação e significância, remoção e correção de ruído, etc. Os dados
+tratados, depois poderão ser processados para a seleção de características,
+redução da dimensionalidade, derivação de novos atributos (discretização) e
+agregação dos dados (granularização). O resultado é um novo conjunto de dados
+que atendem a requesitos específicos, necessários para sua utilização como
+entrada para as ferramentas de mineração.
+\item[4. Mineração dos dados]Aplicação dos métodos de mineração selecionados.
+Apesar de ser através das ferramentas de mineração que as novas informações
+são descobertas, sua utilização normalmente envolve menos esforço do que
+preparar os dados. Ferramentas de mineração reunem diversos tipos de algoritmos
+como conjuntos \emph{fuzzy}, métodos Bayesianos, computação genética,
+aprendizado de máquina, redes neurais, etc. Para uma visão mais detalhada desses
+algoritmos, referimo-nos a \cite{JiaweiHan2006}.
+\item[5. Avaliação do conhecimento descoberto]Interpretação dos
+resultados, verificando a relevância da informação encontrada. Somente os
+modelos aprovados são mantidos, todo o processo pode ser revisitado e ações
+alternativas que levem à melhoria dos resultados podem ser identificadas.
+\item[6. Usando o conhecimento descoberto]Entrega do conhecimento produzido.
+Criação de um plano para monitorar sua utilização, documentação do projeto,
+estender sua aplicação para outros domínios.
+\end{description}
+
+O método de 6 passos para mineração de dados foi escolhido dentre outros
+possíveis devido ao seu viés acadêmico e modelo iterativo com ciclos de
+\emph{feedback} explícitos que orientam o retorno a passos anteriores para a
+melhoria do processo \citep{KURGAN2006}. Mostraremos agora, para cada passo do
+método quais as considerações necessárias, dificuldades e possíveis soluções no
+contexto da mensuração de redes sociais digitais para a análise da influência.
+
+\section{Contribuição e metodologia}
+
+Uma vez definidos o conceito de rede social digital e sua mineração nas seções
+anteriores, este trabalho aprofunda cada um dos passos da metodologia de
+\citeauthor{Cios2005} a partir do ponto de vista da análise de influência. No
+\chapref{ch:dominio} revisitamos a teoria de força da conexão de
+\citeauthor{Granovetter1973} para entedermos sua consequência nas abordagens
+atuais de mensuração de redes sociais digitais. No \chapref{ch:dados}
+apresentamos uma tipologia de interações que facilita o entendimento das
+diferentes formas conexões entre dois indivíduos nos meios digitais e da mesma
+forma a sua mensuração em uma representação da rede; também lançamos mão da
+teoria da atenção de \citeauthor{Davenport2001} para tecer um algoritmo simples
+que integre diferentes tipos de interações textuais em uma única representação.
+O \chapref{ch:preparacao} traz detalhes de operação do algoritmo de mensuração
+da atenção e também critérios para comparar diferentes representações da rede
+para a escolhar do melhor subconjunto que será utilizado na análise de
+influência. Sobre a análise de influência propriamente dita, trataremos no
+\chapref{ch:mineracao}, onde também relacionaremos o conceito de comunidades de
+prática com a avaliação da aplicabilidade dos resultados da análise. O
+\chapref{ch:amigos} contém a descrição de um experimento realizado com uma rede
+real, onde será avaliado a utilidade da metodologia de \citeauthor{Cios2005}
+como processo orientador da mineração e também a utilidade do algoritmo de
+mensuração da atenção proposto. Encerramos com a conclusão e trabalhos futuros.
