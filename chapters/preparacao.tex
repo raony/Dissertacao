@@ -22,43 +22,56 @@ agrupados por alguma relação \citep{Breiger1974, Seidman1978}. Um exemplo
 claro de hipergrafo é a representação formada a partir da afiliação dos atores à
 comunidades, contudo, a rigor, toda interação particiona o grafo em um
 subconjunto.
-\begin{quote}
-$\bigotimes$ \textbf{Um exemplo de hipergrafo:} Considere dois medianeiros
-$\mathscr{X}_1$ e $\mathscr{X}_2$ com seus respectivo conjuntos de interações
-$\mathscr{L}_1$ e $\mathscr{L}_2$. Ambos referem-se ao mesmo conjunto de atores
-$\mathscr{N} = \{n_1, n_2, n_3\}$. Para $\mathscr{L}_1$ temos duas interações
-$l_1$ e $l_2$, onde $n_1$ é o autor de ambas, ou seja $A(l_1)=A(l_2)=\{n_1\}$. O
-ator $n_2$ é o receptor de $l_1$ e $n_3$ é o de $l_2$, assim temos
-$R(l_1)=\{n_2\}$ e $R(l_2)=\{n_3\}$. Se construirmos uma representação de
-$\mathscr{X}_1$ chamada de $X_1$, onde $x_{ij}=1$ se existir uma interação $l$
-onde $i \in A(l)$ e $j \in R(l)$ então teremos:
 
-\center
-\begin{array}{c | c c c}
-& n_1 & n_2 & n_3 \\ \hline
-n_1&0&1&1\\
-n_2&0&0&0\\
-n_3&0&0&0\\
-\end{array}
+\section{Exemplo de hipergrafo}
 
-\flushleft
-Agora para $\mathscr{L}_2$ temos apenas uma interação $q$ onde $A(q)=\{n_1\}$ e
-$R(q)=\{n_2,n_3\}$. Então em apenas uma interação $n_1$ conseguiu a atenção de
-$n_2$ e $n_3$. Se utilizarmos a mesma regra para construirmos $X_2$ também
-teremos:
+Considere dois medianeiros $A$ e $B$ que mediam o mesmo conjunto de
+atores $\mathscr{N} = \{n_1, n_2, n_3\}$. Em $A$, coletamos duas interações
+$i_1$ e $i_2$. O ator $n_1$ é o autor de ambas interações. O ator $n_2$ é o
+receptor da interação $i_1$ e o ator $n_3$ é o receptor da interação $i_2$. Se
+construirmos uma matriz de adjacência e um hipergrafo a partir do medianeiro $A$
+teremos o resultado apresentado na \figref{fig:hiperg1}:
 
-\center
-\begin{array}{c | c c c}
-& n_1 & n_2 & n_3 \\ \hline
-n_1&0&1&1\\
-n_2&0&0&0\\
-n_3&0&0&0\\
-\end{array}
+\begin{figure}[htb]
+  \centering
+  \begin{minipage}[c]{0.48\textwidth}
+    \centering
+    \begin{array}{c | c c c}
+	& n_1 & n_2 & n_3 \\ \hline
+	n_1&0&1&1\\
+	n_2&0&0&0\\
+	n_3&0&0&0\\
+	\end{array}
+  \end{minipage}
+  \begin{minipage}[c]{0.38\textwidth}
+    \includegraphics[width=\textwidth]{imgs/hipergraf1v.png}
+  \end{minipage}
+  \caption{hipergrafo de $A$ -- três atores, duas
+  interações.}\label{fig:hiperg1}
+\end{figure}
 
-\flushleft
-O que é no mínimo inconveniente, já que os dois medianeiros possuem padrões bem
-diferentes, o primeiro possui dois subgrafos e o segundo apenas um. 
-\end{quote}
+Já em $B$ temos apenas uma interação, $i_3$, cujos receptores são $n_2$ e $n_3$.
+Se construirmos sua matriz de adjacência, ela será igual à de $A$ porem os
+hipergrafos demonstram grande diferença, já que em $B$ o ator $n_1$ alcançou
+$n_2$ e $n_3$ com uma única interação.
+
+\begin{figure}[htb]
+  \centering
+  \begin{minipage}[c]{0.48\textwidth}
+    \centering
+    \begin{array}{c | c c c}
+	& n_1 & n_2 & n_3 \\ \hline
+	n_1&0&1&1\\
+	n_2&0&0&0\\
+	n_3&0&0&0\\
+	\end{array}
+  \end{minipage}
+  \begin{minipage}[c]{0.28\textwidth}
+    \includegraphics[width=\textwidth]{imgs/hipergraf2v.png}
+  \end{minipage}
+  \caption{hipergrafo de $B$ -- três atores, uma
+  interação.}\label{fig:hiperg2}
+\end{figure}
 
 Nenhum das abordagens citadas no \chapref{ch:dominio} consideram o aspecto de
 hipergrafo das interações. Seria necessário adaptar as técnicas de análise de

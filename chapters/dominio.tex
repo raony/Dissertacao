@@ -9,20 +9,22 @@ caráter probabilístico. Essa probabildiade pode ser inferida por um modelo a
 partir de uma primeira representação bruta das interações ou gerado através de
 propriedades comuns entre os atores. Por outro lado, existe a possibilidade de
 utilizar técnicas da análise de redes sociais tradicional como métricas de
-centralidade e prestígio para aproximar a influência do ator na rede. Nesse caso, a
-representação utilizada para o cálculo dessas métricas não precisa ser
-probabilística, mas também deve satisfazer alguns critérios que serão vistos
-mais adiante.
+centralidade e prestígio para aproximar a influência do ator na rede. Nesse
+caso, não há necessidade de uma representação probabilística da rede, mas
+esta deverá satisfazer critérios de que serão vistos mais adiante.
 
-Em \cite{Domingos2001}, os autores levantaram a questão: como selecionar o
-conjunto ótimo de atores para a influência na rede? Demonstraram que a solução
-dessa questão é \textit{NP} e apresentaram três algoritmos de aproximação
-considerando uma representação probabilística da rede. Depois deles, outros
-vieram, mas todos voltados para modelos probabilísticos da rede. Devido a essa
-dependência, achamos que é necessário uma atenção maior sobre a mensuração da
-rede através de modelos probabilísticos devido a dificuldades que se
-aprensentam, mas as considerações gerais que serão feitas não deixam de
-se aplicar também para representações não probabilísticas.
+Em 2001, \citeauthor{Domingos2001} levantaram a questão: ``como selecionar o
+conjunto ótimo de atores para a influência na rede?'' Demonstraram que a solução
+dessa questão é \textit{NP}, ou seja, que não pode ser calculada em tempo
+polinomial. Como consequência, para redes com milhares de nós como as que estamos
+considerando, calcular a resposta exata desta pergunta tomaria um tempo
+virtualmente infinito. Também apresentaram três algoritmos que aproximam essa
+reposta, considerando uma representação probabilística da rede. Depois deles,
+outros vieram, mas todos voltados para modelos probabilísticos da rede. Devido a
+essa dependência, achamos que é necessário uma atenção maior sobre a mensuração
+da rede através de modelos probabilísticos devido a dificuldades que se
+aprensentam, mas as considerações gerais que serão feitas não deixam de se
+aplicar também para representações não probabilísticas.
 
 \section{Dificuldades e critérios na mensuração}
 
