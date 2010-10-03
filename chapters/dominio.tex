@@ -3,15 +3,18 @@
 
 No caso da análise da influência a mineração se divide em duas etapas a saber: a
 mensuração da rede propriamente dita e o reconhecimento de atores chave. Da
-segunda, depende a primeira. Caso a abordagem seja encontrar esses atores por
-simulação ou por algoritmos de otimização, então a representação deve ter um
-caráter probabilístico. Essa probabildiade pode ser inferida por um modelo a
-partir de uma primeira representação bruta das interações ou gerado através de
-propriedades comuns entre os atores. Por outro lado, existe a possibilidade de
-utilizar técnicas da análise de redes sociais tradicional como métricas de
-centralidade e prestígio para aproximar a influência do ator na rede. Nesse
-caso, não há necessidade de uma representação probabilística da rede, mas
-esta deverá satisfazer critérios de que serão vistos mais adiante.
+segunda, depende a primeira. Em abordagens onde a propagação da informação é
+simulada e o objetivo é encontrar o conjunto ótimo de atores para obter o maior
+alcance possível, são utilizados modelos probabilísticos onde a força da conexão
+representa a probabilidade de um ator convencer o outro. Essa probabilidade pode
+ser inferida por um modelo a partir de uma primeira representação bruta das
+interações ou gerado através de propriedades comuns entre os atores. Por outro
+lado, existe também a possibilidade de utilizar técnicas da análise de redes
+sociais tradicional como métricas de centralidade e prestígio para aproximar a
+influência do ator na rede. Nesse caso, não há necessidade de uma representação
+probabilística da rede, mas esta deverá satisfazer critérios de coesão que a
+caracterizam como comunidades de prática. Mais sobre isso será detalhado no
+\chapref{ch:mineracao}.
 
 Em 2001, \citeauthor{Domingos2001} levantaram a questão: ``como selecionar o
 conjunto ótimo de atores para a influência na rede?'' Demonstraram que a solução
@@ -59,15 +62,26 @@ modelo que considera a força da conexão como uma variável escondida do proces
 com sua causa na similaridade dos atores e com sua consequência nos padrões de
 interação observados.
 
-Em um primeiro momento o método estima a força da conexão com um modelo
-discriminativo que busca maximizar a probabilidade da ocorrência das interações
-observadas, a partir de uma amostragem da população. Depois, essa estimativa é
-usada para calibrar um modelo generativo que relaciona similaridade com força.
-Uma vez relacionadas, a partir da similaridade de dois atores quaisquer é
-possível calcular a força de sua conexão. Essa combinação de modelo
-discriminativo e generativo possibilita a inferência não supervisionada da força
-da conexão, o que é um ponto positivo para esta abordagem, porém ela subestima
-outros fatores igualmente importantes.
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{imgs/modeloXiang.png}
+	\caption{modelo da força da conexão como variável escondida \citep{Xiang2010}.}
+	\label{fig:xiang}
+\end{figure}
+
+No primeiro momento, para uma amostragem dos atores, são observadas as variáveis
+de interação, como se há troca de mensagens, fotos ou se foi estabelecido uma
+conexão entre os atores; são também coletadas as similaridades, como a presença
+nos mesmos grupos, a existência de amigos em comum e a equivalência de cargos e
+funções. No segundo, a força da conexão é inferida como variável latente que é
+dependente da similaridade e da qual dependem as variáveis de interação
+observadas. Os pesos dessas dependências são ajustados iterativamente de forma a
+maximizar a probabilidade da ocorrência das variáveis observadas. Uma vez
+ajustados os pesos, a partir da similaridade de dois atores quaisquer será
+possível calcular a força de sua conexão. Essa combinação de modelo discriminativo e
+generativo possibilita a inferência não supervisionada da força da conexão, o que
+é um ponto positivo para esta abordagem, porém ela subestima outros fatores
+igualmente importantes.
 
 A similaridade é apenas uma das possíveis componentes da força da conexão,
 propriedade conhecida como homofilia. Para um entendimento de um processo geral
@@ -185,7 +199,7 @@ Granovetter está relacionada com a influência, ela não é condição necessá
 \citep{Brown2007}.
 
 Finalmente, nenhuma das soluções estudadas considera a evolução da rede no
-tempo. Nesse aspecto algumas pesquisas utilizam fotografias na rede em
+tempo. Nesse aspecto algumas pesquisas utilizam ``fotografias'' na rede em
 momentos diferentes ou agregações das interações por período. A partir daí
 utiliza-se modelos probabilísticos \citep{Sarkar2005}, meta-grupos
 \citep{Berger-Wolf2006} ou modelos provenientes da psicologia comportamental e da
