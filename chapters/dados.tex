@@ -192,24 +192,6 @@ de outros conteúdos. Essas informações poderiam ser utilizadas numa análise
 intrínseca da rede para a concepção de um modelo mais real do interagente quanto
 ao dispêndio da atenção.
 
-\subsection{$\bigotimes$ Notação}
-
-Seja $\mathscr{X}$ um medianeiro, existirá um conjunto $\mathscr{L}$ de
-interações associado a $\mathscr{X}$. Considere o conjunto $\mathscr{N}$ de
-atores envolvidos através do medianeiro $\mathscr{X}$. Temos que para cada
-iteração $l_k \in \mathscr{L}$ existe pelo menos um ator $n_i \in \mathscr{N}$
-que provocou a interação, chamamos esses atores de agentes ou autores. Também
-existe pelos menos um ator $n_j \in \mathscr{N}$ que recebeu a interação,
-chamamos esses atores de receptores, audiência ou abrangência. Assim para fins de
-notação, sendo $\mathscr{P}(.)$ o conjunto das partes, considere
-$A:\mathscr{L}\to\mathscr{P}(\mathscr{N})$ onde $A(l_k)$ é conjunto de autores de
-$l_k$. Da mesma forma, faça $R:\mathscr{L}\to\mathscr{P}(\mathscr{N})$ onde
-$R(l_k)$ é conjunto de receptores de $l_k$. Nenhuma das duas funções são
-inversíveis, porém para economizar a notação definimos
-$A^{-1}:\mathscr{N}\to\mathscr{P}(\mathscr{L})$ onde $A^{-1}(n_i)$ é o conjunto
-de interações $l$ tal que $n_i \in A(l)$. O mesmo deve ser considerado para
-$R^{-1}$.
-
 \section{Uma teoria da atenção como capital social}
 \label{sec:teoria_atencao}
 
@@ -290,31 +272,3 @@ sobre o contexto. Isto quer dizer que alguns indivíduos podem receber atenção
 indiretamente ao serem citados, por intermediarem a interação ou por
 simplesmente fazer parte do contexto de alguma forma. Essa atenção chamamos de
 \textbf{transitiva}.
-
-\subsection{$\bigotimes$ Formalização}
-
-Considere dois atores $i$ e $j \in \mathscr{N}$; se $\mathscr{X}$ é um medianeiro
-para $\mathscr{N}$ com um conjunto de interações $\mathscr{L}$, considere também
-$l$ uma interação de $\mathscr{L}$. Se $i \in A(l)$ e $j \in R(l)$ então existe
-uma atenção direta $v_{jil}\neq0$ de $j$ para $i$ e uma atenção residual de $i$
-para $j$ expressa como $\dot{v}_{ijl}\neq0$. Usaremos o símbolo $+$ em um índice
-quando queremos dizer que trata-se do somatório sobre todo o seu conjunto, alguns
-exemplos: $v_{i+l} = \sum_{j \in \mathscr{N}}v_{ijl}$ representa toda a atenção
-direta investida por $i$ na interação $l$; $v_{ij+} = \sum_{l \in
-\mathscr{L}}v_{ijl}$, toda atenção direta cedida de $i$ para $j$ considerando
-todas as interações; e $v_{++l} = \sum_{i \in \mathscr{N}}\sum_{j \in
-\mathscr{N}}v_{ijl}$, toda a atenção direta cedida na rede através da interação
-$l$.
-
-Algumas restrições são óbvias, como o total de atenção investida em um ator
-qualquer é: $v_{i++} + \dot{v}_{i++} = c, \forall i \in \mathscr{N}$. Essa
-restrição, no entanto, não se sustenta quando só temos as interações da rede
-para avaliar já que representam apenas uma fração da atenção total do ator.
-
-Para definir a atenção transitiva é necessário primeiro estabelecer a relação
-$T:\mathscr{L}\to\mathscr{L}$ tal que se $l$ e $q \in \mathscr{L}$ e uma faz
-parte do contexto da outra, isto é, estão encadeadas, então $q \in T(l)$ se $q$
-veio antes. Dizemos que há atenção transitiva $\widetriangle{v}_{ijl}$ se há um
-caminho entre $i$ e $j$ através de $v$, isto é, se $i \in R(l)$ e $j \in A(q)$
-para algum $q \in T(l)$. Exemplos de interações encadeadas são comentários de
-\emph{posts}, \emph{threads} em fóruns e recomendação de conteúdo.

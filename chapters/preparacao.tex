@@ -176,7 +176,7 @@ para um determinado público, mais forte também será sua relação direcionada
 com o mesmo. Tal rede, por tanto, integraria insumos de diversos tipos de
 interação mensurados, desde que sejam de conteúdo textual.
 
-\subsection{$\bigotimes$ Algoritmo}
+\subsection{Algoritmo}
 \label{sec:formalizacao}
 
 Utilizando a teoria da atenção como capital social apresentada na
@@ -193,7 +193,12 @@ ator. A forma geral do algoritmo é a que segue:
       valor da \textbf{atenção residual} de $l$;
       \item a atenção total que vai do receptor para o autor é acrescida pelo valor da
 		\textbf{atenção direta} de $l$;
-	  \item	para cada mensagem $t$ na \emph{thread} de $l$: \begin{itemize}
+	  \item	para cada mensagem $t$ na \emph{thread}\footnote{\emph{thread} é uma
+	  cadeia de mensagens que sucedem-se no tempo pela relação de resposta. A
+	  mensagem que inicia a \emph{thread} não é uma resposta a nenhuma outra
+	  interação e todas as outras mensagens da \emph{thread} são respostas a alguma outra mensagem
+	  também da \emph{thread}, mas que ocorreu antes.} de $l$:
+	  \begin{itemize}
 	    \item a atenção total que vai do autor de $l$ para o autor de $t$ é
 			acrescida pelo valor da \textbf{atenção transitiva} de $l$ para $t$;
 		\end{itemize}
@@ -233,49 +238,7 @@ distância entre as interações é calculada da seguinte forma:
 
 Evidentemente, este é um modelo exploratório para a mensuração de redes a partir
 de interações textuais sob um ponto de vista generalista. Nesse sentido há muito
-espaço para aperfeiçoamento dentro do campo experimental. Para finalizar,
-devemos fazer mais algumas considerações:
-\begin{itemize}
-  \item $\vec{v}_{ij+}$ tem sua soma normalizada devido ao limite de atenção
-  natural de cada um;
-  \item Porém, cada pessoa dedica quantidades diferentes de atenção total aos
-  medianeiros analisados, de forma que seria simplório normalizar todos em 1.
-  Por esta razão, cada ator tem a soma de suas atenções distribuídas na rede
-  normalizada em um fator $E(n_i)$ que indica o seu grau de atividade na rede.
-  Esse fator, \emph{a priori} será sempre relativo e caso o escolhamos como
-  sendo a razão do total de atenção cedido pelo ator sobre a maior atenção
-  medida, teremos uma normalização absoluta para toda a rede baseada no seu
-  máximo. O que pode não ser a melhor escolha, pois idealmente a restrição de
-  atenção deve servir para reduzir a variância da força das conexões na rede;
-  \item O parâmetro $\gamma$ representa a força da influência de mensagens
-  antigas na $thread$ sobre um determinado ator em sua participação atual. Por
-  esta razão $0 \leq \gamma \leq 1$, sendo que $\gamma=0$ anula toda a atenção
-  transitiva e $\gamma=1$ considera todas as mensagens anteriores como sendo
-  igualmente influentes na mensagem atual;
-  \item O parâmetro $\beta$ representa a atenção recíproca do agente para os
-  seus recptores, também varia de 0 a 1, sendo que $\beta=0$ anula a atenção
-  residual da composição e $\beta=1$ indica que o autor da mensagem cedeu
-  individualmente a cada receptor tanto quanto este para com ele. Um valor
-  interessante para $\beta$ é o inverso da quantidade de atores na abrangência
-  da interação em contexto, isto é, $\beta=^1/_{|A(l_k)|}$. Assim, o autor cede
-  uma fração igual para cada receptor que é tão menor quanto maior for seu
-  público. Essa proporção também satisfaz a dimensão de intimidade da força da
-  conexão, já que interações mais íntimas (menor abrangência) mobilizam maior
-  atenção;
-  \item O parâmetro $\alpha$ representa o quão certos estamos de que a interação
-  foi recebida integralmente pelo receptor. A sua escolha depende de diversos
-  fatores da análise empregada sobre os medianeiros, pois que para cada caso
-  poderemos (ou não) averiguar a atenção média cedida por um ator a uma
-  interação que lhe chega qualquer. Se $\alpha=0$ indica que caso o receptor não
-  tenha respondido à interação de alguma forma, ele não foi influenciado por
-  ela. $\alpha=1$ retira qualquer valor do fato do ator ter respondido ou não
-  determinada mensagem, igualando os dois casos. Em geral, mesmo que tenhamos o
-  indicativo de que o receptor recebeu a interação, é interessante manter um
-  valor de $\alpha$ diferente dos extremos para premiar a relação entre atores
-  que se respondem. O parâmetro $\alpha$ também pode ser visto no contexto da
-  dimensão de reciprocidade da força da conexão, já que quanto menor o $\alpha$
-  mais forte será proporcionalmente as conexões em que houveram reciprocidade.
-\end{itemize}
+espaço para aperfeiçoamento dentro do campo experimental.
 
 \section{Critérios de escolha da representação}
 \label{sec:criterios}
@@ -317,7 +280,7 @@ seja, são redundantes. Sendo assim, nosso objetivo é formular alguns critério
 de escolha, de modo que tenhamos em mãos o conjunto de representações
 minimamente redundante.
 
-\subsection{$\bigotimes$ Mínima redundância}
+\subsection{Mínima redundância}
 
 Dada uma entrada de dados $D$, composta de $N$ amostras e $M$
 características $X=\{x_i, i=1,\ldots,M\}$, dizemos que um subconjunto $S
@@ -360,7 +323,7 @@ desenvolvidas na literatura são: gráficos aleatórios exponenciais e procedime
 de atribuição quadrática, respectivamente $p*$ (\emph{exponential random
 graphs}) e \emph{QAP} (\emph{quadratic assignment procedure}).
 
-\subsection{$\bigotimes$ Redes discretas e/ou esparsas}
+\subsection{Redes discretas e/ou esparsas}
 
 O primeiro método citado, gráficos aleatórios exponenciais, é mais apropriado
 para redes binárias ou com valores discretos \citep{Dekker2007}. Consiste em
