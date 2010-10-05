@@ -137,10 +137,11 @@ pouco provável que tenhamos disruptores e históricos longos de adversidade, de
 forma que podemos considerar que muitas interações entre dois membros é uma bom
 indicativo da positividade de suas intenções.
 
-O poder da abordagem apresentada na \secref{sec:teoria_atencao} é a integração
-de vários tipos de interação, conquanto sejam textuais. Então utilizaremos
-quatro medianeiros textuais reconhecidos no ambiente e classificaremos de
-acordo com a tipologia apresentada na \secref{sec:tipologia}:
+Nesse trabalho utilizamos a abordagem de mensuração apresentada na 
+\secref{sec:teoria_atencao}, com isso obtivemos a integração de quatro tipos
+de interação textuais. Os quatro medianeiros textuais utilizados e
+classificados de acordo com a tipologia apresentada na \secref{sec:tipologia}
+são:
 
 \begin{description}
 \item[Tópicos] são mensagens que \textbf{iniciam} discussões nos fóruns das
@@ -158,28 +159,32 @@ espaço público onde qualquer membro pode ler e publicar sua opinião, trata-se
 portanto de uma interação de abrangência comum.
 \end{description}
 
-É importante denotar a abrangência de cada medianeiro pois que afeta diretamente
-o cálculo da atenção residual que cada autor tem com seus leitores. Usaremos o
-coeficiente $\beta$ igual ao inverso multiplicativo da quantidade de membros da
-abrangência, assim cada autor cede parcelas iguais a sua audiência por cada
-interação. Para interações de abrangência generalizada para todo o ambiente, como
-é o caso da grande maioria das histórias cadastradas, temos que $\beta=0$, por
-tanto, o autor não cede atenção residual para ninguém.
+Além desses quatro tipos de interação, também coletamos interações conectivas, de
+conteúdo não textual. Dessa forma, nas próximas seções desse capítulo quando for
+utilizado o termo \textbf{rede de atenção}, nos referimos as representações
+formadas a partir do algoritmo aprensentado em \secref{sec:formalizacao},
+consistindo na atenção trocada entre os atores. Especificamente trataremos de
+três redes: a formada com o algoritmo citado a partir das interações de tópicos e
+respostas apenas, das de histórias e comentários somente e das quatro combinadas.
+Essa representação que integra os quatro tipos será chamada de \textbf{completa}.
 
-Como nossa anális é intrínseca, pela disposição da informação no banco de dados
-podemos saber exatamente qual membro acessou e leu quais tópicos e histórias.
-Por esta razão, definimos o coeficiente $\alpha$ da seguinte maneira: 0, caso
-não tenha lido; $0.2$, caso tenha. Sendo assim, membros da abrangência que não
-leram não cedem atenção ao autor, membros que leram cedem 20\% do total possível
-e aqueles que leram e responderam ou comentaram cedem 100\% da atenção.
+Como o sistema mantém um registro de quem leu ou não um determinado tópico ou
+história, ajustamos o \textbf{fator de concentração} para 0, caso o ator faça
+parte da abrangência esperada mas não tenha lido e $0,2$ caso tenha. O valor foi
+escolhido a partir de pesquisas feitas com usuários de web, onde estima-se que
+um usuário comum leia menos de 28\% do texto que encontra enquanto navega, em
+média \citep{Weinreich2008, Nielsen2008}. Já a \textbf{função de esquecimento}
+foi definida como:
 
-Fizemos $\gamma=^1/_2$ de forma que a atenção transitiva decai para a metade a
-cada elo da \textit{thread}. Infelizmente, mesmo a análise sendo intrínseca, não
-tivemos acesos a interações passivas do usuário como, por exemplo, o tempo que
-ele passou em cada leitura ou logado no sistema. Dessa forma é complicado
-estimar uma função de participação $E(.)$, porém nós podemos considerar o
-próprio índice de atividade calculado pelo sistema como aproximação desse
-parâmetro.
+\begin{equation}
+f(d) = ^1/_{2^{d-1}}
+\end{equation}
+
+Assim, a atenção transitiva cedida através de uma interação as suas
+ancestrais na \emph{thread} diminui pela metada a cada passo na cadeia.
+Infelizmente, mesmo a análise sendo intrínseca, não tivemos acesos a interações
+passivas do usuário como, por exemplo, o tempo que ele passou em cada leitura
+ou logado no sistema.
 
 \section{Preparando os dados}
 \label{ap:sec:preparacao}
@@ -292,22 +297,22 @@ efetivamente se prestaram a isso.
 \end{table}
 
 Antes de prosseguir com a análise da influência, podemos avaliar o quanto de
-informação mútua existe nas redes mensuradas. Como foi mostrado na
-\secref{sec:criterios}, redes com alto grau de sobreposição podem ser
-descartadas uma em favor da outra para reduzir o conjunto a ser analisado na
-próxima etapa. Na \tabref{ap:tab:qap} temos o resultado para as quatro redes
-mensuradas. Se considerarmos separadamente tópicos e histórias, veremos que eles
-tem pouca coisa em comum; mas a rede completa de atenção por sua vez é
-fortemente correlacionada com ambas, sugerindo sua utilização no lugar das
-primeiras. Também notamos uma leve para moderada correlação positiva entre a
-rede de contatos e a de atenção, apesar de não estarem relacionadas diretamente.
-Essa diferença entre as redes justificaria também uma forte diferença na análise
-da influência?
+informação mútua existe nas redes mensuradas utilizando o método de atribuição
+quadrática (\emph{QAP}). Como foi mostrado na \secref{sec:criterios}, redes com
+alto grau de sobreposição podem ser descartadas uma em favor da outra para
+reduzir o conjunto a ser analisado na próxima etapa. Na \tabref{ap:tab:qap} temos
+o resultado para as quatro redes mensuradas. Se considerarmos separadamente
+tópicos e histórias, veremos que eles tem pouca coisa em comum; mas a rede
+completa de atenção por sua vez é fortemente correlacionada com ambas, sugerindo
+sua utilização no lugar das primeiras. Também notamos uma leve para moderada
+correlação positiva entre a rede de contatos e a de atenção, apesar de não
+estarem relacionadas diretamente. Resta saber se essa diferença entre as redes
+justificaria também uma forte diferença na análise da influência.
 
 \begin{table}[htbp]
 	\setlength{\arrayrulewidth}{2\arrayrulewidth}
 	\setlength{\belowcaptionskip}{10pt}
-	\caption{\emph{QAP} aplicado as quatro redes (p. < 0,001)} \centering
+	\caption{\emph{QAP} aplicado as quatro redes} \centering
 	\begin{tabular}{|c | c  c  c  c |}
 	\hline
 	QAP corr & completa & contatos & histórias & tópicos \\ \hline
@@ -323,15 +328,32 @@ da influência?
 \section{Análise da influência}
 \label{ap:sec:analise}
 
-Após a mensuração das redes, apresentada na seção anterior, passamos à análise
-de influência propriamente dita. Havíamos decidido usar o \emph{Flow
-Betweenness} no passo 1 desse projeto, devido à natureza valorada da
-representação, porém não nos foi possível alcançar nosso intento devido ao alto
-custo computacional que se mostrou para essa métrica. Sendo assim, substituímos
-pela métrica simples de \emph{Betweenness} que dicotomiza a rede pela média,
-isto é, os laços cuja força seja maior ou igual que a média continuam (1) e os
-abaixo são removidos (0). A métrica de \citeauthor{Bonacich1987} foi calculada
-como planejada.
+As métricas escolhidas para a análise de influência foram:
+\begin{description}
+\item[\emph{Flow Betweenness}] é baseada sobre o conceito de fluxo de
+informação. Em grafos valorados deve corresponder de alguma forma à capacidade
+de fluxo do nó. A centralidade de fluxo de um nó é definida como a soma da
+contribuição do nó para o fluxo de todos os caminhos ótimos entre dois nós
+quaisquer na rede, dividido pelo fluxo total no grafo \citep{Freeman1991}. O
+custo computacional dessa métrica está na ordem de $n^4$.
+\item[Bonacich's \emph{Power}] é uma métrica de prestígio e pode ser definida da
+seguinte forma: o prestígio de um nó é a soma do prestígio de todos os nós que
+estão ligados a ele multiplicados pela força dessa ligação. Com algumas
+restrições, esse problema é resolvido encontrando o autovetor do maior autovalor
+de uma matriz adaptada e tem custo computacional na ordem de $n^3$.
+\end{description}
+
+Pelo custo computacional das métricas escolhidas, temos que o tempo utilizado
+para calcular a métrica de \emph{flow betweenness} aumenta na proporção da quarta
+potência da quantidade de nós do grafo. Esse custo inviabilizou a sua utilização
+em nosso experimento, por isso, substituímos pela métrica simples de
+\emph{betweenness}. A centralidade por \emph{betweenness} de um nó é calculada
+como a quantidade de caminhos geodésicos entre dois nós quaisquer que passam por
+este nó dividido pela maior centralidade possível no grafo. A desvantagem de usar
+essa métrica de centralidade mais simples é que as conexões entre os nós
+precisariam ser dicotomizadas, isto é, os laços cuja força seja maior ou igual
+que a média continuam (1) e os abaixo são removidos (0). A métrica de
+\citeauthor{Bonacich1987} foi calculada como planejada.
 
 As Tabelas \ref{ap:tab:cent-contatos} e \ref{ap:tab:cent-completa} apresentam os
 resultados para a métrica de \emph{Betweenness} nas rede de contatos e na de
@@ -492,7 +514,28 @@ foi apresentado na \secref{sec:rel_proe}. Sendo assim, caso a rede mensurada
 não tenha propriedades estruturais de uma comunidade de prática, então a métrica
 radial que escolhemos, o poder de \citeauthor{Bonacich1987}, terá pouca
 utilidade prática já que os \emph{hubs} estarão isolados em seus
-\emph{clusters}. A \tabref{ap:tab:comu_prat} nos mostra que esse não é o caso,
+\emph{clusters}. Utilizamos as seguintes métricas para este fim:
+\begin{description}
+\item[Coeficiente de Clusterização] É definido como a média do coeficiente de
+clusterização de cada nó da rede. Já para um nó específico, é a densidade da
+sua vizinhança. Isto é, a quantidade de conexões que existem entre nós
+conectados diretamente a ele dividido pelo número de conexões possíveis. Na sua
+forma ponderada, nós com mais conexões tem maior peso na construção da média.
+\item[Distância] É definida como o tamanho médio das distância geodésicas no
+grafo.
+\item[Adequação Núcleo/Periferia] Consiste em reordenar as linhas e colunas da
+matriz de adjacência, de modo a dividir os nós em dois grupos: núcleo e
+periferia. Idealmente, esses dois grupos seriam reconhecidos porque separariam a
+matriz em quatro partes, no primeiro quadrante temos uma alta densidade de
+conexões que consiste nas ligações entre os membros do núcleo; no segundo
+e terceiro quadrante temos uma menor densidade que consiste nas ligações entre
+os membros do núcleo e os da periferia; e o último quadrante seria vazio ou com
+muito poucas conexões que advém do fato de que membros da periferia não tem
+conexões entre si (ou então formariam outros núcleos). A adequação varia de 0 a
+1 e representa o quanto da matriz testada se aproxima desse modelo ideal.
+\end{description}
+
+A \tabref{ap:tab:comu_prat} nos mostra que esse não é o caso,
 encontramos um alto grau de coesão e padrão núcleo/periferia nas redes
 mensuradas. Sendo a rede de tópicos a que mais se destacou com esse padrão,
 talvez por representar o dia a dia dos colaboradores em suas trocas de
@@ -513,18 +556,18 @@ mensagens.
 	\label{ap:tab:comu_prat}
 \end{table}
 
-Para ilustrar a aplicação desse novo conhecimento adquirido, vamos utilizar uma
-quinta e ultima mensuração do a.m.i.g.o.s.: a rede de recomendação. A rede de
-atenção se comporta de certa forma às avessas, se um laço vai de $a$ para $b$ é
-por que houve uma interação de $b$ para $a$. Então temos que prestígio, na rede
-atenção, é sinônimo de atividade; Usuários ativos que publicam muito conteúdo
-recebem muita atenção e por isso possuem alto prestígio. Para testar essa
-afirmação, mensuramos uma rede binária direcionada ingênua a partir das
-recomendações encontradas no sistema. Nessa representação, se $X_{ab}=1$ então
-$a$ enviou uma recomendação de algo (comunidade, tópico ou história) para $b$.
-Só pra constar, recomendações são interações de conteúdo não-textual e de
-abrangência individual básica (i.e., de membro a membro), no geral, sua
-intenção é informativa ou conectiva.
+Para ilustrar a aplicação dos resultados obtidos na análise de influência, vamos
+utilizar uma quinta e ultima mensuração do a.m.i.g.o.s.: a rede de recomendação.
+A rede de atenção se comporta de certa forma às avessas, se um laço vai de $a$
+para $b$ é por que houve uma interação de $b$ para $a$. Então temos que
+prestígio, na rede atenção, é sinônimo de atividade; Usuários ativos que publicam
+muito conteúdo recebem muita atenção e por isso possuem alto prestígio. Para
+testar essa afirmação, mensuramos uma rede binária direcionada ingênua a partir
+das recomendações encontradas no sistema. Nessa representação, se $X_{ab}=1$
+então $a$ enviou uma recomendação de algo (comunidade, tópico ou história) para
+$b$. Só pra constar, recomendações são interações de conteúdo não-textual e de
+abrangência individual básica (i.e., de membro a membro), no geral, sua intenção
+é informativa ou conectiva.
 
 \begin{figure}[h!]
   \centering
