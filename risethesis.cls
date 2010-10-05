@@ -115,7 +115,7 @@
 \gdef\@malecoadvisertitle{Co-Advisor}
 \gdef\@femalecoadvisertitle{Co-Advisor}
 \gdef\@bachelordissertation{Trabalho de Gradua��o}
-\gdef\@mastersdissertation{M.Sc. Dissertation}
+\gdef\@mastersdissertation{Dissertação de Mestrado}
 \gdef\@phdqualifying{Monografia de Qualifica��o}
 \gdef\@phdproposal{Proposta de Tese de Doutorado}
 \gdef\@phdthesis{Tese de Doutorado}
