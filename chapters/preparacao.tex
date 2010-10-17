@@ -324,21 +324,21 @@ Colocando de outra forma, quanto de informação estarei perdendo caso considere
 apenas uma delas?
 
 A seleção de característica (\emph{feature selection}), na aprendizagem de
-máquina, é a tarefa de escolher quais variáveis serão consideradas no treinamento
-do sistema de forma a obter a melhor aproximação do modelo \citep{Jain1997,
-Blum1997, Jain2000}. De forma similar devemos ser capazes de selecionar redes que
-maximizem nossa análise de influência. Recentemente, \citet{Peng2005} sugere que
-as variáveis sejam escolhidas de forma a maximizar a relevância e reduzir a
-redundância, mRMR (\emph{minimal-redundancy-maximal-relevance}). No nosso caso,
-não conhecemos o modelo da rede \emph{a priori} e a inferência é
-não-supervisionada. Por isso, não temos como avaliar a relevância de uma rede em
-relação a outra, todas são relevantes. Poderíamos considerar que redes que não
-demonstrem características de redes sociais poderiam ser vistas como fortemente
-enviesadas e por isso de baixa relevância, a saber: diâmetro pequeno (\emph{small
-world}) \citep{Milgram1967, Watts1998}, poucos muito conectados e muitos pouco
-conectados (\emph{power-law}) \citep{Liljeros2001, Mitzenmacher2004} e atores com
-muitas conexões tendem a estar conectados uns aos outros (\emph{scale-free})
-\citep{Li2005}.
+máquina, é a tarefa de escolher quais variáveis -- ou produtos, ou transformações
+destas -- serão consideradas no treinamento do sistema de forma a obter a melhor
+aproximação do modelo \citep{Jain1997, Blum1997, Jain2000}. De forma similar
+devemos ser capazes de selecionar redes que maximizem nossa análise de
+influência. Recentemente, \citet{Peng2005} sugere que as variáveis sejam
+escolhidas de forma a maximizar a relevância e reduzir a redundância, mRMR
+(\emph{minimal-redundancy-maximal-relevance}). No nosso caso, não conhecemos o
+modelo da rede \emph{a priori} e a inferência é não-supervisionada. Por isso, não
+temos como avaliar a relevância de uma rede em relação a outra, todas são
+relevantes. Podemos considerar que redes que não demonstrem características de
+redes sociais serão vistas como fortemente enviesadas e por isso de baixa
+relevância, a saber: diâmetro pequeno (\emph{small world}) \citep{Milgram1967,
+Watts1998}, poucos muito conectados e muitos pouco conectados (\emph{power-law})
+\citep{Liljeros2001, Mitzenmacher2004} e atores com muitas conexões tendem a
+estar conectados uns aos outros (\emph{scale-free}) \citep{Li2005}.
 
 Por outro lado, a redundância da informação nos ajudará a separar as
 representações importantes das que não acrescentam informação substancial, ou
@@ -391,18 +391,19 @@ graphs}) e \emph{QAP} (\emph{quadratic assignment procedure}).
 
 \subsection{$\bigotimes$ Redes discretas e/ou esparsas}
 
-O primeiro é mais apropriado para redes binárias ou com valores discretos
-\citep{Dekker2007}. Consiste em criar um modelo exponencial para a criação de
-grafos aleatórios a partir de um conjunto de parâmetros relacionados a
-\textbf{configurações} de interesse \citep{ROBINS2007a}. Uma configuração pode
-ser desde a presença de uma conexão, até a quantidade de k-triângulos e outros
-padrões mais complexos. Cada configuração tem um parâmetro relacionado que pode
-ser negativo, indicando que a rede tem tendência inversa à presença daquela
-configuração, nula representando a indiferença e positiva para uma tendência de
-mesmo modo. Assim sendo, cada parâmetro pode ser visto como tendências da rede em
-relação a, por exemplo: densidade, reciprocidade e transitividade da rede quando
-suas configurações relativas são respectivamente a presença de conexões, a
-mutualidade das relações e a presença de triângulos.
+O primeiro método citado, gráficos aleatórios exponenciais, é mais apropriado
+para redes binárias ou com valores discretos \citep{Dekker2007}. Consiste em
+criar um modelo exponencial para a criação de grafos aleatórios a partir de um
+conjunto de parâmetros relacionados a \textbf{configurações} de interesse
+\citep{ROBINS2007a}. Uma configuração pode ser desde a presença de uma conexão,
+até a quantidade de k-triângulos e outros padrões mais complexos. Cada
+configuração tem um parâmetro relacionado que pode ser negativo, indicando que a
+rede tem tendência inversa à presença daquela configuração, nula representando a
+indiferença e positiva para uma tendência de mesmo modo. Assim sendo, cada
+parâmetro pode ser visto como tendências da rede em relação a, por exemplo:
+densidade, reciprocidade e transitividade da rede quando suas configurações
+relativas são respectivamente a presença de conexões, a mutualidade das relações
+e a presença de triângulos.
 
 Modelos exponenciais de gráficos aleatórios tem a seguinte forma geral:
 
