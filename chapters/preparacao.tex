@@ -176,7 +176,7 @@ para um determinado público, mais forte também será sua relação direcionada
 com o mesmo. Tal rede, por tanto, integraria insumos de diversos tipos de
 interação mensurados, desde que sejam de conteúdo textual.
 
-\subsection{$\bigotimes$ Formalização}
+\subsection{Algoritmo}
 \label{sec:formalizacao}
 Para a formalização dessa métrica, vamos usar um exemplo prático. Em um fórum
 qualquer, vamos tomar um tópico para nosso exemplo. O fórum é o
@@ -189,122 +189,60 @@ intenção. Revisando:
   $i=1,2,\ldots,N$;
   \item $\mathscr{L}$ o conjunto de $L$ tópicos do fórum e o $k$-ésimo
   tópico é $l_k$, $k=1,2,\ldots,L$;
-  \item $A:\mathscr{L}\to \mathscr{N}$ tal que $A(l_k)$ seja o
-  autor do tópico $l_k$, a função $A$ não é inversível, dado que um ator pode
-  ser autor de mais de um tópico, porém considere a função
-  $A^{-1}:\mathscr{N}\to \mathscr{P}(\mathscr{L})$ tal que $A^{-1}(n_i) = \{x
-  \in \mathscr{L}|A(x) = n_i\}$ representando o conjunto de tópicos escritos
-  pelo ator;
-  \item $R:\mathscr{L}\to \mathscr{P}(\mathscr{N})$ tal que todo $x \in R(l_k)$
-  é um receptor de $l_k$, considere também o conjunto de tópicos recebidos por
-  um ator como sendo $R^{-1}:\mathscr{N}\to \mathscr{P}(\mathscr{L})$ tal que
-  $R^{-1}(n_i) = \{x \in \mathscr{L}|n_i\in R(x)\}$;
+  \item $A(l_k) = n_i$ quer dizer que $n_i$ escreveu o tópico $l_k$;
+  \item $I^A(n_i)$ é o conjunto de tópicos que $n_i$ escreveu;
+  \item $n_j \in R(l_k)$ quer dizer que $n_j$ faz parte da abrangência do tópico
+  $l_k$;
+  \item $I^R(n_j)$ é o conjunto de tópicos que $n_j$ leu;
+  \item $T^*(l_k)$ é o conjunto da \emph{thread} de $l_k$; 
   \item Se $x \in \mathscr{L}$, $|x|$ é a quantidade de palavras de $x$, para
-  todos os outros casos, quando aplicável, é a cardinalidade do conjunto;
+  todos os outros casos, quando aplicável, é a cardinalidade do conjunto.
 \end{itemize}
 
-Definimos a atenção total cedida de $n_i$ para $n_j$, $\vec{v}_{ij+}$
-como a soma de suas atenções diretas $v_{ij+}$, residuais $\dot{v}_{ij+}$ e
-transitivas $\widetriangle{v}_{ij+}$. A atenção direta é aquela formada quando
-$n_i$ é receptor de $n_j$ numa interação $l_k$ e definimos como:
+Vamos agora apenas apresentar uma implementação possível para as definições
+apresentadas na \secref{sec:dados:notacao}, utilizando a quantidade de palavras
+como base para o cálcula de atenção. Considere que para um tópico $l_k$, $n_i$ é
+seu autor e $n_j$ faz parte da sua abrangência, a atenção direta cedida nesse
+caso será:
 
-\begin{equation}
+\begin{Def}
 \label{def:atedireta}
-v_{ijk} = \alpha |l_k| 
-\end{equation}
+$\vdp{j}{i}{k} = \omega|l_k|$
+\end{Def}
 
-A atenção residual é cedida quando $n_j$ esta na abrangência da interação $l_k$
-cujo autor é $n_i$ e definimos como:
+O parâmetro $\omega \in [0..1]$ representa a importância proporcional que a
+análise dá para a recepção da mensagem. Se possuir o valor 0 significa que
+nenhuma atenção é cedida pelo simples fato de receber uma mensagem -- o parâmetro
+também será usado na atenção transitiva mais adiante -- somente quando
+respondida; já com o valor de 1 significa que não há diferença entre a atenção
+cedida por um simples leitor e por um leitor que respondeu ao tópico.
 
-\begin{equation}
+Utilizando o mesmo exemplo, podemos definir a atenção residual de $n_i$ para
+$n_j$ através de $l_k$ da seguinte maneira:
+
+\begin{Def}
 \label{def:ateresidual}
-\dot{v}_{ijk} = \beta |l_k|
-\end{equation}
+$\vrp{i}{j}{k} = \frac{|l_k|}{|R(l_k)|}$
+\end{Def}
 
-A atenção transitiva é aquela $n_j$ recebe de $n_i$ se este é o autor de algum
-tópico $l_k$ que responde a um anterior de autoria do primeiro. Para definirmos
-$\widetriangle{v}$ devemos antes modelar o encadeamento dos tópicos. Seja
-$T:\mathscr{L}\to \mathscr{L}\cup\{\varnothing\}$, se $l_h=T(l_k)$ então
-$l_k$ é uma resposta a $l_h$, se $l_k$ é a mensagem que iniciou o tópico então
-$T(l_k)=\varnothing$. Agora faça $T^*:\mathscr{L}\to\mathscr{P}(\mathscr{L})$:
+Assim, a atenção residual é dividida igualmente para cada receptor da mensagem.
+Já para a atenção transitiva, suponha que $n_i$ respondeu ao tópico $l_k$ com
+a mensagem $l_q$, podemos definir:
 
-\begin{equation}
-\label{def:thread}
-T^*(l_k) = \left\{ \begin{array}{l l} \varnothing &\quad\text{se
-$T(l_k)=\varnothing$}\\ \{T(l_k)\} \cup T^*(T(l_k)) &\quad\text{em todo outro
-caso}\end{array} \right.
-\end{equation}
-
-Daí temos que $T^*(l_k)$ é conjunto de todas as $m$ mensagens anteriores na
-\emph{thread} de $l_k$ e podemos definir uma sequência $t^*_{kq}$, onde
-$q=1,2,\ldots,m$, sobre esse conjunto considerando a ordenação trivial: $a > b
-\iff a\in T^*(b)$. Dessa forma $l_k$ é uma resposta a $t^*_{k1}$, que por sua
-vez responde a $t^*_{k2}$ e assim sucessivamente até a mensagem inicial. Levando em
-consideração a \defref{def:thread}, definimos a atenção transitiva como:
-
-\begin{equation}
+\begin{Def}
 \label{def:atetransitiva}
-\begin{array}{ l l }
-\widetriangle{v}_{ijk} = \sum_{q}(1-\alpha)\gamma^q|t^*_{kq}| 
-&, q \in \{x | A(t^*_{kx}) = n_j\}
-\end{array}
-\end{equation}
+$\vtrp{i}{j}{k} = f(l_k)(1-\omega)|l_k|$  
+\end{Def}
 
-A partir das Definições em \ref{def:atedireta}, \ref{def:ateresidual} e
-\ref{def:atetransitiva} podemos calcular a atenção total entre $n_i$ e $n_j$
-como:
-
-\begin{equation}
-\label{def:atetotal}
-\vec{v}_{ij+} = E(n_i)\frac{v_{ij+} + \dot{v}_{ij+} +
-\widetriangle{v}_{ij+}}{v_{i++} + \dot{v}_{i++} + \widetriangle{v}_{i++}}
-\end{equation}
+Chamaremos a função $f(.)$ de função de esquecimento e deve moderar o valor da
+atenção transitiva a depender da distância relativa na \emph{thread} entre $l_q$
+e $l_k$. Nota-se, no caso acima, que se $f(l_k)$ retornar 1 já que $l_q$ é uma
+resposta imediata à $l_k$, a atenção total de $n_i$ para $n_j$ vai ser acrescida
+pela parte que ficou faltando na atenção direta ($1-\omega$).
 
 Evidentemente, este é um modelo exploratório para a mensuração de redes a partir
 de interações textuais sob um ponto de vista generalista. Nesse sentido há muito
-espaço para aperfeiçoamento dentro do campo experimental. Para finalizar,
-devemos fazer mais algumas considerações:
-\begin{itemize}
-  \item $\vec{v}_{ij+}$ tem sua soma normalizada devido ao limite de atenção
-  natural de cada um;
-  \item Porém, cada pessoa dedica quantidades diferentes de atenção total aos
-  medianeiros analisados, de forma que seria simplório normalizar todos em 1.
-  Por esta razão, cada ator tem a soma de suas atenções distribuídas na rede
-  normalizada em um fator $E(n_i)$ que indica o seu grau de atividade na rede.
-  Esse fator, \emph{a priori} será sempre relativo e caso o escolhamos como
-  sendo a razão do total de atenção cedido pelo ator sobre a maior atenção
-  medida, teremos uma normalização absoluta para toda a rede baseada no seu
-  máximo. O que pode não ser a melhor escolha, pois idealmente a restrição de
-  atenção deve servir para reduzir a variância da força das conexões na rede;
-  \item O parâmetro $\gamma$ representa a força da influência de mensagens
-  antigas na $thread$ sobre um determinado ator em sua participação atual. Por
-  esta razão $0 \leq \gamma \leq 1$, sendo que $\gamma=0$ anula toda a atenção
-  transitiva e $\gamma=1$ considera todas as mensagens anteriores como sendo
-  igualmente influentes na mensagem atual;
-  \item O parâmetro $\beta$ representa a atenção recíproca do agente para os
-  seus recptores, também varia de 0 a 1, sendo que $\beta=0$ anula a atenção
-  residual da composição e $\beta=1$ indica que o autor da mensagem cedeu
-  individualmente a cada receptor tanto quanto este para com ele. Um valor
-  interessante para $\beta$ é o inverso da quantidade de atores na abrangência
-  da interação em contexto, isto é, $\beta=^1/_{|A(l_k)|}$. Assim, o autor cede
-  uma fração igual para cada receptor que é tão menor quanto maior for seu
-  público. Essa proporção também satisfaz a dimensão de intimidade da força da
-  conexão, já que interações mais íntimas (menor abrangência) mobilizam maior
-  atenção;
-  \item O parâmetro $\alpha$ representa o quão certos estamos de que a interação
-  foi recebida integralmente pelo receptor. A sua escolha depende de diversos
-  fatores da análise empregada sobre os medianeiros, pois que para cada caso
-  poderemos (ou não) averiguar a atenção média cedida por um ator a uma
-  interação que lhe chega qualquer. Se $\alpha=0$ indica que caso o receptor não
-  tenha respondido à interação de alguma forma, ele não foi influenciado por
-  ela. $\alpha=1$ retira qualquer valor do fato do ator ter respondido ou não
-  determinada mensagem, igualando os dois casos. Em geral, mesmo que tenhamos o
-  indicativo de que o receptor recebeu a interação, é interessante manter um
-  valor de $\alpha$ diferente dos extremos para premiar a relação entre atores
-  que se respondem. O parâmetro $\alpha$ também pode ser visto no contexto da
-  dimensão de reciprocidade da força da conexão, já que quanto menor o $\alpha$
-  mais forte será proporcionalmente as conexões em que houveram reciprocidade.
-\end{itemize}
+espaço para aperfeiçoamento dentro do campo experimental.
 
 \section{Critérios de escolha da representação}
 \label{sec:criterios}
