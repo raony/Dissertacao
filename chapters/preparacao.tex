@@ -226,12 +226,20 @@ $\vrp{i}{j}{k} = \frac{|l_k|}{|R(l_k)|}$
 \end{Def}
 
 Assim, a atenção residual é dividida igualmente para cada receptor da mensagem.
-Já para a atenção transitiva, suponha que $n_i$ respondeu ao tópico $l_k$ com
+Já para a atenção transitiva, suponha que $n_j$ respondeu ao tópico $l_k$ com
 a mensagem $l_q$, podemos definir:
 
 \begin{Def}
 \label{def:atetransitiva}
-$\vtrp{i}{j}{k} = f(l_k)(1-\omega)|l_k|$  
+$\vtrp{j}{i}{k} = f(d(n_j, l_k))(1-\omega)|l_k|$  
+\end{Def}
+
+\begin{Def}
+$d(n_j, l_k)$ é a distância mínima entre o tópico $l_k$ e alguma mensagem da
+autoria de $n_j$; essa distância é calculada pelo número de mensagens que
+separam as duas interações na \emph{thread}. Que pode ser calculada
+como: $\min(|T^*(l_q)| - |T^*(l_k)|)$, para todo $l_q$ tal que $A(l_q) = n_j$ e
+$l_k \in T^*(l_q)$.
 \end{Def}
 
 Chamaremos a função $f(.)$ de função de esquecimento e deve moderar o valor da

@@ -169,12 +169,12 @@ respostas apenas, das de histórias e comentários somente e das quatro combinad
 Essa representação que integra os quatro tipos será chamada de \textbf{completa}.
 
 Como o sistema mantém um registro de quem leu ou não um determinado tópico ou
-história, ajustamos o \textbf{fator de concentração} para 0, caso o ator faça
-parte da abrangência esperada mas não tenha lido e $0,2$ caso tenha. O valor foi
-escolhido a partir de pesquisas feitas com usuários de web, onde estima-se que
-um usuário comum leia menos de 28\% do texto que encontra enquanto navega, em
-média \citep{Weinreich2008, Nielsen2008}. Já a \textbf{função de esquecimento}
-foi definida como:
+história, ajustamos o parâmetro $\omega$ (ver a \defref{def:atedireta}) para 0,
+caso o ator faça parte da abrangência esperada mas não tenha lido e $0,2$ caso
+tenha. O valor foi escolhido a partir de pesquisas feitas com usuários de web,
+onde estima-se que um usuário comum leia menos de 28\% do texto que encontra
+enquanto navega, em média \citep{Weinreich2008, Nielsen2008}. Já a \textbf{função
+de esquecimento} foi definida como:
 
 \begin{equation}
 f(d) = ^1/_{2^{d-1}}
