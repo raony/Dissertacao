@@ -347,10 +347,22 @@ $T(l_k)$ não existir}\\ \{T(l_k)\} \cup T^*(T(l_k)) &\quad\text{em
 todo outro caso}\end{array} \right.$
 \end{Def}
 
-Assim, se $n_j$ for autor de alguma interação $l_q$ que influenciou $l_k$ cujo
-autor seja $n_i$, então existirá uma atenção transitiva de $n_i$ para $n_j$,
-representada por \vtrp{i}{j}{k}.
+Da definição anterior podemos deduzir que se uma interação $l_k$ influenciou um
+ator $n_i$, então é porque existe um $l_q \in I^A(n_i)$ tal que $l_k \in
+T^*(l_q)$, ou seja, está na \emph{thread} de alguma interação para qual $n_i$
+foi autor. Nesses casos, se $n_j$ é o autor de $l_k$ então existirá uma atenção
+transitiva de $n_i$ para $n_j$, representada por \vtrp{i}{j}{q}. 
 
 \begin{Def}
-$\Vtrp{i}{j} = \sum_{l_k \in }
+O conjunto de todas as \emph{threads} de um ator $n_i$ é definido por
+$T^{*A}(n_i) = \bigcup T^*(l_q), \forall l_q \in I^A(n_i)$; A união de todas as
+\emph{threads} para cada interação cujo autor foi $n_i$.
+\end{Def}
+
+A atenção transitiva total entre $n_i$ e $n_j$ será a soma das atenções
+transitivas para cada interação em que $n_j$ foi autor e que faz parte da
+\emph{thread} de alguma interação de autoria de $n_i$.
+
+\begin{Def}
+$\Vtrp{i}{j} = \sum_{l_k \in I^A(n_j)\cap T^{*A}(n_i)} \vtrp{i}{j}{k}$
 \end{Def}
