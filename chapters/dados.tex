@@ -200,11 +200,24 @@ atores envolvidos através do medianeiro $\mathscr{X}$. Temos que para cada
 iteração $l_k \in \mathscr{L}$ existe pelo menos um ator $n_i \in \mathscr{N}$
 que provocou a interação, chamamos esses atores de agentes ou autores. Também
 existe pelos menos um ator $n_j \in \mathscr{N}$ que recebeu a interação,
-chamamos esses atores de receptores, audiência ou abrangência. Assim para fins de
-notação, para uma dada interação $l_k$, $A(l_k)$ é o conjunto de seus autores e
-$R(l_k)$ é o conjunto de seus receptores. Definimos também $I^A_{n_i}$ o
-conjunto de interações que são da autoria de um dado ator $n_i$ e $I^R_{n_i}$ o
-conjunto de interações recebidas pelo mesmo ator.
+chamamos esses atores de receptores, audiência ou abrangência. Sendo assim:
+
+\begin{Def}
+Para toda interação $l_k \in \mathscr{L}$, existe um conjunto $A(l_k) \subset
+\mathscr{X}$ que é o conjunto de seus autores.
+\end{Def} 
+\begin{Def}
+Para toda interação $l_k \in \mathscr{L}$, existe um conjunto $R(l_k) \subset
+\mathscr{X}$ que é o conjunto de seus receptores.
+\end{Def} 
+\begin{Def}
+Para todo ator $n_i \in \mathscr{X}$, existe um conjunto $I^A(n_i)
+\subset \mathscr{L}$ que é o conjunto de interações da sua autoria.
+\end{Def} 
+\begin{Def}
+Para todo ator $n_i \in \mathscr{X}$, existe um conjunto $I^R(n_i)
+\subset \mathscr{L}$ que é o conjunto de interações em que é receptor.
+\end{Def} 
 
 \section{Uma teoria da atenção como capital social}
 \label{sec:teoria_atencao}
@@ -222,8 +235,8 @@ conceito de influência e, certamente, é mais fácil de medir.
 
 Foi o vencedor do prémio nobel, o economista Herbert Simon, que disse:
 
-\begin{quote}{\citep{Simon1996}}\emph{O que informação consome é bastante óbvio:
-consome a atenção de seus receptores. Por isso, uma fartura de informação
+\begin{quote}{\citep{Simon1996}} \emph{O que informação consome é bastante
+óbvio: consome a atenção de seus receptores. Por isso, uma fartura de informação
 provoca uma pobreza de atenção.}
 \end{quote}
 
@@ -287,30 +300,57 @@ indiretamente ao serem citados, por intermediarem a interação ou por
 simplesmente fazer parte do contexto de alguma forma. Essa atenção chamamos de
 \textbf{transitiva}.
 
-\subsection{$\bigotimes$ Formalização}
+\subsection{Notação}
 
-Considere dois atores $i$ e $j \in \mathscr{N}$; se $\mathscr{X}$ é um medianeiro
-para $\mathscr{N}$ com um conjunto de interações $\mathscr{L}$, considere também
-$l$ uma interação de $\mathscr{L}$. Se $i \in A(l)$ e $j \in R(l)$ então existe
-uma atenção direta $v_{jil}\neq0$ de $j$ para $i$ e uma atenção residual de $i$
-para $j$ expressa como $\dot{v}_{ijl}\neq0$. Usaremos o símbolo $+$ em um índice
-quando queremos dizer que trata-se do somatório sobre todo o seu conjunto, alguns
-exemplos: $v_{i+l} = \sum_{j \in \mathscr{N}}v_{ijl}$ representa toda a atenção
-direta investida por $i$ na interação $l$; $v_{ij+} = \sum_{l \in
-\mathscr{L}}v_{ijl}$, toda atenção direta cedida de $i$ para $j$ considerando
-todas as interações; e $v_{++l} = \sum_{i \in \mathscr{N}}\sum_{j \in
-\mathscr{N}}v_{ijl}$, toda a atenção direta cedida na rede através da interação
-$l$.
+Para fins de notação, \Vtp{i}{j} representa o total de atenção cedida do
+ator $n_i$ para o ator $n_j$. Esse total, como foi apresentado na
+\secref{sec:teoria_atencao}, é composto por toda a atenção direta, residual e
+transitiva de um para o outro, respectivamente \Vd, \Vr\ e \Vtr. Sendo
+assim:
 
-Algumas restrições são óbvias, como o total de atenção investida em um ator
-qualquer é: $v_{i++} + \dot{v}_{i++} = c, \forall i \in \mathscr{N}$. Essa
-restrição, no entanto, não se sustenta quando só temos as interações da rede
-para avaliar já que representam apenas uma fração da atenção total do ator.
+\begin{Def}
+$\Vtp{i}{j} = \Vdp{i}{j} + \Vrp{i}{j} + \Vtrp{i}{j}$
+\end{Def}
 
-Para definir a atenção transitiva é necessário primeiro estabelecer a relação
-$T:\mathscr{L}\to\mathscr{L}$ tal que se $l$ e $q \in \mathscr{L}$ e uma faz
-parte do contexto da outra, isto é, estão encadeadas, então $q \in T(l)$ se $q$
-veio antes. Dizemos que há atenção transitiva $\widetriangle{v}_{ijl}$ se há um
-caminho entre $i$ e $j$ através de $v$, isto é, se $i \in R(l)$ e $j \in A(q)$
-para algum $q \in T(l)$. Exemplos de interações encadeadas são comentários de
-\emph{posts}, \emph{threads} em fóruns e recomendação de conteúdo.
+Quando estivermos nos referindo a atenção direta cedida através de uma interação
+particular $l_k$ usaremos a notação \vdp{i}{j}{k} e só será diferente de zero se
+a interação $n_j$ for um autor de $l_k$ e $n_i$ for um dos seus receptores, ou
+seja, se $l_k \in I^A(n_j)\cap~I^R(n_i)$. Com isso temos:
+
+\begin{Def}
+$\Vdp{i}{j} = \sum_{l_k \in I^A(n_j)\cap~I^R(n_i)}\vdp{i}{j}{k}$
+\end{Def}
+
+Da mesma forma, \vrp{i}{j}{k} representa a atenção residual cedida por $n_i$ a
+$n_j$ através da interação $l_k$. Por esta razão, a interação $l_k \in I^A(n_i)
+\cap~I^R(n_j)$, ou seja, $n_i$ é um autor de $l_k$ e $n_j$ é um dos seus
+receptores.
+
+\begin{Def}
+$\Vrp{i}{j} = \sum_{l_k \in I^A(n_i)\cap~I^R(n_j)}\vrp{i}{j}{k}$
+\end{Def}
+
+Finalmente, para a atenção transitiva será necessário estabelecer o conjunto da
+\emph{thread} de $l_k$. Esse conjunto reúne todas as interações que influenciaram
+a interação em consideração. 
+
+\begin{Def}
+Se $l_k$ é uma resposta a $l_q$, então definimos $T(l_k) = l_q$.
+\end{Def}
+
+Com essa definição podemos criar uma função recursiva que retorna o conjunto
+da \emph{thread} da interação da seguinte forma:
+
+\begin{Def}
+$T^*(l_k) = \left\{ \begin{array}{l l} \varnothing &\quad\text{se
+$T(l_k)$ não existir}\\ \{T(l_k)\} \cup T^*(T(l_k)) &\quad\text{em
+todo outro caso}\end{array} \right.$
+\end{Def}
+
+Assim, se $n_j$ for autor de alguma interação $l_q$ que influenciou $l_k$ cujo
+autor seja $n_i$, então existirá uma atenção transitiva de $n_i$ para $n_j$,
+representada por \vtrp{i}{j}{k}.
+
+\begin{Def}
+$\Vtrp{i}{j} = \sum_{l_k \in }
+\end{Def}
